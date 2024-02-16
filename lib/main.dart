@@ -14,7 +14,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-
 import 'utils/Preferences.dart';
 
 void main() async {
