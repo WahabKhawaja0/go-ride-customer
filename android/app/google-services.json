@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "516489839414",
+    "firebase_url": "https://ridedekho-default-rtdb.firebaseio.com",
+    "project_id": "ridedekho",
+    "storage_bucket": "ridedekho.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:516489839414:android:22ed8f058879412cdc6997",
+        "android_client_info": {
+          "package_name": "com.ridedekho.customer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "516489839414-3etre6i85ste5imb8q9862bt6n1nbpha.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0v84Ssf2f5vpTfi_Hu5AX_4Cpc-7Ljz4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "516489839414-3etre6i85ste5imb8q9862bt6n1nbpha.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
