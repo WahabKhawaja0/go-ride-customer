@@ -38,7 +38,7 @@ class WalletScreen extends StatelessWidget {
                       Container(
                         height: Responsive.width(28, context),
                         width: Responsive.width(100, context),
-                        color: AppColors.primary,
+                        color: Colors.white,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: Row(
@@ -52,7 +52,7 @@ class WalletScreen extends StatelessWidget {
                                     Text(
                                       "Total Balance".tr,
                                       style: GoogleFonts.poppins(
-                                          color: Colors.white,
+                                          color: Colors.black,
                                           fontWeight: FontWeight.w600,
                                           fontSize: 16),
                                     ),
@@ -62,7 +62,7 @@ class WalletScreen extends StatelessWidget {
                                               .userModel.value.walletAmount
                                               .toString()),
                                       style: GoogleFonts.poppins(
-                                          color: Colors.white,
+                                          color: Colors.black,
                                           fontWeight: FontWeight.w600,
                                           fontSize: 24),
                                     ),
@@ -74,8 +74,8 @@ class WalletScreen extends StatelessWidget {
                                 child: ButtonThem.roundButton(
                                   context,
                                   title: "Topup Wallet".tr,
-                                  btnColor: Colors.white,
-                                  txtColor: AppColors.primary,
+                                  btnColor: AppColors.primary,
+                                  txtColor: Colors.white,
                                   btnWidthRatio: 0.40,
                                   btnHeight: 40,
                                   onPress: () async {
@@ -101,7 +101,15 @@ class WalletScreen extends StatelessWidget {
                                   const EdgeInsets.symmetric(horizontal: 10),
                               child: controller.transactionList.isEmpty
                                   ? Center(
-                                      child: Text("No transaction found".tr))
+                                      child: Text(
+                                        "No transaction found".tr,
+                                        style: TextStyle(
+                                          color: themeChange.getThem()
+                                              ? Colors.black
+                                              : Colors.black,
+                                        ),
+                                      ),
+                                    )
                                   : ListView.builder(
                                       itemCount:
                                           controller.transactionList.length,
@@ -165,7 +173,7 @@ class WalletScreen extends StatelessWidget {
                                                       ? AppColors
                                                           .darkContainerBackground
                                                       : AppColors
-                                                          .containerBackground,
+                                                          .darkContainerBackground,
                                                   borderRadius:
                                                       const BorderRadius.all(
                                                           Radius.circular(10)),
@@ -175,7 +183,7 @@ class WalletScreen extends StatelessWidget {
                                                           ? AppColors
                                                               .darkContainerBorder
                                                           : AppColors
-                                                              .containerBorder,
+                                                              .darkContainerBorder,
                                                       width: 0.5),
                                                   boxShadow: themeChange
                                                           .getThem()
@@ -237,6 +245,8 @@ class WalletScreen extends StatelessWidget {
                                                                         walletTransactionModel
                                                                             .createdDate),
                                                                     style: GoogleFonts.poppins(
+                                                                        color: Colors.black,
+
                                                                         fontWeight:
                                                                             FontWeight.w600),
                                                                   ),
@@ -265,6 +275,8 @@ class WalletScreen extends StatelessWidget {
                                                                         .note
                                                                         .toString(),
                                                                     style: GoogleFonts.poppins(
+                                                                        color: Colors.black,
+
                                                                         fontWeight:
                                                                             FontWeight.w400),
                                                                   ),
@@ -272,7 +284,10 @@ class WalletScreen extends StatelessWidget {
                                                                 Text(walletTransactionModel
                                                                     .paymentType
                                                                     .toString()
-                                                                    .toUpperCase())
+                                                                    .toUpperCase(),
+                                                                style: GoogleFonts.poppins(
+                                                                    color: Colors.black,),
+                                                                )
                                                               ],
                                                             ),
                                                           ],
@@ -324,12 +339,15 @@ class WalletScreen extends StatelessWidget {
                                 onTap: () {
                                   Get.back();
                                 },
-                                child: const Icon(Icons.arrow_back_ios)),
+                                child: const Icon(
+                                  Icons.arrow_back_ios,
+                                  color: Colors.black,
+                                )),
                             Expanded(
                                 child: Center(
                                     child: Text(
                               "Topup Wallet".tr,
-                              style: GoogleFonts.poppins(),
+                              style: GoogleFonts.poppins(color: Colors.black),
                             ))),
                           ],
                         ),
@@ -344,6 +362,7 @@ class WalletScreen extends StatelessWidget {
                                 Text(
                                   "Add Topup Amount".tr,
                                   style: GoogleFonts.poppins(
+                                      color: Colors.black,
                                       fontWeight: FontWeight.w600),
                                 ),
                                 const SizedBox(
@@ -360,6 +379,7 @@ class WalletScreen extends StatelessWidget {
                                 Text(
                                   "Select Payment Option".tr,
                                   style: GoogleFonts.poppins(
+                                      color: Colors.black,
                                       fontWeight: FontWeight.w600),
                                 ),
                                 Visibility(
@@ -398,7 +418,8 @@ class WalletScreen extends StatelessWidget {
                                                       ? themeChange.getThem()
                                                           ? AppColors
                                                               .darkModePrimary
-                                                          : AppColors.primary
+                                                          : AppColors
+                                                              .darkModePrimary
                                                       : AppColors
                                                           .textFieldBorder,
                                                   width: 1),
@@ -439,7 +460,9 @@ class WalletScreen extends StatelessWidget {
                                                           .value.strip!.name
                                                           .toString(),
                                                       style:
-                                                          GoogleFonts.poppins(),
+                                                          GoogleFonts.poppins(
+                                                        color: Colors.black,
+                                                      ),
                                                     ),
                                                   ),
                                                   Radio(
@@ -452,11 +475,12 @@ class WalletScreen extends StatelessWidget {
                                                     groupValue: controller
                                                         .selectedPaymentMethod
                                                         .value,
-                                                    activeColor:
-                                                        themeChange.getThem()
-                                                            ? AppColors
-                                                                .darkModePrimary
-                                                            : AppColors.primary,
+                                                    activeColor: themeChange
+                                                            .getThem()
+                                                        ? AppColors
+                                                            .darkModePrimary
+                                                        : AppColors
+                                                            .darkModePrimary,
                                                     onChanged: (value) {
                                                       controller
                                                               .selectedPaymentMethod
@@ -510,7 +534,8 @@ class WalletScreen extends StatelessWidget {
                                                     ? themeChange.getThem()
                                                         ? AppColors
                                                             .darkModePrimary
-                                                        : AppColors.primary
+                                                        : AppColors
+                                                            .darkModePrimary
                                                     : AppColors.textFieldBorder,
                                                 width: 1),
                                           ),
@@ -547,8 +572,9 @@ class WalletScreen extends StatelessWidget {
                                                     controller.paymentModel
                                                         .value.paypal!.name
                                                         .toString(),
-                                                    style:
-                                                        GoogleFonts.poppins(),
+                                                    style: GoogleFonts.poppins(
+                                                      color: Colors.black,
+                                                    ),
                                                   ),
                                                 ),
                                                 Radio(
@@ -562,7 +588,8 @@ class WalletScreen extends StatelessWidget {
                                                       themeChange.getThem()
                                                           ? AppColors
                                                               .darkModePrimary
-                                                          : AppColors.primary,
+                                                          : AppColors
+                                                              .darkModePrimary,
                                                   onChanged: (value) {
                                                     controller
                                                             .selectedPaymentMethod
@@ -615,7 +642,8 @@ class WalletScreen extends StatelessWidget {
                                                     ? themeChange.getThem()
                                                         ? AppColors
                                                             .darkModePrimary
-                                                        : AppColors.primary
+                                                        : AppColors
+                                                            .darkModePrimary
                                                     : AppColors.textFieldBorder,
                                                 width: 1),
                                           ),
@@ -653,7 +681,9 @@ class WalletScreen extends StatelessWidget {
                                                         .value.payStack!.name
                                                         .toString(),
                                                     style:
-                                                        GoogleFonts.poppins(),
+                                                        GoogleFonts.poppins(
+                                                            color: Colors.black,
+                                                        ),
                                                   ),
                                                 ),
                                                 Radio(
@@ -667,7 +697,8 @@ class WalletScreen extends StatelessWidget {
                                                       themeChange.getThem()
                                                           ? AppColors
                                                               .darkModePrimary
-                                                          : AppColors.primary,
+                                                          : AppColors
+                                                              .darkModePrimary,
                                                   onChanged: (value) {
                                                     controller
                                                             .selectedPaymentMethod
@@ -723,7 +754,8 @@ class WalletScreen extends StatelessWidget {
                                                     ? themeChange.getThem()
                                                         ? AppColors
                                                             .darkModePrimary
-                                                        : AppColors.primary
+                                                        : AppColors
+                                                            .darkModePrimary
                                                     : AppColors.textFieldBorder,
                                                 width: 1),
                                           ),
@@ -761,7 +793,7 @@ class WalletScreen extends StatelessWidget {
                                                         .value.mercadoPago!.name
                                                         .toString(),
                                                     style:
-                                                        GoogleFonts.poppins(),
+                                                        GoogleFonts.poppins(color: Colors.black,),
                                                   ),
                                                 ),
                                                 Radio(
@@ -775,7 +807,8 @@ class WalletScreen extends StatelessWidget {
                                                       themeChange.getThem()
                                                           ? AppColors
                                                               .darkModePrimary
-                                                          : AppColors.primary,
+                                                          : AppColors
+                                                              .darkModePrimary,
                                                   onChanged: (value) {
                                                     controller
                                                             .selectedPaymentMethod
@@ -831,7 +864,8 @@ class WalletScreen extends StatelessWidget {
                                                     ? themeChange.getThem()
                                                         ? AppColors
                                                             .darkModePrimary
-                                                        : AppColors.primary
+                                                        : AppColors
+                                                            .darkModePrimary
                                                     : AppColors.textFieldBorder,
                                                 width: 1),
                                           ),
@@ -868,8 +902,9 @@ class WalletScreen extends StatelessWidget {
                                                     controller.paymentModel
                                                         .value.flutterWave!.name
                                                         .toString(),
-                                                    style:
-                                                        GoogleFonts.poppins(),
+                                                    style: GoogleFonts.poppins(
+                                                      color: Colors.black,
+                                                    ),
                                                   ),
                                                 ),
                                                 Radio(
@@ -883,7 +918,8 @@ class WalletScreen extends StatelessWidget {
                                                       themeChange.getThem()
                                                           ? AppColors
                                                               .darkModePrimary
-                                                          : AppColors.primary,
+                                                          : AppColors
+                                                              .darkModePrimary,
                                                   onChanged: (value) {
                                                     controller
                                                             .selectedPaymentMethod
@@ -936,7 +972,8 @@ class WalletScreen extends StatelessWidget {
                                                     ? themeChange.getThem()
                                                         ? AppColors
                                                             .darkModePrimary
-                                                        : AppColors.primary
+                                                        : AppColors
+                                                            .darkModePrimary
                                                     : AppColors.textFieldBorder,
                                                 width: 1),
                                           ),
@@ -973,8 +1010,9 @@ class WalletScreen extends StatelessWidget {
                                                     controller.paymentModel
                                                         .value.payfast!.name
                                                         .toString(),
-                                                    style:
-                                                        GoogleFonts.poppins(),
+                                                    style: GoogleFonts.poppins(
+                                                      color: Colors.black,
+                                                    ),
                                                   ),
                                                 ),
                                                 Radio(
@@ -988,7 +1026,8 @@ class WalletScreen extends StatelessWidget {
                                                       themeChange.getThem()
                                                           ? AppColors
                                                               .darkModePrimary
-                                                          : AppColors.primary,
+                                                          : AppColors
+                                                              .darkModePrimary,
                                                   onChanged: (value) {
                                                     controller
                                                             .selectedPaymentMethod
@@ -1038,7 +1077,8 @@ class WalletScreen extends StatelessWidget {
                                                     ? themeChange.getThem()
                                                         ? AppColors
                                                             .darkModePrimary
-                                                        : AppColors.primary
+                                                        : AppColors
+                                                            .darkModePrimary
                                                     : AppColors.textFieldBorder,
                                                 width: 1),
                                           ),
@@ -1075,8 +1115,9 @@ class WalletScreen extends StatelessWidget {
                                                     controller.paymentModel
                                                         .value.paytm!.name
                                                         .toString(),
-                                                    style:
-                                                        GoogleFonts.poppins(),
+                                                    style: GoogleFonts.poppins(
+                                                      color: Colors.black,
+                                                    ),
                                                   ),
                                                 ),
                                                 Radio(
@@ -1090,7 +1131,8 @@ class WalletScreen extends StatelessWidget {
                                                       themeChange.getThem()
                                                           ? AppColors
                                                               .darkModePrimary
-                                                          : AppColors.primary,
+                                                          : AppColors
+                                                              .darkModePrimary,
                                                   onChanged: (value) {
                                                     controller
                                                             .selectedPaymentMethod
@@ -1143,7 +1185,8 @@ class WalletScreen extends StatelessWidget {
                                                     ? themeChange.getThem()
                                                         ? AppColors
                                                             .darkModePrimary
-                                                        : AppColors.primary
+                                                        : AppColors
+                                                            .darkModePrimary
                                                     : AppColors.textFieldBorder,
                                                 width: 1),
                                           ),
@@ -1180,8 +1223,9 @@ class WalletScreen extends StatelessWidget {
                                                     controller.paymentModel
                                                         .value.razorpay!.name
                                                         .toString(),
-                                                    style:
-                                                        GoogleFonts.poppins(),
+                                                    style: GoogleFonts.poppins(
+                                                      color: Colors.black,
+                                                    ),
                                                   ),
                                                 ),
                                                 Radio(
@@ -1195,7 +1239,8 @@ class WalletScreen extends StatelessWidget {
                                                       themeChange.getThem()
                                                           ? AppColors
                                                               .darkModePrimary
-                                                          : AppColors.primary,
+                                                          : AppColors
+                                                              .darkModePrimary,
                                                   onChanged: (value) {
                                                     controller
                                                             .selectedPaymentMethod
@@ -1326,6 +1371,7 @@ class WalletScreen extends StatelessWidget {
                         style: GoogleFonts.poppins(
                           fontWeight: FontWeight.w600,
                           fontSize: 16,
+                          color: Colors.black,
                         ),
                       ),
                     ),
@@ -1333,7 +1379,7 @@ class WalletScreen extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: themeChange.getThem()
                             ? AppColors.darkContainerBackground
-                            : AppColors.containerBackground,
+                            : AppColors.darkContainerBackground,
                         borderRadius:
                             const BorderRadius.all(Radius.circular(10)),
                         border: Border.all(
@@ -1364,6 +1410,7 @@ class WalletScreen extends StatelessWidget {
                                   style: GoogleFonts.poppins(
                                     fontWeight: FontWeight.w600,
                                     fontSize: 15,
+                                    color: Colors.black,
                                   ),
                                 ),
                                 const SizedBox(
@@ -1372,6 +1419,7 @@ class WalletScreen extends StatelessWidget {
                                 Text(
                                   "#${walletTransactionModel.transactionId!.toUpperCase()}",
                                   style: GoogleFonts.poppins(
+                                    color: Colors.black,
                                     fontWeight: FontWeight.w400,
                                   ),
                                 ),
@@ -1388,13 +1436,13 @@ class WalletScreen extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: themeChange.getThem()
                             ? AppColors.darkContainerBackground
-                            : AppColors.containerBackground,
+                            : AppColors.darkContainerBackground,
                         borderRadius:
                             const BorderRadius.all(Radius.circular(10)),
                         border: Border.all(
                             color: themeChange.getThem()
                                 ? AppColors.darkContainerBorder
-                                : AppColors.containerBorder,
+                                : AppColors.darkContainerBorder,
                             width: 0.5),
                         boxShadow: themeChange.getThem()
                             ? null
@@ -1422,6 +1470,7 @@ class WalletScreen extends StatelessWidget {
                                       style: GoogleFonts.poppins(
                                         fontWeight: FontWeight.w600,
                                         fontSize: 14,
+                                        color: Colors.black,
                                       ),
                                     ),
                                     const SizedBox(
@@ -1435,6 +1484,7 @@ class WalletScreen extends StatelessWidget {
                                             "Pay Via".tr,
                                             style: GoogleFonts.poppins(
                                               fontSize: 16,
+                                              color: Colors.black,
                                             ),
                                           ),
                                         ),
@@ -1470,6 +1520,7 @@ class WalletScreen extends StatelessWidget {
                                         style: GoogleFonts.poppins(
                                           fontWeight: FontWeight.w600,
                                           fontSize: 14,
+                                          color: Colors.black,
                                         ),
                                       ),
                                       const SizedBox(
@@ -1485,6 +1536,7 @@ class WalletScreen extends StatelessWidget {
                                               .toUpperCase(),
                                           style: GoogleFonts.poppins(
                                             fontSize: 16,
+                                            color: Colors.black,
                                           ),
                                         ),
                                       ),

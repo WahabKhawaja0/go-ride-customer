@@ -30,13 +30,13 @@ class ProfileScreen extends StatelessWidget {
         init: ProfileController(),
         builder: (controller) {
           return Scaffold(
-              backgroundColor: AppColors.primary,
+              backgroundColor: Colors.white,
               body: Column(
                 children: [
                   Container(
                     height: Responsive.width(45, context),
                     width: Responsive.width(100, context),
-                    color: AppColors.primary,
+                    color: Colors.white,
                     child: Stack(
                       alignment: Alignment.bottomCenter,
                       children: [
@@ -45,34 +45,49 @@ class ProfileScreen extends StatelessWidget {
                           child: Center(
                             child: controller.profileImage.isEmpty
                                 ? ClipRRect(
-                                    borderRadius: BorderRadius.circular(60),
-                                    child: CachedNetworkImage(
-                                      imageUrl: Constant.userPlaceHolder,
-                                      fit: BoxFit.fill,
-                                      height: Responsive.width(30, context),
-                                      width: Responsive.width(30, context),
-                                      placeholder: (context, url) => Constant.loader(),
-                                      errorWidget: (context, url, error) => Image.network(Constant.userPlaceHolder),
-                                    ),
-                                  )
+                              borderRadius: BorderRadius.circular(60),
+                              child: CachedNetworkImage(
+                                imageUrl: Constant.userPlaceHolder,
+                                fit: BoxFit.fill,
+                                height: Responsive.width(30, context),
+                                width: Responsive.width(30, context),
+                                placeholder: (context, url) =>
+                                    Constant.loader(),
+                                errorWidget: (context, url, error) =>
+                                    Image.network(
+                                        Constant.userPlaceHolder),
+                              ),
+                            )
                                 : ClipRRect(
-                                    borderRadius: BorderRadius.circular(60),
-                                    child: Constant().hasValidUrl(controller.profileImage.value) == false
-                                        ? Image.file(
-                                            File(controller.profileImage.value),
-                                            height: Responsive.width(30, context),
-                                            width: Responsive.width(30, context),
-                                            fit: BoxFit.fill,
-                                          )
-                                        : CachedNetworkImage(
-                                            imageUrl: controller.profileImage.value.toString(),
-                                            fit: BoxFit.fill,
-                                            height: Responsive.width(30, context),
-                                            width: Responsive.width(30, context),
-                                            placeholder: (context, url) => Constant.loader(),
-                                            errorWidget: (context, url, error) => Image.network(Constant.userPlaceHolder),
-                                          ),
-                                  ),
+                              borderRadius: BorderRadius.circular(60),
+                              child: Constant().hasValidUrl(controller
+                                  .profileImage.value) ==
+                                  false
+                                  ? Image.file(
+                                File(controller.profileImage.value),
+                                height:
+                                Responsive.width(30, context),
+                                width:
+                                Responsive.width(30, context),
+                                fit: BoxFit.fill,
+                              )
+                                  : CachedNetworkImage(
+                                imageUrl: controller
+                                    .profileImage.value
+                                    .toString(),
+                                fit: BoxFit.fill,
+                                height:
+                                Responsive.width(30, context),
+                                width:
+                                Responsive.width(30, context),
+                                placeholder: (context, url) =>
+                                    Constant.loader(),
+                                errorWidget: (context, url,
+                                    error) =>
+                                    Image.network(
+                                        Constant.userPlaceHolder),
+                              ),
+                            ),
                           ),
                         ),
                         Positioned(
@@ -106,99 +121,216 @@ class ProfileScreen extends StatelessWidget {
                       child: controller.isLoading.value
                           ? Constant.loader()
                           : Container(
-                              decoration:
-                                  BoxDecoration(color: Theme.of(context).colorScheme.background, borderRadius: const BorderRadius.only(topLeft: Radius.circular(25), topRight: Radius.circular(25))),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 10),
-                                child: Padding(
-                                  padding: const EdgeInsets.only(top: 20),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                                    child: SingleChildScrollView(
-                                      child: Column(
-                                        children: [
-                                          TextFieldThem.buildTextFiled(context, hintText: 'Full name'.tr, controller: controller.fullNameController.value),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          TextFormField(
-                                              validator: (value) => value != null && value.isNotEmpty ? null : 'Required',
-                                              keyboardType: TextInputType.number,
-                                              textCapitalization: TextCapitalization.sentences,
-                                              controller: controller.phoneNumberController.value,
-                                              textAlign: TextAlign.start,
-                                              enabled: false,
-                                              decoration: InputDecoration(
-                                                  isDense: true,
-                                                  filled: true,
-                                                  fillColor: themeChange.getThem() ? AppColors.darkTextField : AppColors.textField,
-                                                  contentPadding: const EdgeInsets.symmetric(vertical: 12),
-                                                  prefixIcon: CountryCodePicker(
-                                                    onChanged: (value) {
-                                                      controller.countryCode.value = value.dialCode.toString();
-                                                    },
-                                                    dialogBackgroundColor: themeChange.getThem() ? AppColors.darkBackground : AppColors.background,
-                                                    initialSelection: controller.countryCode.value,
-                                                    comparator: (a, b) => b.name!.compareTo(a.name.toString()),
-                                                    flagDecoration: const BoxDecoration(
-                                                      borderRadius: BorderRadius.all(Radius.circular(2)),
-                                                    ),
-                                                  ),
-                                                  disabledBorder: OutlineInputBorder(
-                                                    borderRadius: const BorderRadius.all(Radius.circular(4)),
-                                                    borderSide: BorderSide(color: themeChange.getThem() ? AppColors.darkTextFieldBorder : AppColors.textFieldBorder, width: 1),
-                                                  ),
-                                                  focusedBorder: OutlineInputBorder(
-                                                    borderRadius: const BorderRadius.all(Radius.circular(4)),
-                                                    borderSide: BorderSide(color: themeChange.getThem() ? AppColors.darkTextFieldBorder : AppColors.textFieldBorder, width: 1),
-                                                  ),
-                                                  enabledBorder: OutlineInputBorder(
-                                                    borderRadius: const BorderRadius.all(Radius.circular(4)),
-                                                    borderSide: BorderSide(color: themeChange.getThem() ? AppColors.darkTextFieldBorder : AppColors.textFieldBorder, width: 1),
-                                                  ),
-                                                  errorBorder: OutlineInputBorder(
-                                                    borderRadius: const BorderRadius.all(Radius.circular(4)),
-                                                    borderSide: BorderSide(color: themeChange.getThem() ? AppColors.darkTextFieldBorder : AppColors.textFieldBorder, width: 1),
-                                                  ),
-                                                  border: OutlineInputBorder(
-                                                    borderRadius: const BorderRadius.all(Radius.circular(4)),
-                                                    borderSide: BorderSide(color: themeChange.getThem() ? AppColors.darkTextFieldBorder : AppColors.textFieldBorder, width: 1),
-                                                  ),
-                                                  hintText: "Phone number".tr)),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          TextFieldThem.buildTextFiled(context, hintText: 'Email'.tr, controller: controller.emailController.value, enable: false),
-                                          const SizedBox(
-                                            height: 20,
-                                          ),
-                                          ButtonThem.buildButton(
-                                            context,
-                                            title: "Update Profile".tr,
-                                            onPress: () async {
-                                              ShowToastDialog.showLoader("Please wait".tr);
-                                              if (controller.profileImage.value.isNotEmpty) {
-                                                controller.profileImage.value = await Constant.uploadUserImageToFireStorage(
-                                                    File(controller.profileImage.value), "profileImage/${FireStoreUtils.getCurrentUid()}", File(controller.profileImage.value).path.split('/').last);
-                                              }
-
-                                              UserModel userModel = controller.userModel.value;
-                                              userModel.fullName = controller.fullNameController.value.text;
-                                              userModel.profilePic = controller.profileImage.value;
-
-                                              FireStoreUtils.updateUser(userModel).then((value) {
-                                                ShowToastDialog.closeLoader();
-                                                ShowToastDialog.showToast("Profile update successfully".tr);
-                                              });
-                                            },
-                                          ),
-                                        ],
-                                      ),
+                        decoration: BoxDecoration(
+                            color:
+                            Colors.white,
+                            borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(25),
+                                topRight: Radius.circular(25))),
+                        child: Padding(
+                          padding:
+                          const EdgeInsets.symmetric(horizontal: 10),
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 20),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10),
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  children: [
+                                    TextFieldThem.buildTextFiled(context,
+                                        hintText: 'Full name'.tr,
+                                        controller: controller
+                                            .fullNameController.value),
+                                    const SizedBox(
+                                      height: 10,
                                     ),
-                                  ),
+                                    TextFormField(
+                                        validator: (value) => value !=
+                                            null &&
+                                            value.isNotEmpty
+                                            ? null
+                                            : 'Required',
+                                        keyboardType:
+                                        TextInputType.number,
+                                        textCapitalization:
+                                        TextCapitalization.sentences,
+                                        style: GoogleFonts.poppins(
+                                          color: Colors.black,),
+                                        controller: controller
+                                            .phoneNumberController.value,
+                                        textAlign: TextAlign.start,
+                                        enabled: false,
+                                        decoration: InputDecoration(
+                                            isDense: true,
+                                            filled: true,
+                                            fillColor: themeChange
+                                                .getThem()
+                                                ? AppColors.textField
+                                                :AppColors.textField,
+                                            contentPadding:
+                                            const EdgeInsets
+                                                .symmetric(
+                                                vertical: 12),
+                                            prefixIcon: CountryCodePicker(
+                                              textStyle: TextStyle(
+                                                  color: themeChange
+                                                      .getThem()
+                                                      ? Colors.black
+                                                      : Colors.black),
+                                              onChanged: (value) {
+                                                controller.countryCode
+                                                    .value =
+                                                    value.dialCode
+                                                        .toString();
+                                              },
+                                              dialogBackgroundColor:
+                                              themeChange.getThem()
+                                                  ? Colors.black
+                                                  :Colors.black,
+                                              initialSelection: controller
+                                                  .countryCode.value,
+                                              comparator: (a, b) =>
+                                                  b.name!.compareTo(
+                                                      a.name.toString()),
+                                              flagDecoration:
+                                              const BoxDecoration(
+                                                borderRadius:
+                                                BorderRadius.all(
+                                                    Radius.circular(
+                                                        2)),
+                                              ),
+                                            ),
+                                            disabledBorder:
+                                            OutlineInputBorder(
+                                              borderRadius:
+                                              const BorderRadius.all(
+                                                  Radius.circular(4)),
+                                              borderSide: BorderSide(
+                                                  color: themeChange
+                                                      .getThem()
+                                                      ? AppColors
+                                                      .darkTextFieldBorder
+                                                      : AppColors
+                                                      .darkTextFieldBorder,
+                                                  width: 1),
+                                            ),
+                                            focusedBorder:
+                                            OutlineInputBorder(
+                                              borderRadius:
+                                              const BorderRadius.all(
+                                                  Radius.circular(4)),
+                                              borderSide: BorderSide(
+                                                  color: themeChange
+                                                      .getThem()
+                                                      ? AppColors
+                                                      .darkTextFieldBorder
+                                                      : AppColors
+                                                      .darkTextFieldBorder,
+                                                  width: 1),
+                                            ),
+                                            enabledBorder:
+                                            OutlineInputBorder(
+                                              borderRadius:
+                                              const BorderRadius.all(
+                                                  Radius.circular(4)),
+                                              borderSide: BorderSide(
+                                                  color: themeChange
+                                                      .getThem()
+                                                      ? AppColors
+                                                      .darkTextFieldBorder
+                                                      : AppColors
+                                                      .darkTextFieldBorder,
+                                                  width: 1),
+                                            ),
+                                            errorBorder:
+                                            OutlineInputBorder(
+                                              borderRadius:
+                                              const BorderRadius.all(
+                                                  Radius.circular(4)),
+                                              borderSide: BorderSide(
+                                                  color: themeChange
+                                                      .getThem()
+                                                      ? AppColors
+                                                      .darkTextFieldBorder
+                                                      : AppColors
+                                                      .darkTextFieldBorder,
+                                                  width: 1),
+                                            ),
+                                            border: OutlineInputBorder(
+                                              borderRadius:
+                                              const BorderRadius.all(
+                                                  Radius.circular(4)),
+                                              borderSide: BorderSide(
+                                                  color: themeChange
+                                                      .getThem()
+                                                      ? AppColors
+                                                      .darkTextFieldBorder
+                                                      : AppColors
+                                                      .darkTextFieldBorder,
+                                                  width: 1),
+                                            ),
+                                            hintText: "Phone number".tr)),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    TextFieldThem.buildTextFiled(context,
+                                        hintText: 'Email'.tr,
+                                        controller: controller
+                                            .emailController.value,
+                                        enable: false),
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                    ButtonThem.buildButton(
+                                      context,
+                                      title: "Update Profile".tr,
+                                      onPress: () async {
+                                        ShowToastDialog.showLoader(
+                                            "Please wait".tr);
+                                        if (controller.profileImage.value
+                                            .isNotEmpty) {
+                                          controller.profileImage.value =
+                                          await Constant
+                                              .uploadUserImageToFireStorage(
+                                              File(controller
+                                                  .profileImage
+                                                  .value),
+                                              "profileImage/${FireStoreUtils.getCurrentUid()}",
+                                              File(controller
+                                                  .profileImage
+                                                  .value)
+                                                  .path
+                                                  .split('/')
+                                                  .last);
+                                        }
+
+                                        UserModel userModel =
+                                            controller.userModel.value;
+                                        userModel.fullName = controller
+                                            .fullNameController
+                                            .value
+                                            .text;
+                                        userModel.profilePic =
+                                            controller.profileImage.value;
+
+                                        FireStoreUtils.updateUser(
+                                            userModel)
+                                            .then((value) {
+                                          ShowToastDialog.closeLoader();
+                                          ShowToastDialog.showToast(
+                                              "Profile update successfully"
+                                                  .tr);
+                                        });
+                                      },
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ],
@@ -208,6 +340,7 @@ class ProfileScreen extends StatelessWidget {
 
   buildBottomSheet(BuildContext context, ProfileController controller) {
     return showModalBottomSheet(
+        backgroundColor: Colors.white,
         context: context,
         builder: (context) {
           return StatefulBuilder(builder: (context, setState) {
@@ -222,6 +355,8 @@ class ProfileScreen extends StatelessWidget {
                       "Please Select".tr,
                       style: GoogleFonts.poppins(
                         fontSize: 16,
+                        color: Colors.black,
+
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -236,14 +371,18 @@ class ProfileScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             IconButton(
-                                onPressed: () => controller.pickFile(source: ImageSource.camera),
+                                onPressed: () => controller.pickFile(
+                                    source: ImageSource.camera),
                                 icon: const Icon(
                                   Icons.camera_alt,
                                   size: 32,
+                                  color: Colors.black,
+
                                 )),
-                             Padding(
+                            Padding(
                               padding: EdgeInsets.only(top: 3),
-                              child: Text("Camera".tr),
+                              child: Text("Camera".tr,style: GoogleFonts.poppins(
+                                color: Colors.black,),),
                             ),
                           ],
                         ),
@@ -255,14 +394,18 @@ class ProfileScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             IconButton(
-                                onPressed: () => controller.pickFile(source: ImageSource.gallery),
+                                onPressed: () => controller.pickFile(
+                                    source: ImageSource.gallery),
                                 icon: const Icon(
                                   Icons.photo_library_sharp,
                                   size: 32,
+                                  color: Colors.black,
+
                                 )),
-                             Padding(
+                            Padding(
                               padding: EdgeInsets.only(top: 3),
-                              child: Text("Gallery".tr),
+                              child: Text("Gallery".tr,style: GoogleFonts.poppins(
+                                color: Colors.black,),),
                             ),
                           ],
                         ),

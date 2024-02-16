@@ -69,6 +69,8 @@ class TextFieldThem {
         style: GoogleFonts.poppins(color: themeChange.getThem() ? Colors.white : Colors.black),
         decoration: InputDecoration(
             prefix: prefix,
+            prefixIconColor: Colors.black,
+            suffixIconColor: Colors.black,
             filled: true,
             fillColor: themeChange.getThem() ? AppColors.darkTextField : AppColors.textField,
             contentPadding: const EdgeInsets.only(left: 10, right: 10),

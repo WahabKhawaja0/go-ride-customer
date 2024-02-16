@@ -30,9 +30,9 @@ class InterCityAcceptOrderScreen extends StatelessWidget {
         init: InterCityAcceptOrderController(),
         builder: (controller) {
           return Scaffold(
-            backgroundColor: AppColors.primary,
+            backgroundColor: Colors.white,
             appBar: AppBar(
-              backgroundColor: AppColors.primary,
+              backgroundColor: Colors.white,
               title:  Text("OutStation ride details".tr),
               leading: InkWell(
                   onTap: () {
@@ -51,7 +51,7 @@ class InterCityAcceptOrderScreen extends StatelessWidget {
                 Expanded(
                   child: Container(
                     decoration:
-                        BoxDecoration(color: themeChange.getThem() ? AppColors.darkGray : AppColors.gray, borderRadius: BorderRadius.only(topLeft: Radius.circular(25), topRight: Radius.circular(25))),
+                    BoxDecoration(color: themeChange.getThem() ? AppColors.darkGray : AppColors.darkGray, borderRadius: BorderRadius.only(topLeft: Radius.circular(25), topRight: Radius.circular(25))),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: Padding(
@@ -103,7 +103,7 @@ class InterCityAcceptOrderScreen extends StatelessWidget {
                                       ),
                                       Container(
                                         decoration:
-                                            BoxDecoration(color: themeChange.getThem() ? AppColors.darkContainerBorder : Colors.white, borderRadius: const BorderRadius.all(Radius.circular(10))),
+                                        BoxDecoration(color: themeChange.getThem() ? AppColors.darkContainerBorder : AppColors.darkContainerBorder, borderRadius: const BorderRadius.all(Radius.circular(10))),
                                         child: Padding(
                                             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 14),
                                             child: Row(
@@ -145,203 +145,197 @@ class InterCityAcceptOrderScreen extends StatelessWidget {
                                 Expanded(
                                   child: orderModel.acceptedDriverId == null || orderModel.acceptedDriverId!.isEmpty
                                       ?  Center(
-                                          child: Text("No driver Found".tr),
-                                        )
+                                    child: Text("No driver Found".tr),
+                                  )
                                       : ListView.builder(
-                                          shrinkWrap: true,
-                                          itemCount: orderModel.acceptedDriverId!.length,
-                                          itemBuilder: (context, index) {
-                                            return FutureBuilder<DriverUserModel?>(
-                                                future: FireStoreUtils.getDriver(orderModel.acceptedDriverId![index]),
-                                                builder: (context, snapshot) {
-                                                  switch (snapshot.connectionState) {
-                                                    case ConnectionState.waiting:
-                                                      return Constant.loader();
-                                                    case ConnectionState.done:
-                                                      if (snapshot.hasError) {
-                                                        return Text(snapshot.error.toString());
-                                                      } else {
-                                                        DriverUserModel driverModel = snapshot.data!;
-                                                        return FutureBuilder<DriverIdAcceptReject?>(
-                                                            future: FireStoreUtils.getInterCItyAcceptedOrders(orderModel.id.toString(), driverModel.id.toString()),
-                                                            builder: (context, snapshot) {
-                                                              switch (snapshot.connectionState) {
-                                                                case ConnectionState.waiting:
-                                                                  return Constant.loader();
-                                                                case ConnectionState.done:
-                                                                  if (snapshot.hasError) {
-                                                                    return Text(snapshot.error.toString());
-                                                                  } else {
-                                                                    DriverIdAcceptReject driverIdAcceptReject = snapshot.data!;
-                                                                    return Padding(
-                                                                      padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
-                                                                      child: Container(
-                                                                        decoration: BoxDecoration(
-                                                                          color: themeChange.getThem() ? AppColors.darkContainerBackground : AppColors.containerBackground,
-                                                                          borderRadius: const BorderRadius.all(Radius.circular(10)),
-                                                                          border: Border.all(color: themeChange.getThem() ? AppColors.darkContainerBorder : AppColors.containerBorder, width: 0.5),
-                                                                          boxShadow: themeChange.getThem()
-                                                                              ? null
-                                                                              : [
-                                                                                  BoxShadow(
-                                                                                    color: Colors.black.withOpacity(0.10),
-                                                                                    blurRadius: 5,
-                                                                                    offset: const Offset(0, 4), // changes position of shadow
-                                                                                  ),
-                                                                                ],
-                                                                        ),
-                                                                        child: Column(
+                                    shrinkWrap: true,
+                                    itemCount: orderModel.acceptedDriverId!.length,
+                                    itemBuilder: (context, index) {
+                                      return FutureBuilder<DriverUserModel?>(
+                                          future: FireStoreUtils.getDriver(orderModel.acceptedDriverId![index]),
+                                          builder: (context, snapshot) {
+                                            switch (snapshot.connectionState) {
+                                              case ConnectionState.waiting:
+                                                return Constant.loader();
+                                              case ConnectionState.done:
+                                                if (snapshot.hasError) {
+                                                  return Text(snapshot.error.toString());
+                                                } else {
+                                                  DriverUserModel driverModel = snapshot.data!;
+                                                  return FutureBuilder<DriverIdAcceptReject?>(
+                                                      future: FireStoreUtils.getInterCItyAcceptedOrders(orderModel.id.toString(), driverModel.id.toString()),
+                                                      builder: (context, snapshot) {
+                                                        switch (snapshot.connectionState) {
+                                                          case ConnectionState.waiting:
+                                                            return Constant.loader();
+                                                          case ConnectionState.done:
+                                                            if (snapshot.hasError) {
+                                                              return Text(snapshot.error.toString());
+                                                            } else {
+                                                              DriverIdAcceptReject driverIdAcceptReject = snapshot.data!;
+                                                              return Padding(
+                                                                padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+                                                                child: Container(
+                                                                  decoration: BoxDecoration(
+                                                                    color: themeChange.getThem() ? AppColors.darkContainerBackground : AppColors.darkContainerBackground,
+                                                                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                                                                    border: Border.all(color: themeChange.getThem() ? AppColors.darkContainerBorder : AppColors.darkContainerBorder, width: 0.5),
+                                                                    boxShadow: themeChange.getThem()
+                                                                        ? null
+                                                                        : null,
+                                                                  ),
+                                                                  child: Column(
+                                                                    children: [
+                                                                      Padding(
+                                                                        padding: const EdgeInsets.all(8.0),
+                                                                        child: DriverView(driverId: driverModel.id.toString(), amount: driverIdAcceptReject.offerAmount.toString()),
+                                                                      ),
+                                                                      const SizedBox(
+                                                                        height: 10,
+                                                                      ),
+                                                                      Container(
+                                                                        decoration: BoxDecoration(color: themeChange.getThem() ? AppColors.darkGray : AppColors.darkGray),
+                                                                        child: Padding(
+                                                                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                                                                            child: Row(
+                                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                                                              children: [
+                                                                                Row(
+                                                                                  children: [
+                                                                                    SvgPicture.asset(
+                                                                                      'assets/icons/ic_car.svg',
+                                                                                      width: 18,
+                                                                                      color: themeChange.getThem() ? Colors.white : Colors.white,
+                                                                                    ),
+                                                                                    const SizedBox(
+                                                                                      width: 10,
+                                                                                    ),
+                                                                                    Text(
+                                                                                      driverModel.vehicleInformation!.vehicleType.toString(),
+                                                                                      style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
+                                                                                    )
+                                                                                  ],
+                                                                                ),
+                                                                                Row(
+                                                                                  children: [
+                                                                                    SvgPicture.asset(
+                                                                                      'assets/icons/ic_color.svg',
+                                                                                      width: 18,
+                                                                                      color: themeChange.getThem() ? Colors.white : Colors.white,
+                                                                                    ),
+                                                                                    const SizedBox(
+                                                                                      width: 10,
+                                                                                    ),
+                                                                                    Text(
+                                                                                      driverModel.vehicleInformation!.vehicleColor.toString(),
+                                                                                      style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
+                                                                                    )
+                                                                                  ],
+                                                                                ),
+                                                                                Row(
+                                                                                  children: [
+                                                                                    Image.asset(
+                                                                                      'assets/icons/ic_number.png',
+                                                                                      width: 18,
+                                                                                      color: themeChange.getThem() ? Colors.white : Colors.white,
+                                                                                    ),
+                                                                                    const SizedBox(
+                                                                                      width: 10,
+                                                                                    ),
+                                                                                    Text(
+                                                                                      driverModel.vehicleInformation!.vehicleNumber.toString(),
+                                                                                      style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
+                                                                                    )
+                                                                                  ],
+                                                                                ),
+                                                                              ],
+                                                                            )),
+                                                                      ),
+                                                                      const SizedBox(
+                                                                        height: 10,
+                                                                      ),
+                                                                      Padding(
+                                                                        padding: const EdgeInsets.all(8.0),
+                                                                        child: Row(
                                                                           children: [
-                                                                            Padding(
-                                                                              padding: const EdgeInsets.all(8.0),
-                                                                              child: DriverView(driverId: driverModel.id.toString(), amount: driverIdAcceptReject.offerAmount.toString()),
+                                                                            Expanded(
+                                                                              child: ButtonThem.buildBorderButton(
+                                                                                context,
+                                                                                title: "Reject".tr,
+                                                                                btnHeight: 45,
+                                                                                iconVisibility: false,
+                                                                                onPress: () async {
+                                                                                  List<dynamic> rejectDriverId = [];
+                                                                                  if (controller.orderModel.value.rejectedDriverId != null) {
+                                                                                    rejectDriverId = controller.orderModel.value.rejectedDriverId!;
+                                                                                  } else {
+                                                                                    rejectDriverId = [];
+                                                                                  }
+                                                                                  rejectDriverId.add(driverModel.id);
+
+                                                                                  List<dynamic> acceptDriverId = [];
+                                                                                  if (controller.orderModel.value.acceptedDriverId != null) {
+                                                                                    acceptDriverId = controller.orderModel.value.acceptedDriverId!;
+                                                                                  } else {
+                                                                                    acceptDriverId = [];
+                                                                                  }
+
+                                                                                  acceptDriverId.remove(driverModel.id);
+
+                                                                                  controller.orderModel.value.rejectedDriverId = rejectDriverId;
+                                                                                  controller.orderModel.value.acceptedDriverId = acceptDriverId;
+                                                                                  await SendNotification.sendOneNotification(
+                                                                                      token: driverModel.fcmToken.toString(),
+                                                                                      title: 'Ride Canceled'.tr,
+                                                                                      body: 'The passenger has canceled the ride. No action is required from your end.'.tr,
+                                                                                      payload: {});
+                                                                                  await FireStoreUtils.setInterCityOrder(controller.orderModel.value);
+                                                                                },
+                                                                              ),
                                                                             ),
                                                                             const SizedBox(
-                                                                              height: 10,
+                                                                              width: 10,
                                                                             ),
-                                                                            Container(
-                                                                              decoration: BoxDecoration(color: themeChange.getThem() ? AppColors.darkGray : AppColors.gray),
-                                                                              child: Padding(
-                                                                                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                                                                                  child: Row(
-                                                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                                                                    children: [
-                                                                                      Row(
-                                                                                        children: [
-                                                                                          SvgPicture.asset(
-                                                                                            'assets/icons/ic_car.svg',
-                                                                                            width: 18,
-                                                                                            color: themeChange.getThem() ? Colors.white : Colors.black,
-                                                                                          ),
-                                                                                          const SizedBox(
-                                                                                            width: 10,
-                                                                                          ),
-                                                                                          Text(
-                                                                                            driverModel.vehicleInformation!.vehicleType.toString(),
-                                                                                            style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
-                                                                                          )
-                                                                                        ],
-                                                                                      ),
-                                                                                      Row(
-                                                                                        children: [
-                                                                                          SvgPicture.asset(
-                                                                                            'assets/icons/ic_color.svg',
-                                                                                            width: 18,
-                                                                                            color: themeChange.getThem() ? Colors.white : Colors.black,
-                                                                                          ),
-                                                                                          const SizedBox(
-                                                                                            width: 10,
-                                                                                          ),
-                                                                                          Text(
-                                                                                            driverModel.vehicleInformation!.vehicleColor.toString(),
-                                                                                            style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
-                                                                                          )
-                                                                                        ],
-                                                                                      ),
-                                                                                      Row(
-                                                                                        children: [
-                                                                                          Image.asset(
-                                                                                            'assets/icons/ic_number.png',
-                                                                                            width: 18,
-                                                                                            color: themeChange.getThem() ? Colors.white : Colors.black,
-                                                                                          ),
-                                                                                          const SizedBox(
-                                                                                            width: 10,
-                                                                                          ),
-                                                                                          Text(
-                                                                                            driverModel.vehicleInformation!.vehicleNumber.toString(),
-                                                                                            style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
-                                                                                          )
-                                                                                        ],
-                                                                                      ),
-                                                                                    ],
-                                                                                  )),
-                                                                            ),
-                                                                            const SizedBox(
-                                                                              height: 10,
-                                                                            ),
-                                                                            Padding(
-                                                                              padding: const EdgeInsets.all(8.0),
-                                                                              child: Row(
-                                                                                children: [
-                                                                                  Expanded(
-                                                                                    child: ButtonThem.buildBorderButton(
-                                                                                      context,
-                                                                                      title: "Reject".tr,
-                                                                                      btnHeight: 45,
-                                                                                      iconVisibility: false,
-                                                                                      onPress: () async {
-                                                                                        List<dynamic> rejectDriverId = [];
-                                                                                        if (controller.orderModel.value.rejectedDriverId != null) {
-                                                                                          rejectDriverId = controller.orderModel.value.rejectedDriverId!;
-                                                                                        } else {
-                                                                                          rejectDriverId = [];
-                                                                                        }
-                                                                                        rejectDriverId.add(driverModel.id);
-
-                                                                                        List<dynamic> acceptDriverId = [];
-                                                                                        if (controller.orderModel.value.acceptedDriverId != null) {
-                                                                                          acceptDriverId = controller.orderModel.value.acceptedDriverId!;
-                                                                                        } else {
-                                                                                          acceptDriverId = [];
-                                                                                        }
-
-                                                                                        acceptDriverId.remove(driverModel.id);
-
-                                                                                        controller.orderModel.value.rejectedDriverId = rejectDriverId;
-                                                                                        controller.orderModel.value.acceptedDriverId = acceptDriverId;
-                                                                                        await SendNotification.sendOneNotification(
-                                                                                            token: driverModel.fcmToken.toString(),
-                                                                                            title: 'Ride Canceled'.tr,
-                                                                                            body: 'The passenger has canceled the ride. No action is required from your end.'.tr,
-                                                                                            payload: {});
-                                                                                        await FireStoreUtils.setInterCityOrder(controller.orderModel.value);
-                                                                                      },
-                                                                                    ),
-                                                                                  ),
-                                                                                  const SizedBox(
-                                                                                    width: 10,
-                                                                                  ),
-                                                                                  Expanded(
-                                                                                    child: ButtonThem.buildButton(
-                                                                                      context,
-                                                                                      title: "Accept".tr,
-                                                                                      btnHeight: 45,
-                                                                                      onPress: () async {
-                                                                                        orderModel.acceptedDriverId = [];
-                                                                                        orderModel.driverId = driverIdAcceptReject.driverId.toString();
-                                                                                        orderModel.status = Constant.rideActive;
-                                                                                        orderModel.finalRate = driverIdAcceptReject.offerAmount;
-                                                                                        await SendNotification.sendOneNotification(
-                                                                                            token: driverModel.fcmToken.toString(),
-                                                                                            title: 'Ride Confirmed',
-                                                                                            body: 'Your ride request has been accepted by the passenger. Please proceed to the pickup location.'.tr,
-                                                                                            payload: {});
-                                                                                        FireStoreUtils.setInterCityOrder(orderModel);
-                                                                                        Get.back();
-                                                                                      },
-                                                                                    ),
-                                                                                  )
-                                                                                ],
+                                                                            Expanded(
+                                                                              child: ButtonThem.buildButton(
+                                                                                context,
+                                                                                title: "Accept".tr,
+                                                                                btnHeight: 45,
+                                                                                onPress: () async {
+                                                                                  orderModel.acceptedDriverId = [];
+                                                                                  orderModel.driverId = driverIdAcceptReject.driverId.toString();
+                                                                                  orderModel.status = Constant.rideActive;
+                                                                                  orderModel.finalRate = driverIdAcceptReject.offerAmount;
+                                                                                  await SendNotification.sendOneNotification(
+                                                                                      token: driverModel.fcmToken.toString(),
+                                                                                      title: 'Ride Confirmed',
+                                                                                      body: 'Your ride request has been accepted by the passenger. Please proceed to the pickup location.'.tr,
+                                                                                      payload: {});
+                                                                                  FireStoreUtils.setInterCityOrder(orderModel);
+                                                                                  Get.back();
+                                                                                },
                                                                               ),
                                                                             )
                                                                           ],
                                                                         ),
-                                                                      ),
-                                                                    );
-                                                                  }
-                                                                default:
-                                                                  return  Text('Error'.tr);
-                                                              }
-                                                            });
-                                                      }
-                                                    default:
-                                                      return  Text('Error'.tr);
-                                                  }
-                                                });
-                                          },
-                                        ),
+                                                                      )
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            }
+                                                          default:
+                                                            return  Text('Error'.tr);
+                                                        }
+                                                      });
+                                                }
+                                              default:
+                                                return  Text('Error'.tr);
+                                            }
+                                          });
+                                    },
+                                  ),
                                 )
                               ],
                             );

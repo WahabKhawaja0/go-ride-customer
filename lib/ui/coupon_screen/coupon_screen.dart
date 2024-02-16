@@ -30,7 +30,7 @@ class CouponScreen extends StatelessWidget {
         builder: (controller) {
           return Scaffold(
               appBar: AppBar(
-                backgroundColor: AppColors.primary,
+                backgroundColor: Colors.white,
                 title:  Text('Redeem Coupon'.tr),
                 leading: InkWell(
                     onTap: () {
@@ -38,6 +38,7 @@ class CouponScreen extends StatelessWidget {
                     },
                     child: const Icon(
                       Icons.arrow_back,
+                      color: Colors.black,
                     )),
               ),
               body: Column(
@@ -51,7 +52,7 @@ class CouponScreen extends StatelessWidget {
                     child: Transform.translate(
                       offset: const Offset(0, -22),
                       child: Container(
-                        decoration: BoxDecoration(color: Theme.of(context).colorScheme.background, borderRadius: const BorderRadius.only(topLeft: Radius.circular(25), topRight: Radius.circular(25))),
+                        decoration: BoxDecoration(color: Colors.black, borderRadius: const BorderRadius.only(topLeft: Radius.circular(25), topRight: Radius.circular(25))),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: Padding(
@@ -97,18 +98,12 @@ class CouponScreen extends StatelessWidget {
                                                         padding: const EdgeInsets.symmetric(vertical: 5),
                                                         child: Container(
                                                           decoration: BoxDecoration(
-                                                            color: themeChange.getThem() ? AppColors.darkContainerBackground : AppColors.containerBackground,
+                                                            color: themeChange.getThem() ? AppColors.darkContainerBackground : AppColors.darkContainerBackground,
                                                             borderRadius: const BorderRadius.all(Radius.circular(10)),
-                                                            border: Border.all(color: themeChange.getThem() ? AppColors.darkContainerBorder : AppColors.containerBorder, width: 0.5),
+                                                            border: Border.all(color: themeChange.getThem() ? AppColors.darkContainerBorder : AppColors.darkContainerBorder, width: 0.5),
                                                             boxShadow: themeChange.getThem()
                                                                 ? null
-                                                                : [
-                                                                    BoxShadow(
-                                                                      color: Colors.grey.withOpacity(0.5),
-                                                                      blurRadius: 8,
-                                                                      offset: const Offset(0, 2), // changes position of shadow
-                                                                    ),
-                                                                  ],
+                                                                : null,
                                                           ),
                                                           child: Padding(
                                                             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
@@ -168,7 +163,7 @@ class CouponScreen extends StatelessWidget {
                                                                               style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
                                                                             ),
                                                                           ),
-                                                                           Text("Tap to Copy".tr)
+                                                                          Text("Tap to Copy".tr)
                                                                         ],
                                                                       ),
                                                                     ),

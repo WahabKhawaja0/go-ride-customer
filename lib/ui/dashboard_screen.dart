@@ -12,8 +12,19 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class DashBoardScreen extends StatelessWidget {
+class DashBoardScreen extends StatefulWidget {
   const DashBoardScreen({Key? key}) : super(key: key);
+
+  @override
+  State<DashBoardScreen> createState() => _DashBoardScreenState();
+}
+
+class _DashBoardScreenState extends State<DashBoardScreen> {
+  @override
+  void initState() {
+    super.initState();
+    FireStoreUtils.getUserProfile(FireStoreUtils.getCurrentUid());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,24 +33,21 @@ class DashBoardScreen extends StatelessWidget {
         builder: (controller) {
           return Scaffold(
             appBar: AppBar(
-              backgroundColor: AppColors.primary,
+              backgroundColor: Colors.white,
               title: controller.selectedDrawerIndex.value != 0 &&
-                      controller.selectedDrawerIndex.value != 6
+                  controller.selectedDrawerIndex.value != 6
                   ? Text(
-                      controller
-                          .drawerItems[controller.selectedDrawerIndex.value]
-                          .title,
-                      style: const TextStyle(
-                        color: Colors.white,
-                      ),
-                    )
-                  : Text(
-                      "Ride Dekho",
-                      style: GoogleFonts.poppins(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                controller
+                    .drawerItems[controller.selectedDrawerIndex.value]
+                    .title,
+                style: const TextStyle(
+                  color: Colors.black,
+                ),
+              )
+                  : Text("Go-Ride",style: GoogleFonts.poppins(
+                color: Colors.black,
+                fontWeight: FontWeight.bold
+              ),),
               leading: Builder(builder: (context) {
                 return InkWell(
                   onTap: () {
@@ -48,67 +56,65 @@ class DashBoardScreen extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.only(
                         left: 10, right: 20, top: 20, bottom: 20),
-                    child: SvgPicture.asset('assets/icons/ic_humber.svg'),
+                    child: SvgPicture.asset('assets/icons/ic_humber.svg',color: Colors.black,),
                   ),
                 );
               }),
-              // actions: [
-              //   controller.selectedDrawerIndex.value == 0
-              //       ? FutureBuilder<UserModel?>(
-              //           future: FireStoreUtils.getUserProfile(
-              //               FireStoreUtils.getCurrentUid()),
-              //           builder: (context, snapshot) {
-              //             switch (snapshot.connectionState) {
-              //               case ConnectionState.waiting:
-              //                 return Constant.loader();
-              //               case ConnectionState.done:
-              //                 if (snapshot.hasError) {
-              //                   return Text(snapshot.error.toString());
-              //                 } else {
-              //                   UserModel driverModel = snapshot.data!;
-              //                   return InkWell(
-              //                     onTap: () {
-              //                       controller.selectedDrawerIndex(8);
-              //                     },
-              //                     child: Padding(
-              //                       padding: const EdgeInsets.all(10.0),
-              //                       child: ClipOval(
-              //                         child: CachedNetworkImage(
-              //                           imageUrl:
-              //                               driverModel.profilePic.toString(),
-              //                           fit: BoxFit.cover,
-              //                           placeholder: (context, url) =>
-              //                               Constant.loader(),
-              //                           errorWidget: (context, url, error) =>
-              //                               Image.network(
-              //                                   Constant.userPlaceHolder),
-              //                         ),
-              //                       ),
-              //                     ),
-              //                   );
-              //                 }
-              //               default:
-              //                 return Text('Error'.tr);
-              //             }
-              //           })
-              //       : Container(),
-              // ],
+              actions: [
+                controller.selectedDrawerIndex.value == 0
+                    ? FutureBuilder<UserModel?>(
+                    future: FireStoreUtils.getUserProfile(
+                        FireStoreUtils.getCurrentUid()),
+                    builder: (context, snapshot) {
+                      switch (snapshot.connectionState) {
+                        case ConnectionState.waiting:
+                          return Constant.loader();
+                        case ConnectionState.done:
+                          if (snapshot.hasError) {
+                            return Text(snapshot.error.toString());
+                          } else if (snapshot.hasData) {
+                            UserModel driverModel = snapshot.data!;
+                            return InkWell(
+                              onTap: () {
+                                controller.selectedDrawerIndex(8);
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: ClipOval(
+                                  child: CachedNetworkImage(
+                                    imageUrl:
+                                    driverModel.profilePic.toString(),
+                                    fit: BoxFit.cover,
+                                    placeholder: (context, url) =>
+                                        Constant.loader(),
+                                    errorWidget: (context, url, error) =>
+                                        Image.network(
+                                            Constant.userPlaceHolder),
+                                  ),
+                                ),
+                              ),
+                            );
+                          } else {}
+                          break;
+                      }
+                      return Container();
+                    })
+                    : Container(),
+              ],
             ),
             drawer: buildAppDrawer(context, controller),
             body: WillPopScope(
-              onWillPop: controller.onWillPop,
-              child: controller.isLoading.value == true
-                  ? Constant.loader()
-                  : controller.getDrawerItemWidget(
-                      controller.selectedDrawerIndex.value,
-                    ),
-            ),
+                onWillPop: controller.onWillPop,
+                child: controller.isLoading.value == true
+                    ? Constant.loader()
+                    : controller.getDrawerItemWidget(
+                    controller.selectedDrawerIndex.value)),
           );
         });
   }
 
   buildAppDrawer(BuildContext context, DashBoardController controller) {
-    final themeChange = Provider.of<DarkThemeProvider>(context);
+    // final themeChange = Provider.of<DarkThemeProvider>(context);
 
     var drawerOptions = <Widget>[];
     for (var i = 0; i < controller.drawerItems.length; i++) {
@@ -122,7 +128,7 @@ class DashBoardScreen extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
                 color: i == controller.selectedDrawerIndex.value
-                    ? Theme.of(context).colorScheme.primary
+                    ? Colors.green
                     : Colors.transparent,
                 borderRadius: const BorderRadius.all(Radius.circular(10))),
             padding: const EdgeInsets.all(12),
@@ -132,12 +138,8 @@ class DashBoardScreen extends StatelessWidget {
                   d.icon,
                   width: 20,
                   color: i == controller.selectedDrawerIndex.value
-                      ? themeChange.getThem()
-                          ? Colors.black
-                          : Colors.white
-                      : themeChange.getThem()
-                          ? Colors.white
-                          : AppColors.drawerIcon,
+                      ? Colors.white
+                      :  Colors.green,
                 ),
                 const SizedBox(
                   width: 20,
@@ -146,12 +148,8 @@ class DashBoardScreen extends StatelessWidget {
                   d.title,
                   style: GoogleFonts.poppins(
                       color: i == controller.selectedDrawerIndex.value
-                          ? themeChange.getThem()
-                              ? Colors.black
-                              : Colors.white
-                          : themeChange.getThem()
-                              ? Colors.white
-                              : Colors.black,
+                          ? Colors.white
+                          :  Colors.black,
                       fontWeight: FontWeight.w500),
                 )
               ],
@@ -161,7 +159,7 @@ class DashBoardScreen extends StatelessWidget {
       ));
     }
     return Drawer(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Colors.white,
       child: ListView(
         children: [
           DrawerHeader(
@@ -193,24 +191,17 @@ class DashBoardScreen extends StatelessWidget {
                                     Image.network(Constant.userPlaceHolder),
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 10),
-                              child: Text(
-                                driverModel.fullName.toString(),
+                            Text(driverModel.fullName.toString(),
                                 style: GoogleFonts.poppins(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 13,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500)),
                             Padding(
                               padding: const EdgeInsets.only(top: 2),
                               child: Text(
                                 driverModel.email.toString(),
                                 style: GoogleFonts.poppins(
-                                  fontSize: 12,
-                                  color: Colors.black,
+                                  color: Colors.black
+                                  ,
                                 ),
                               ),
                             )

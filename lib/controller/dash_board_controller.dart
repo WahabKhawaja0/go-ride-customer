@@ -25,6 +25,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class DashBoardController extends GetxController {
   final drawerItems = [
@@ -70,7 +71,8 @@ class DashBoardController extends GetxController {
       case 7:
         return const FaqScreen();
       default:
-        return const Text("Error");
+        return Text("Error",style: GoogleFonts.poppins(
+          color: Colors.black,),);
     }
   }
 

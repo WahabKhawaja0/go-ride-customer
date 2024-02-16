@@ -35,21 +35,18 @@ class InterCityOrderScreen extends StatelessWidget {
     final themeChange = Provider.of<DarkThemeProvider>(context);
 
     return Scaffold(
-      backgroundColor: AppColors.primary,
-      appBar: AppBar(
-        backgroundColor: AppColors.primary,
-      ),
+      backgroundColor: Colors.white,
       body: Column(
         children: [
           Container(
             height: Responsive.width(8, context),
             width: Responsive.width(100, context),
-            color: AppColors.primary,
+            color: Colors.white,
           ),
           Expanded(
             child: Container(
               decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.background,
+                  color: Colors.white,
                   borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(25),
                       topRight: Radius.circular(25))),
@@ -63,25 +60,38 @@ class InterCityOrderScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         TabBar(
-                          indicatorColor: AppColors.darkModePrimary,
+                          dividerColor: Colors.white,
+                          indicatorColor: Colors.green,
                           tabs: [
                             Tab(
                                 child: Text(
                               "Active Rides".tr,
                               textAlign: TextAlign.center,
-                              style: GoogleFonts.poppins(),
+                              style: GoogleFonts.poppins(
+                                color: themeChange.getThem()
+                                    ? Colors.black
+                                    : Colors.black,
+                              ),
                             )),
                             Tab(
                                 child: Text(
                               "Completed Rides".tr,
                               textAlign: TextAlign.center,
-                              style: GoogleFonts.poppins(),
+                              style: GoogleFonts.poppins(
+                                color: themeChange.getThem()
+                                    ? Colors.black
+                                    : Colors.black,
+                              ),
                             )),
                             Tab(
                                 child: Text(
                               "Canceled Rides".tr,
                               textAlign: TextAlign.center,
-                              style: GoogleFonts.poppins(),
+                              style: GoogleFonts.poppins(
+                                color: themeChange.getThem()
+                                    ? Colors.black
+                                    : Colors.black,
+                              ),
                             )),
                           ],
                         ),
@@ -107,7 +117,12 @@ class InterCityOrderScreen extends StatelessWidget {
                                     AsyncSnapshot<QuerySnapshot> snapshot) {
                                   if (snapshot.hasError) {
                                     return Center(
-                                        child: Text('Something went wrong'.tr));
+                                        child: Text(
+                                      'Something went wrong'.tr,
+                                      style: GoogleFonts.poppins(
+                                        color: Colors.black,
+                                      ),
+                                    ));
                                   }
                                   if (snapshot.connectionState ==
                                       ConnectionState.waiting) {
@@ -115,8 +130,12 @@ class InterCityOrderScreen extends StatelessWidget {
                                   }
                                   return snapshot.data!.docs.isEmpty
                                       ? Center(
-                                          child:
-                                              Text("No active rides Found".tr),
+                                          child: Text(
+                                            "No active rides Found".tr,
+                                            style: GoogleFonts.poppins(
+                                              color: Colors.black,
+                                            ),
+                                          ),
                                         )
                                       : ListView.builder(
                                           itemCount: snapshot.data!.docs.length,
@@ -169,7 +188,7 @@ class InterCityOrderScreen extends StatelessWidget {
                                                         ? AppColors
                                                             .darkContainerBackground
                                                         : AppColors
-                                                            .containerBackground,
+                                                            .darkContainerBackground,
                                                     borderRadius:
                                                         const BorderRadius.all(
                                                             Radius.circular(
@@ -180,23 +199,12 @@ class InterCityOrderScreen extends StatelessWidget {
                                                             ? AppColors
                                                                 .darkContainerBorder
                                                             : AppColors
-                                                                .containerBorder,
+                                                                .darkContainerBorder,
                                                         width: 0.5),
                                                     boxShadow:
                                                         themeChange.getThem()
                                                             ? null
-                                                            : [
-                                                                BoxShadow(
-                                                                  color: Colors
-                                                                      .black
-                                                                      .withOpacity(
-                                                                          0.10),
-                                                                  blurRadius: 5,
-                                                                  offset: const Offset(
-                                                                      0,
-                                                                      4), // changes position of shadow
-                                                                ),
-                                                              ],
+                                                            : null,
                                                   ),
                                                   child: Padding(
                                                     padding:
@@ -223,6 +231,8 @@ class InterCityOrderScreen extends StatelessWidget {
                                                                           .status
                                                                           .toString(),
                                                                       style: GoogleFonts.poppins(
+                                                                          color: Colors
+                                                                              .black,
                                                                           fontWeight:
                                                                               FontWeight.w500),
                                                                     ),
@@ -238,6 +248,8 @@ class InterCityOrderScreen extends StatelessWidget {
                                                                             amount:
                                                                                 double.parse(orderModel.finalRate.toString()).toStringAsFixed(Constant.currencyModel!.decimalDigits!)),
                                                                     style: GoogleFonts.poppins(
+                                                                        color: Colors
+                                                                            .black,
                                                                         fontWeight:
                                                                             FontWeight.bold),
                                                                   ),
@@ -294,9 +306,16 @@ class InterCityOrderScreen extends StatelessWidget {
                                                                         10,
                                                                     vertical:
                                                                         4),
-                                                                child: Text(orderModel
-                                                                    .paymentType
-                                                                    .toString()),
+                                                                child: Text(
+                                                                  orderModel
+                                                                      .paymentType
+                                                                      .toString(),
+                                                                  style: GoogleFonts
+                                                                      .poppins(
+                                                                    color: Colors
+                                                                        .black,
+                                                                  ),
+                                                                ),
                                                               ),
                                                             ),
                                                             const SizedBox(
@@ -304,8 +323,8 @@ class InterCityOrderScreen extends StatelessWidget {
                                                             ),
                                                             Container(
                                                               decoration: BoxDecoration(
-                                                                  color: AppColors
-                                                                      .primary
+                                                                  color: Colors
+                                                                      .green
                                                                       .withOpacity(
                                                                           0.30),
                                                                   borderRadius:
@@ -320,10 +339,17 @@ class InterCityOrderScreen extends StatelessWidget {
                                                                         10,
                                                                     vertical:
                                                                         4),
-                                                                child: Text(orderModel
-                                                                    .intercityService!
-                                                                    .name
-                                                                    .toString()),
+                                                                child: Text(
+                                                                  orderModel
+                                                                      .intercityService!
+                                                                      .name
+                                                                      .toString(),
+                                                                  style: GoogleFonts
+                                                                      .poppins(
+                                                                    color: Colors
+                                                                        .black,
+                                                                  ),
+                                                                ),
                                                               ),
                                                             ),
                                                           ],
@@ -351,7 +377,7 @@ class InterCityOrderScreen extends StatelessWidget {
                                                                         ? AppColors
                                                                             .darkGray
                                                                         : AppColors
-                                                                            .gray,
+                                                                            .darkGray,
                                                                     borderRadius:
                                                                         const BorderRadius
                                                                             .all(
@@ -375,8 +401,11 @@ class InterCityOrderScreen extends StatelessWidget {
                                                                           child:
                                                                               Row(
                                                                             children: [
-                                                                              Text(orderModel.someOneElse!.fullName.toString().tr, style: GoogleFonts.poppins()),
-                                                                              Text(orderModel.someOneElse!.contactNumber.toString().tr, style: GoogleFonts.poppins(fontWeight: FontWeight.w600, fontSize: 12)),
+                                                                              Text(orderModel.someOneElse!.fullName.toString().tr,
+                                                                                  style: GoogleFonts.poppins(
+                                                                                    color: Colors.black,
+                                                                                  )),
+                                                                              Text(orderModel.someOneElse!.contactNumber.toString().tr, style: GoogleFonts.poppins(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 12)),
                                                                             ],
                                                                           ),
                                                                         ),
@@ -389,7 +418,10 @@ class InterCityOrderScreen extends StatelessWidget {
                                                                               );
                                                                             },
                                                                             child:
-                                                                                const Icon(Icons.share))
+                                                                                const Icon(
+                                                                              Icons.share,
+                                                                              color: Colors.black,
+                                                                            ))
                                                                       ],
                                                                     )),
                                                               )
@@ -406,7 +438,7 @@ class InterCityOrderScreen extends StatelessWidget {
                                                                     ? AppColors
                                                                         .darkGray
                                                                     : AppColors
-                                                                        .gray,
+                                                                        .darkGray,
                                                                 borderRadius:
                                                                     const BorderRadius
                                                                         .all(
@@ -431,11 +463,19 @@ class InterCityOrderScreen extends StatelessWidget {
                                                                       child: orderModel.status == Constant.rideInProgress ||
                                                                               orderModel.status == Constant.ridePlaced ||
                                                                               orderModel.status == Constant.rideComplete
-                                                                          ? Text(orderModel.status.toString())
+                                                                          ? Text(
+                                                                              orderModel.status.toString(),
+                                                                              style: GoogleFonts.poppins(
+                                                                                color: Colors.black,
+                                                                              ),
+                                                                            )
                                                                           : Row(
                                                                               children: [
-                                                                                Text("OTP".tr, style: GoogleFonts.poppins()),
-                                                                                Text(" : ${orderModel.otp}", style: GoogleFonts.poppins(fontWeight: FontWeight.w600, fontSize: 12)),
+                                                                                Text("OTP".tr,
+                                                                                    style: GoogleFonts.poppins(
+                                                                                      color: Colors.black,
+                                                                                    )),
+                                                                                Text(" : ${orderModel.otp}", style: GoogleFonts.poppins(fontWeight: FontWeight.w600, fontSize: 12, color: Colors.black)),
                                                                               ],
                                                                             ),
                                                                     ),
@@ -444,7 +484,9 @@ class InterCityOrderScreen extends StatelessWidget {
                                                                             .createdDate),
                                                                         style: GoogleFonts.poppins(
                                                                             fontSize:
-                                                                                12)),
+                                                                                12,
+                                                                            color:
+                                                                                Colors.black)),
                                                                   ],
                                                                 )),
                                                           ),
@@ -521,14 +563,14 @@ class InterCityOrderScreen extends StatelessWidget {
                                                                       decoration: BoxDecoration(
                                                                           color: themeChange.getThem()
                                                                               ? AppColors.darkModePrimary
-                                                                              : AppColors.primary,
+                                                                              : AppColors.darkModePrimary,
                                                                           borderRadius: BorderRadius.circular(5)),
                                                                       child: Icon(
                                                                           Icons
                                                                               .chat,
                                                                           color: themeChange.getThem()
                                                                               ? Colors.black
-                                                                              : Colors.white),
+                                                                              : Colors.black),
                                                                     ),
                                                                   ),
                                                                 ),
@@ -555,14 +597,14 @@ class InterCityOrderScreen extends StatelessWidget {
                                                                       decoration: BoxDecoration(
                                                                           color: themeChange.getThem()
                                                                               ? AppColors.darkModePrimary
-                                                                              : AppColors.primary,
+                                                                              : AppColors.darkModePrimary,
                                                                           borderRadius: BorderRadius.circular(5)),
                                                                       child: Icon(
                                                                           Icons
                                                                               .call,
                                                                           color: themeChange.getThem()
                                                                               ? Colors.black
-                                                                              : Colors.white),
+                                                                              : Colors.black),
                                                                     ),
                                                                   ),
                                                                 )
@@ -632,12 +674,9 @@ class InterCityOrderScreen extends StatelessWidget {
                                                             title: "Pay".tr,
                                                             btnHeight: 44,
                                                             onPress: () async {
-                                                              Get.to(
-                                                                  const InterCityPaymentOrderScreen(),
-                                                                  arguments: {
-                                                                    "orderModel":
-                                                                        orderModel,
-                                                                  });
+                                                              // Get.to(const InterCityPaymentOrderScreen(), arguments: {
+                                                              //   "orderModel": orderModel,
+                                                              // });
                                                               // paymentMethodDialog(context, controller, orderModel);
                                                             },
                                                           ),
@@ -666,7 +705,12 @@ class InterCityOrderScreen extends StatelessWidget {
                                     AsyncSnapshot<QuerySnapshot> snapshot) {
                                   if (snapshot.hasError) {
                                     return Center(
-                                        child: Text('Something went wrong'.tr));
+                                        child: Text(
+                                      'Something went wrong'.tr,
+                                      style: GoogleFonts.poppins(
+                                        color: Colors.black,
+                                      ),
+                                    ));
                                   }
                                   if (snapshot.connectionState ==
                                       ConnectionState.waiting) {
@@ -696,7 +740,7 @@ class InterCityOrderScreen extends StatelessWidget {
                                                       ? AppColors
                                                           .darkContainerBackground
                                                       : AppColors
-                                                          .containerBackground,
+                                                          .darkContainerBackground,
                                                   borderRadius:
                                                       const BorderRadius.all(
                                                           Radius.circular(10)),
@@ -706,22 +750,12 @@ class InterCityOrderScreen extends StatelessWidget {
                                                           ? AppColors
                                                               .darkContainerBorder
                                                           : AppColors
-                                                              .containerBorder,
+                                                              .darkContainerBorder,
                                                       width: 0.5),
-                                                  boxShadow: themeChange
-                                                          .getThem()
-                                                      ? null
-                                                      : [
-                                                          BoxShadow(
-                                                            color: Colors.black
-                                                                .withOpacity(
-                                                                    0.10),
-                                                            blurRadius: 5,
-                                                            offset: const Offset(
-                                                                0,
-                                                                4), // changes position of shadow
-                                                          ),
-                                                        ],
+                                                  boxShadow:
+                                                      themeChange.getThem()
+                                                          ? null
+                                                          : null,
                                                 ),
                                                 child: InkWell(
                                                     onTap: () {
@@ -804,8 +838,8 @@ class InterCityOrderScreen extends StatelessWidget {
                                                               ),
                                                               Container(
                                                                 decoration: BoxDecoration(
-                                                                    color: AppColors
-                                                                        .primary
+                                                                    color: Colors
+                                                                        .green
                                                                         .withOpacity(
                                                                             0.30),
                                                                     borderRadius:
@@ -819,10 +853,17 @@ class InterCityOrderScreen extends StatelessWidget {
                                                                           10,
                                                                       vertical:
                                                                           4),
-                                                                  child: Text(orderModel
-                                                                      .intercityService!
-                                                                      .name
-                                                                      .toString()),
+                                                                  child: Text(
+                                                                    orderModel
+                                                                        .intercityService!
+                                                                        .name
+                                                                        .toString(),
+                                                                    style: GoogleFonts
+                                                                        .poppins(
+                                                                      color: Colors
+                                                                          .black,
+                                                                    ),
+                                                                  ),
                                                                 ),
                                                               ),
                                                             ],
@@ -850,7 +891,7 @@ class InterCityOrderScreen extends StatelessWidget {
                                                                     ? AppColors
                                                                         .darkGray
                                                                     : AppColors
-                                                                        .gray,
+                                                                        .darkGray,
                                                                 borderRadius:
                                                                     const BorderRadius
                                                                         .all(
@@ -869,12 +910,15 @@ class InterCityOrderScreen extends StatelessWidget {
                                                                       Expanded(
                                                                           child: Text(
                                                                               orderModel.status.toString(),
-                                                                              style: GoogleFonts.poppins(fontWeight: FontWeight.w600))),
+                                                                              style: GoogleFonts.poppins(color: Colors.black, fontWeight: FontWeight.w600))),
                                                                       Text(
                                                                           Constant().formatTimestamp(orderModel
                                                                               .createdDate),
                                                                           style:
-                                                                              GoogleFonts.poppins()),
+                                                                              GoogleFonts.poppins(
+                                                                            color:
+                                                                                Colors.black,
+                                                                          )),
                                                                     ],
                                                                   ),
                                                                 )),
@@ -936,7 +980,12 @@ class InterCityOrderScreen extends StatelessWidget {
                                     AsyncSnapshot<QuerySnapshot> snapshot) {
                                   if (snapshot.hasError) {
                                     return Center(
-                                        child: Text('Something went wrong'.tr));
+                                        child: Text(
+                                      'Something went wrong'.tr,
+                                      style: GoogleFonts.poppins(
+                                        color: Colors.black,
+                                      ),
+                                    ));
                                   }
                                   if (snapshot.connectionState ==
                                       ConnectionState.waiting) {
@@ -945,7 +994,11 @@ class InterCityOrderScreen extends StatelessWidget {
                                   return snapshot.data!.docs.isEmpty
                                       ? Center(
                                           child: Text(
-                                              "No completed rides Found".tr),
+                                            "No completed rides Found".tr,
+                                            style: GoogleFonts.poppins(
+                                              color: Colors.black,
+                                            ),
+                                          ),
                                         )
                                       : ListView.builder(
                                           itemCount: snapshot.data!.docs.length,
@@ -966,7 +1019,7 @@ class InterCityOrderScreen extends StatelessWidget {
                                                       ? AppColors
                                                           .darkContainerBackground
                                                       : AppColors
-                                                          .containerBackground,
+                                                          .darkContainerBackground,
                                                   borderRadius:
                                                       const BorderRadius.all(
                                                           Radius.circular(10)),
@@ -976,22 +1029,12 @@ class InterCityOrderScreen extends StatelessWidget {
                                                           ? AppColors
                                                               .darkContainerBorder
                                                           : AppColors
-                                                              .containerBorder,
+                                                              .darkContainerBorder,
                                                       width: 0.5),
-                                                  boxShadow: themeChange
-                                                          .getThem()
-                                                      ? null
-                                                      : [
-                                                          BoxShadow(
-                                                            color: Colors.black
-                                                                .withOpacity(
-                                                                    0.10),
-                                                            blurRadius: 5,
-                                                            offset: const Offset(
-                                                                0,
-                                                                4), // changes position of shadow
-                                                          ),
-                                                        ],
+                                                  boxShadow:
+                                                      themeChange.getThem()
+                                                          ? null
+                                                          : null,
                                                 ),
                                                 child: Padding(
                                                   padding: const EdgeInsets.all(
@@ -1017,6 +1060,8 @@ class InterCityOrderScreen extends StatelessWidget {
                                                                         .status
                                                                         .toString(),
                                                                     style: GoogleFonts.poppins(
+                                                                        color: Colors
+                                                                            .black,
                                                                         fontWeight:
                                                                             FontWeight.w500),
                                                                   ),
@@ -1030,6 +1075,8 @@ class InterCityOrderScreen extends StatelessWidget {
                                                                               .currencyModel!
                                                                               .decimalDigits!)),
                                                                   style: GoogleFonts.poppins(
+                                                                      color: Colors
+                                                                          .black,
                                                                       fontWeight:
                                                                           FontWeight
                                                                               .bold),
@@ -1060,9 +1107,17 @@ class InterCityOrderScreen extends StatelessWidget {
                                                                           10,
                                                                       vertical:
                                                                           4),
-                                                              child: Text(orderModel
-                                                                  .paymentType
-                                                                  .toString()),
+                                                              child: Text(
+                                                                orderModel
+                                                                    .paymentType
+                                                                    .toString(),
+                                                                style:
+                                                                    GoogleFonts
+                                                                        .poppins(
+                                                                  color: Colors
+                                                                      .black,
+                                                                ),
+                                                              ),
                                                             ),
                                                           ),
                                                           const SizedBox(
@@ -1070,8 +1125,8 @@ class InterCityOrderScreen extends StatelessWidget {
                                                           ),
                                                           Container(
                                                             decoration: BoxDecoration(
-                                                                color: AppColors
-                                                                    .primary
+                                                                color: Colors
+                                                                    .green
                                                                     .withOpacity(
                                                                         0.30),
                                                                 borderRadius:
@@ -1087,10 +1142,18 @@ class InterCityOrderScreen extends StatelessWidget {
                                                                           10,
                                                                       vertical:
                                                                           4),
-                                                              child: Text(orderModel
-                                                                  .intercityService!
-                                                                  .name
-                                                                  .toString()),
+                                                              child: Text(
+                                                                orderModel
+                                                                    .intercityService!
+                                                                    .name
+                                                                    .toString(),
+                                                                style:
+                                                                    GoogleFonts
+                                                                        .poppins(
+                                                                  color: Colors
+                                                                      .black,
+                                                                ),
+                                                              ),
                                                             ),
                                                           ),
                                                         ],
@@ -1119,7 +1182,7 @@ class InterCityOrderScreen extends StatelessWidget {
                                                                   ? AppColors
                                                                       .darkGray
                                                                   : AppColors
-                                                                      .gray,
+                                                                      .darkGray,
                                                               borderRadius:
                                                                   const BorderRadius
                                                                       .all(
@@ -1142,14 +1205,24 @@ class InterCityOrderScreen extends StatelessWidget {
                                                                         .center,
                                                                 children: [
                                                                   Expanded(
-                                                                      child: Text(orderModel
-                                                                          .status
-                                                                          .toString())),
+                                                                      child:
+                                                                          Text(
+                                                                    orderModel
+                                                                        .status
+                                                                        .toString(),
+                                                                    style: GoogleFonts
+                                                                        .poppins(
+                                                                      color: Colors
+                                                                          .black,
+                                                                    ),
+                                                                  )),
                                                                   Text(
                                                                       Constant().formatTimestamp(
                                                                           orderModel
                                                                               .createdDate),
                                                                       style: GoogleFonts.poppins(
+                                                                          color: Colors
+                                                                              .black,
                                                                           fontSize:
                                                                               12)),
                                                                 ],

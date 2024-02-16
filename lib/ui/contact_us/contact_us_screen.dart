@@ -22,7 +22,7 @@ class ContactUsScreen extends StatelessWidget {
         init: ContactUsController(),
         builder: (controller) {
           return Scaffold(
-            backgroundColor: AppColors.primary,
+            backgroundColor: Colors.white,
             body: Column(
               children: [
                 SizedBox(
@@ -31,133 +31,239 @@ class ContactUsScreen extends StatelessWidget {
                 ),
                 Expanded(
                   child: Container(
-                    decoration: BoxDecoration(color: Theme.of(context).colorScheme.background, borderRadius: const BorderRadius.only(topLeft: Radius.circular(25), topRight: Radius.circular(25))),
+                    decoration: BoxDecoration(
+                        color:Colors.white,
+                        borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(25),
+                            topRight: Radius.circular(25))),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: controller.isLoading.value
                           ? Constant.loader()
                           : Padding(
-                              padding: const EdgeInsets.only(top: 10),
-                              child: DefaultTabController(
-                                length: 2,
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                        padding: const EdgeInsets.only(top: 10),
+                        child: DefaultTabController(
+                          length: 2,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10),
+                            child: Column(
+                              crossAxisAlignment:
+                              CrossAxisAlignment.start,
+                              children: [
+                                Text("Contact us".tr,
+                                    style: GoogleFonts.poppins(
+                                        color:Colors.black,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600)),
+                                Text(
+                                    "Let us know your issue & feedback"
+                                        .tr,
+                                    style: GoogleFonts.poppins(
+                                      color:Colors.black,
+                                    )),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                TabBar(
+                                  indicatorColor:
+                                  AppColors.darkModePrimary,
+                                  dividerColor: Colors.white,
+                                  tabs: [
+                                    Tab(
+                                      child: Text(
+                                        "Call Us".tr,
+                                        style: GoogleFonts.poppins(
+                                          color:Colors.black,
+
+                                        ),
+                                      ),
+                                    ),
+                                    Tab(
+                                        child: Text(
+                                          "Email Us".tr,
+                                          style: GoogleFonts.poppins(
+                                            color:Colors.black,
+                                          ),
+                                        )),
+                                  ],
+                                ),
+                                Expanded(
+                                  child: TabBarView(
                                     children: [
-                                      Text("Contact us".tr, style: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.w600)),
-                                      Text("Let us know your issue & feedback".tr, style: GoogleFonts.poppins()),
-                                      const SizedBox(
-                                        height: 20,
-                                      ),
-                                      TabBar(
-                                        indicatorColor: AppColors.darkModePrimary,
-                                        tabs: [
-                                          Tab(
-                                              child: Text(
-                                            "Call Us".tr,
-                                            style: GoogleFonts.poppins(),
-                                          )),
-                                          Tab(
-                                              child: Text(
-                                            "Email Us".tr,
-                                            style: GoogleFonts.poppins(),
-                                          )),
-                                        ],
-                                      ),
-                                      Expanded(
-                                        child: TabBarView(
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 20),
+                                        child: Column(
                                           children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(top: 20),
-                                              child: Column(
+                                            InkWell(
+                                              onTap: () {
+                                                Constant.makePhoneCall(
+                                                    controller
+                                                        .phone.value);
+                                              },
+                                              child: Row(
                                                 children: [
-                                                  InkWell(
-                                                    onTap: () {
-                                                      Constant.makePhoneCall(controller.phone.value);
-                                                    },
-                                                    child: Row(
-                                                      children: [
-                                                        const Icon(Icons.call),
-                                                        const SizedBox(
-                                                          width: 20,
-                                                        ),
-                                                        Text(controller.phone.value)
-                                                      ],
+                                                  Icon(
+                                                    Icons.call,
+                                                    color:Colors.black,
+                                                  ),
+                                                  const SizedBox(
+                                                    width: 20,
+                                                  ),
+                                                  Text(
+                                                    controller
+                                                        .phone.value,
+                                                    style: TextStyle(
+                                                      color:Colors.black,
                                                     ),
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 10,
-                                                  ),
-                                                  const Divider(),
-                                                  const SizedBox(
-                                                    height: 10,
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      const Icon(Icons.location_on),
-                                                      const SizedBox(
-                                                        width: 20,
-                                                      ),
-                                                      Expanded(child: Text(controller.address.value))
-                                                    ],
                                                   )
                                                 ],
                                               ),
                                             ),
-                                            Padding(
-                                              padding: const EdgeInsets.symmetric(vertical: 10),
-                                              child: SingleChildScrollView(
-                                                child: Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text("Write us".tr, style: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.w600)),
-                                                    Text("Describe your issue".tr, style: GoogleFonts.poppins()),
-                                                    const SizedBox(
-                                                      height: 20,
-                                                    ),
-                                                    TextFieldThem.buildTextFiled(context, hintText: 'Email'.tr, controller: controller.emailController.value),
-                                                    const SizedBox(
-                                                      height: 20,
-                                                    ),
-                                                    TextFieldThem.buildTextFiled(context, hintText: 'Describe your issue and feedback'.tr, controller: controller.feedbackController.value, maxLine: 5),
-                                                    const SizedBox(
-                                                      height: 20,
-                                                    ),
-                                                    ButtonThem.buildButton(
-                                                      context,
-                                                      title: "Submit".tr,
-                                                      onPress: () async {
-                                                        if (controller.emailController.value.text.isEmpty) {
-                                                          ShowToastDialog.showToast("Please enter email".tr);
-                                                        } else if (controller.feedbackController.value.text.isEmpty) {
-                                                          ShowToastDialog.showToast("Please enter feedback".tr);
-                                                        } else {
-                                                          final Email email = Email(
-                                                            body: controller.feedbackController.value.text,
-                                                            subject: controller.subject.value,
-                                                            recipients: [controller.email.value],
-                                                            cc: [controller.emailController.value.text],
-                                                            isHTML: false,
-                                                          );
-                                                          await FlutterEmailSender.send(email);
-                                                          controller.emailController.value.clear();
-                                                          controller.feedbackController.value.clear();
-                                                        }
-                                                      },
-                                                    ),
-                                                  ],
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            const Divider(
+                                              color: Colors.white,
+                                            ),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.location_on,
+                                                  color:Colors.black,
                                                 ),
-                                              ),
+                                                const SizedBox(
+                                                  width: 20,
+                                                ),
+                                                Expanded(
+                                                    child: Text(
+                                                        controller.address
+                                                            .value,
+                                                        style: TextStyle(
+                                                          color:Colors.black,
+                                                        )))
+                                              ],
                                             )
                                           ],
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding:
+                                        const EdgeInsets.symmetric(
+                                            vertical: 10),
+                                        child: SingleChildScrollView(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                            children: [
+                                              Text("Write us".tr,
+                                                  style: GoogleFonts.poppins(
+                                                      color:Colors.black,
+                                                      fontSize: 20,
+                                                      fontWeight:
+                                                      FontWeight
+                                                          .w600)),
+                                              Text(
+                                                  "Describe your issue"
+                                                      .tr,
+                                                  style:
+                                                  GoogleFonts.poppins(
+                                                    color:Colors.black,
+                                                  )),
+                                              const SizedBox(
+                                                height: 20,
+                                              ),
+                                              TextFieldThem.buildTextFiled(
+                                                  context,
+                                                  hintText: 'Email'.tr,
+                                                  controller: controller
+                                                      .emailController
+                                                      .value),
+                                              const SizedBox(
+                                                height: 20,
+                                              ),
+                                              TextFieldThem.buildTextFiled(
+                                                  context,
+                                                  hintText:
+                                                  'Describe your issue and feedback'
+                                                      .tr,
+                                                  controller: controller
+                                                      .feedbackController
+                                                      .value,
+                                                  maxLine: 5),
+                                              const SizedBox(
+                                                height: 20,
+                                              ),
+                                              ButtonThem.buildButton(
+                                                context,
+                                                title: "Submit".tr,
+                                                onPress: () async {
+                                                  if (controller
+                                                      .emailController
+                                                      .value
+                                                      .text
+                                                      .isEmpty) {
+                                                    ShowToastDialog.showToast(
+                                                        "Please enter email"
+                                                            .tr);
+                                                  } else if (controller
+                                                      .feedbackController
+                                                      .value
+                                                      .text
+                                                      .isEmpty) {
+                                                    ShowToastDialog.showToast(
+                                                        "Please enter feedback"
+                                                            .tr);
+                                                  } else {
+                                                    final Email email =
+                                                    Email(
+                                                      body: controller
+                                                          .feedbackController
+                                                          .value
+                                                          .text,
+                                                      subject: controller
+                                                          .subject.value,
+                                                      recipients: [
+                                                        controller
+                                                            .email.value
+                                                      ],
+                                                      cc: [
+                                                        controller
+                                                            .emailController
+                                                            .value
+                                                            .text
+                                                      ],
+                                                      isHTML: false,
+                                                    );
+                                                    await FlutterEmailSender
+                                                        .send(email);
+                                                    controller
+                                                        .emailController
+                                                        .value
+                                                        .clear();
+                                                    controller
+                                                        .feedbackController
+                                                        .value
+                                                        .clear();
+                                                  }
+                                                },
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       )
                                     ],
                                   ),
-                                ),
-                              ),
+                                )
+                              ],
                             ),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),

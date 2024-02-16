@@ -14,9 +14,10 @@ class LiveTrackingScreen extends StatelessWidget {
       init: LiveTrackingController(),
       builder: (controller) {
         return Scaffold(
+          backgroundColor: Colors.green,
           appBar: AppBar(
             elevation: 2,
-            backgroundColor: AppColors.primary,
+            backgroundColor: Colors.white,
             title:  Text("Map view".tr),
             leading: InkWell(
                 onTap: () {
@@ -24,6 +25,7 @@ class LiveTrackingScreen extends StatelessWidget {
                 },
                 child: const Icon(
                   Icons.arrow_back,
+                  color: Colors.black,
                 )),
           ),
           body: GoogleMap(
