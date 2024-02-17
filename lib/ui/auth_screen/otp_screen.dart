@@ -85,19 +85,12 @@ class OtpScreen extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(
-                          height: 30,
-                        ),
-
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        const SizedBox(
-                          height: 300,
+                          height: 380,
                         ),
                         Align(
                           alignment: Alignment.bottomCenter,
                           child: Container(
-                            height: MediaQuery.of(context).size.height * .18,
+                            height: MediaQuery.of(context).size.height * .07,
                             width: double.infinity,
                             decoration: BoxDecoration(
                                 color: Colors.white,
@@ -105,29 +98,65 @@ class OtpScreen extends StatelessWidget {
                                   topLeft: Radius.circular(40),
                                   topRight: Radius.circular(40),
                                 )),
-                            child: Column(
-                              children: [
-                                Spacer(),
-                                InkWell(
-                                  onTap: () async {
-                                    if (controller
-                                            .otpController.value.text.length ==
-                                        6) {
-                                      ShowToastDialog.showLoader(
-                                          "Verify OTP".tr);
+                            child:InkWell(
+                              onTap: () async {
+                                if (controller
+                                    .otpController.value.text.length ==
+                                    6) {
+                                  ShowToastDialog.showLoader(
+                                      "Verify OTP".tr);
 
-                                      PhoneAuthCredential credential =
-                                          PhoneAuthProvider.credential(
-                                              verificationId: controller
-                                                  .verificationId.value,
-                                              smsCode: controller
-                                                  .otpController.value.text);
-                                      await FirebaseAuth.instance
-                                          .signInWithCredential(credential)
-                                          .then((value) async {
-                                        if (value
-                                            .additionalUserInfo!.isNewUser) {
-                                          print("----->new user");
+                                  PhoneAuthCredential credential =
+                                  PhoneAuthProvider.credential(
+                                      verificationId: controller
+                                          .verificationId.value,
+                                      smsCode: controller
+                                          .otpController.value.text);
+                                  await FirebaseAuth.instance
+                                      .signInWithCredential(credential)
+                                      .then((value) async {
+                                    if (value
+                                        .additionalUserInfo!.isNewUser) {
+                                      print("----->new user");
+                                      UserModel userModel = UserModel();
+                                      userModel.id = value.user!.uid;
+                                      userModel.countryCode =
+                                          controller.countryCode.value;
+                                      userModel.phoneNumber =
+                                          controller.phoneNumber.value;
+                                      userModel.loginType =
+                                          Constant.phoneLoginType;
+
+                                      ShowToastDialog.closeLoader();
+                                      Get.to(const InformationScreen(),
+                                          arguments: {
+                                            "userModel": userModel,
+                                          });
+                                    } else {
+                                      print("----->old user");
+                                      FireStoreUtils.userExitOrNot(
+                                          value.user!.uid)
+                                          .then((userExit) async {
+                                        ShowToastDialog.closeLoader();
+                                        if (userExit == true) {
+                                          UserModel? userModel =
+                                          await FireStoreUtils
+                                              .getUserProfile(
+                                              value.user!.uid);
+                                          if (userModel != null) {
+                                            if (userModel.isActive ==
+                                                true) {
+                                              Get.offAll(
+                                                  const DashBoardScreen());
+                                            } else {
+                                              await FirebaseAuth.instance
+                                                  .signOut();
+                                              ShowToastDialog.showToast(
+                                                  "This user is disable please contact administrator"
+                                                      .tr);
+                                            }
+                                          }
+                                        } else {
                                           UserModel userModel = UserModel();
                                           userModel.id = value.user!.uid;
                                           userModel.countryCode =
@@ -137,92 +166,50 @@ class OtpScreen extends StatelessWidget {
                                           userModel.loginType =
                                               Constant.phoneLoginType;
 
-                                          ShowToastDialog.closeLoader();
                                           Get.to(const InformationScreen(),
                                               arguments: {
                                                 "userModel": userModel,
                                               });
-                                        } else {
-                                          print("----->old user");
-                                          FireStoreUtils.userExitOrNot(
-                                                  value.user!.uid)
-                                              .then((userExit) async {
-                                            ShowToastDialog.closeLoader();
-                                            if (userExit == true) {
-                                              UserModel? userModel =
-                                                  await FireStoreUtils
-                                                      .getUserProfile(
-                                                          value.user!.uid);
-                                              if (userModel != null) {
-                                                if (userModel.isActive ==
-                                                    true) {
-                                                  Get.offAll(
-                                                      const DashBoardScreen());
-                                                } else {
-                                                  await FirebaseAuth.instance
-                                                      .signOut();
-                                                  ShowToastDialog.showToast(
-                                                      "This user is disable please contact administrator"
-                                                          .tr);
-                                                }
-                                              }
-                                            } else {
-                                              UserModel userModel = UserModel();
-                                              userModel.id = value.user!.uid;
-                                              userModel.countryCode =
-                                                  controller.countryCode.value;
-                                              userModel.phoneNumber =
-                                                  controller.phoneNumber.value;
-                                              userModel.loginType =
-                                                  Constant.phoneLoginType;
-
-                                              Get.to(const InformationScreen(),
-                                                  arguments: {
-                                                    "userModel": userModel,
-                                                  });
-                                            }
-                                          });
                                         }
-                                      }).catchError((error) {
-                                        ShowToastDialog.closeLoader();
-                                        ShowToastDialog.showToast(
-                                            "Code is Invalid".tr);
                                       });
-                                    } else {
-                                      ShowToastDialog.showToast(
-                                          "Please Enter Valid OTP".tr);
                                     }
+                                  }).catchError((error) {
+                                    ShowToastDialog.closeLoader();
+                                    ShowToastDialog.showToast(
+                                        "Code is Invalid".tr);
+                                  });
+                                } else {
+                                  ShowToastDialog.showToast(
+                                      "Please Enter Valid OTP".tr);
+                                }
 
-                                    // print(controller.countryCode.value);
-                                    // print(controller.phoneNumberController.value.text);
-                                  },
-                                  child: Container(
-                                    height: 60,
-                                    width:
-                                        MediaQuery.of(context).size.width * .85,
-                                    decoration: BoxDecoration(
-                                      color: Colors.green,
-                                      borderRadius: BorderRadius.circular(35),
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        "Verify".tr,
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 17,
-                                        ),
-                                      ),
+                                // print(controller.countryCode.value);
+                                // print(controller.phoneNumberController.value.text);
+                              },
+                              child: Container(
+                                height: 60,
+                                width:
+                                MediaQuery.of(context).size.width * .85,
+                                decoration: BoxDecoration(
+                                  color: Colors.green,
+                                  borderRadius: BorderRadius.circular(35),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    "Verify".tr,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 17,
                                     ),
                                   ),
                                 ),
-                                Spacer(),
-                              ],
+                              ),
                             ),
                           ),
                         ),
                         const SizedBox(
-                          height: 40,
+                          height: 60,
                         ),
 
                         // ButtonThem.buildButton(

@@ -737,7 +737,10 @@ class HomeScreen extends StatelessWidget {
                                             .isEmpty) {
                                           ShowToastDialog.showToast(
                                               "Please select source location"
-                                                  .tr);
+                                                  .tr
+                                          );
+                                          print('asdasdasdasdasdasdasdasda'+controller.sourceLocationController.value.text.toString());
+
                                         } else if (controller
                                             .destinationLocationController
                                             .value
@@ -763,6 +766,7 @@ class HomeScreen extends StatelessWidget {
                                           showAlertDialog(context);
                                           // showDialog(context: context, builder: (BuildContext context) => warningDailog());
                                         } else {
+                                          print('asdasdasdasdasdasdasdasda'+controller.sourceLocationController.value.toString());
                                           // ShowToastDialog.showLoader("Please wait");
                                           OrderModel orderModel = OrderModel();
                                           orderModel.id = Constant.getUuid();

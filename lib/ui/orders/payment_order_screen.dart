@@ -36,22 +36,23 @@ class PaymentOrderScreen extends StatelessWidget {
         builder: (controller) {
           return Scaffold(
               appBar: AppBar(
-                backgroundColor: AppColors.primary,
-                title: Text("Ride Details".tr),
+                backgroundColor: Colors.white,
+                title: Text(
+                  "Ride Details".tr,
+                  style: GoogleFonts.openSans(color: Colors.black),
+                ),
                 leading: InkWell(
                     onTap: () {
                       Get.back();
                     },
-                    child: const Icon(
-                      Icons.arrow_back,
-                    )),
+                    child: const Icon(Icons.arrow_back, color: Colors.black)),
               ),
               body: Column(
                 children: [
                   Container(
                     height: Responsive.width(10, context),
                     width: Responsive.width(100, context),
-                    color: AppColors.primary,
+                    color: Colors.white,
                   ),
                   Expanded(
                     child: Transform.translate(
@@ -60,8 +61,7 @@ class PaymentOrderScreen extends StatelessWidget {
                           ? Constant.loader()
                           : Container(
                               decoration: BoxDecoration(
-                                  color:
-                                      Theme.of(context).colorScheme.background,
+                                  color: Colors.white,
                                   borderRadius: const BorderRadius.only(
                                       topLeft: Radius.circular(25),
                                       topRight: Radius.circular(25))),
@@ -77,7 +77,10 @@ class PaymentOrderScreen extends StatelessWidget {
                                       if (snapshot.hasError) {
                                         return Center(
                                             child: Text(
-                                                'Something went wrong'.tr));
+                                          'Something went wrong'.tr,
+                                          style: GoogleFonts.openSans(
+                                              color: Colors.black),
+                                        ));
                                       }
 
                                       if (snapshot.connectionState ==
@@ -105,11 +108,14 @@ class PaymentOrderScreen extends StatelessWidget {
                                               const Padding(
                                                 padding: EdgeInsets.symmetric(
                                                     vertical: 5),
-                                                child: Divider(thickness: 1),
+                                                child: Divider(
+                                                    thickness: 1,
+                                                    color: Colors.black),
                                               ),
                                               Text(
                                                 "Vehicle Details".tr,
                                                 style: GoogleFonts.poppins(
+                                                    color: Colors.black,
                                                     fontWeight:
                                                         FontWeight.w600),
                                               ),
@@ -131,9 +137,14 @@ class PaymentOrderScreen extends StatelessWidget {
                                                             .loader();
                                                       case ConnectionState.done:
                                                         if (snapshot.hasError) {
-                                                          return Text(snapshot
-                                                              .error
-                                                              .toString());
+                                                          return Text(
+                                                            snapshot.error
+                                                                .toString(),
+                                                            style: GoogleFonts
+                                                                .openSans(
+                                                                    color: Colors
+                                                                        .black),
+                                                          );
                                                         } else {
                                                           DriverUserModel
                                                               driverModel =
@@ -146,7 +157,7 @@ class PaymentOrderScreen extends StatelessWidget {
                                                                   ? AppColors
                                                                       .darkContainerBackground
                                                                   : AppColors
-                                                                      .containerBackground,
+                                                                      .darkContainerBackground,
                                                               borderRadius:
                                                                   const BorderRadius
                                                                       .all(
@@ -157,7 +168,7 @@ class PaymentOrderScreen extends StatelessWidget {
                                                                       ? AppColors
                                                                           .darkContainerBorder
                                                                       : AppColors
-                                                                          .containerBorder,
+                                                                          .darkContainerBorder,
                                                                   width: 0.5),
                                                               boxShadow:
                                                                   themeChange
@@ -199,7 +210,7 @@ class PaymentOrderScreen extends StatelessWidget {
                                                                             18,
                                                                         color: themeChange.getThem()
                                                                             ? Colors.white
-                                                                            : Colors.black,
+                                                                            : Colors.white,
                                                                       ),
                                                                       const SizedBox(
                                                                         width:
@@ -212,7 +223,8 @@ class PaymentOrderScreen extends StatelessWidget {
                                                                             .toString(),
                                                                         style: GoogleFonts.poppins(
                                                                             fontWeight:
-                                                                                FontWeight.w600),
+                                                                                FontWeight.w600,
+                                                                            color: Colors.black),
                                                                       )
                                                                     ],
                                                                   ),
@@ -225,7 +237,7 @@ class PaymentOrderScreen extends StatelessWidget {
                                                                             18,
                                                                         color: themeChange.getThem()
                                                                             ? Colors.white
-                                                                            : Colors.black,
+                                                                            : Colors.white,
                                                                       ),
                                                                       const SizedBox(
                                                                         width:
@@ -251,7 +263,7 @@ class PaymentOrderScreen extends StatelessWidget {
                                                                             18,
                                                                         color: themeChange.getThem()
                                                                             ? Colors.white
-                                                                            : Colors.black,
+                                                                            : Colors.white,
                                                                       ),
                                                                       const SizedBox(
                                                                         width:
@@ -264,7 +276,8 @@ class PaymentOrderScreen extends StatelessWidget {
                                                                             .toString(),
                                                                         style: GoogleFonts.poppins(
                                                                             fontWeight:
-                                                                                FontWeight.w600),
+                                                                                FontWeight.w600,
+                                                                            color: Colors.black),
                                                                       )
                                                                     ],
                                                                   ),
@@ -274,7 +287,13 @@ class PaymentOrderScreen extends StatelessWidget {
                                                           );
                                                         }
                                                       default:
-                                                        return Text('Error'.tr);
+                                                        return Text(
+                                                          'Error'.tr,
+                                                          style: GoogleFonts
+                                                              .openSans(
+                                                                  color: Colors
+                                                                      .black),
+                                                        );
                                                     }
                                                   }),
                                               const SizedBox(
@@ -284,8 +303,8 @@ class PaymentOrderScreen extends StatelessWidget {
                                                 "Pickup and drop-off locations"
                                                     .tr,
                                                 style: GoogleFonts.poppins(
-                                                    fontWeight:
-                                                        FontWeight.w600),
+                                                    fontWeight: FontWeight.w600,
+                                                    color: Colors.black),
                                               ),
                                               const SizedBox(
                                                 height: 10,
@@ -296,7 +315,7 @@ class PaymentOrderScreen extends StatelessWidget {
                                                       ? AppColors
                                                           .darkContainerBackground
                                                       : AppColors
-                                                          .containerBackground,
+                                                          .darkContainerBackground,
                                                   borderRadius:
                                                       const BorderRadius.all(
                                                           Radius.circular(10)),
@@ -306,7 +325,7 @@ class PaymentOrderScreen extends StatelessWidget {
                                                           ? AppColors
                                                               .darkContainerBorder
                                                           : AppColors
-                                                              .containerBorder,
+                                                              .darkContainerBorder,
                                                       width: 0.5),
                                                   boxShadow: themeChange
                                                           .getThem()
@@ -349,7 +368,7 @@ class PaymentOrderScreen extends StatelessWidget {
                                                       color: themeChange
                                                               .getThem()
                                                           ? AppColors.darkGray
-                                                          : AppColors.gray,
+                                                          : AppColors.darkGray,
                                                       borderRadius:
                                                           const BorderRadius
                                                               .all(
@@ -370,13 +389,18 @@ class PaymentOrderScreen extends StatelessWidget {
                                                                         .toString(),
                                                                     style: GoogleFonts.poppins(
                                                                         fontWeight:
-                                                                            FontWeight.w500))),
+                                                                            FontWeight
+                                                                                .w500,
+                                                                        color: Colors
+                                                                            .black))),
                                                             Text(
                                                                 Constant().formatTimestamp(
                                                                     orderModel
                                                                         .createdDate),
                                                                 style: GoogleFonts
-                                                                    .poppins()),
+                                                                    .poppins(
+                                                                        color: Colors
+                                                                            .black)),
                                                           ],
                                                         ),
                                                       )),
@@ -388,7 +412,7 @@ class PaymentOrderScreen extends StatelessWidget {
                                                       ? AppColors
                                                           .darkContainerBackground
                                                       : AppColors
-                                                          .containerBackground,
+                                                          .darkContainerBackground,
                                                   borderRadius:
                                                       const BorderRadius.all(
                                                           Radius.circular(10)),
@@ -398,7 +422,7 @@ class PaymentOrderScreen extends StatelessWidget {
                                                           ? AppColors
                                                               .darkContainerBorder
                                                           : AppColors
-                                                              .containerBorder,
+                                                              .darkContainerBorder,
                                                       width: 0.5),
                                                   boxShadow: themeChange
                                                           .getThem()
@@ -488,13 +512,17 @@ class PaymentOrderScreen extends StatelessWidget {
                                                                 style: GoogleFonts.poppins(
                                                                     fontWeight:
                                                                         FontWeight
-                                                                            .w700),
+                                                                            .w700,
+                                                                    color: Colors
+                                                                        .black),
                                                               ),
                                                               Text(
                                                                 "Add coupon code"
                                                                     .tr,
                                                                 style: GoogleFonts
-                                                                    .poppins(),
+                                                                    .poppins(
+                                                                        color: Colors
+                                                                            .black),
                                                               ),
                                                             ],
                                                           ),
@@ -518,7 +546,7 @@ class PaymentOrderScreen extends StatelessWidget {
                                                       ? AppColors
                                                           .darkContainerBackground
                                                       : AppColors
-                                                          .containerBackground,
+                                                          .darkContainerBackground,
                                                   borderRadius:
                                                       const BorderRadius.all(
                                                           Radius.circular(10)),
@@ -528,7 +556,7 @@ class PaymentOrderScreen extends StatelessWidget {
                                                           ? AppColors
                                                               .darkContainerBorder
                                                           : AppColors
-                                                              .containerBorder,
+                                                              .darkContainerBorder,
                                                       width: 0.5),
                                                   boxShadow: themeChange
                                                           .getThem()
@@ -559,11 +587,13 @@ class PaymentOrderScreen extends StatelessWidget {
                                                             GoogleFonts.poppins(
                                                                 fontWeight:
                                                                     FontWeight
-                                                                        .w600),
+                                                                        .w600,
+                                                                color: Colors
+                                                                    .black),
                                                       ),
                                                       const Divider(
-                                                        thickness: 1,
-                                                      ),
+                                                          thickness: 1,
+                                                          color: Colors.black),
                                                       Row(
                                                         children: [
                                                           Expanded(
@@ -586,13 +616,15 @@ class PaymentOrderScreen extends StatelessWidget {
                                                                 .poppins(
                                                                     fontWeight:
                                                                         FontWeight
-                                                                            .w600),
+                                                                            .w600,
+                                                                    color: Colors
+                                                                        .black),
                                                           ),
                                                         ],
                                                       ),
                                                       const Divider(
-                                                        thickness: 1,
-                                                      ),
+                                                          thickness: 1,
+                                                          color: Colors.black),
                                                       controller
                                                                   .orderModel
                                                                   .value
@@ -630,15 +662,17 @@ class PaymentOrderScreen extends StatelessWidget {
                                                                         ),
                                                                         Text(
                                                                           "${Constant.amountShow(amount: Constant().calculateTax(amount: (double.parse(orderModel.finalRate.toString()) - double.parse(controller.couponAmount.value.toString())).toString(), taxModel: taxModel).toStringAsFixed(Constant.currencyModel!.decimalDigits!).toString())} ",
-                                                                          style:
-                                                                              GoogleFonts.poppins(fontWeight: FontWeight.w600),
+                                                                          style: GoogleFonts.poppins(
+                                                                              fontWeight: FontWeight.w600,
+                                                                              color: Colors.black),
                                                                         ),
                                                                       ],
                                                                     ),
                                                                     const Divider(
-                                                                      thickness:
-                                                                          1,
-                                                                    ),
+                                                                        thickness:
+                                                                            1,
+                                                                        color: Colors
+                                                                            .black),
                                                                   ],
                                                                 );
                                                               },
@@ -670,8 +704,8 @@ class PaymentOrderScreen extends StatelessWidget {
                                                         ],
                                                       ),
                                                       const Divider(
-                                                        thickness: 1,
-                                                      ),
+                                                          thickness: 1,
+                                                          color: Colors.black),
                                                       Row(
                                                         children: [
                                                           Expanded(
@@ -681,7 +715,9 @@ class PaymentOrderScreen extends StatelessWidget {
                                                               style: GoogleFonts.poppins(
                                                                   fontWeight:
                                                                       FontWeight
-                                                                          .w600),
+                                                                          .w600,
+                                                                  color: Colors
+                                                                      .black),
                                                             ),
                                                           ),
                                                           Text(
@@ -693,7 +729,9 @@ class PaymentOrderScreen extends StatelessWidget {
                                                                 .poppins(
                                                                     fontWeight:
                                                                         FontWeight
-                                                                            .w600),
+                                                                            .w600,
+                                                                    color: Colors
+                                                                        .black),
                                                           ),
                                                         ],
                                                       ),
@@ -756,12 +794,13 @@ class PaymentOrderScreen extends StatelessWidget {
                                 onTap: () {
                                   Get.back();
                                 },
-                                child: const Icon(Icons.arrow_back_ios)),
+                                child: const Icon(Icons.arrow_back_ios,
+                                    color: Colors.black)),
                             Expanded(
                                 child: Center(
                                     child: Text(
                               "Select Payment Method".tr,
-                              style: GoogleFonts.poppins(),
+                              style: GoogleFonts.poppins(color: Colors.black),
                             ))),
                           ],
                         ),
@@ -808,7 +847,8 @@ class PaymentOrderScreen extends StatelessWidget {
                                                       ? themeChange.getThem()
                                                           ? AppColors
                                                               .darkModePrimary
-                                                          : AppColors.primary
+                                                          : AppColors
+                                                              .darkModePrimary
                                                       : AppColors
                                                           .textFieldBorder,
                                                   width: 1),
@@ -848,7 +888,9 @@ class PaymentOrderScreen extends StatelessWidget {
                                                           .value.cash!.name
                                                           .toString(),
                                                       style:
-                                                          GoogleFonts.poppins(),
+                                                          GoogleFonts.poppins(
+                                                              color:
+                                                                  Colors.black),
                                                     ),
                                                   ),
                                                   Radio(
@@ -861,11 +903,12 @@ class PaymentOrderScreen extends StatelessWidget {
                                                     groupValue: controller
                                                         .selectedPaymentMethod
                                                         .value,
-                                                    activeColor:
-                                                        themeChange.getThem()
-                                                            ? AppColors
-                                                                .darkModePrimary
-                                                            : AppColors.primary,
+                                                    activeColor: themeChange
+                                                            .getThem()
+                                                        ? AppColors
+                                                            .darkModePrimary
+                                                        : AppColors
+                                                            .darkModePrimary,
                                                     onChanged: (value) {
                                                       controller
                                                               .selectedPaymentMethod
@@ -923,7 +966,8 @@ class PaymentOrderScreen extends StatelessWidget {
                                                       ? themeChange.getThem()
                                                           ? AppColors
                                                               .darkModePrimary
-                                                          : AppColors.primary
+                                                          : AppColors
+                                                              .darkModePrimary
                                                       : AppColors
                                                           .textFieldBorder,
                                                   width: 1),
@@ -966,7 +1010,9 @@ class PaymentOrderScreen extends StatelessWidget {
                                                           .value.wallet!.name
                                                           .toString(),
                                                       style:
-                                                          GoogleFonts.poppins(),
+                                                          GoogleFonts.poppins(
+                                                              color:
+                                                                  Colors.black),
                                                     ),
                                                   ),
                                                   Text(
@@ -977,7 +1023,7 @@ class PaymentOrderScreen extends StatelessWidget {
                                                               ? AppColors
                                                                   .darkModePrimary
                                                               : AppColors
-                                                                  .primary)),
+                                                                  .darkModePrimary)),
                                                   Radio(
                                                     value: controller
                                                         .paymentModel
@@ -988,11 +1034,12 @@ class PaymentOrderScreen extends StatelessWidget {
                                                     groupValue: controller
                                                         .selectedPaymentMethod
                                                         .value,
-                                                    activeColor:
-                                                        themeChange.getThem()
-                                                            ? AppColors
-                                                                .darkModePrimary
-                                                            : AppColors.primary,
+                                                    activeColor: themeChange
+                                                            .getThem()
+                                                        ? AppColors
+                                                            .darkModePrimary
+                                                        : AppColors
+                                                            .darkModePrimary,
                                                     onChanged: (value) {
                                                       controller
                                                               .selectedPaymentMethod
@@ -1050,7 +1097,8 @@ class PaymentOrderScreen extends StatelessWidget {
                                                       ? themeChange.getThem()
                                                           ? AppColors
                                                               .darkModePrimary
-                                                          : AppColors.primary
+                                                          : AppColors
+                                                              .darkModePrimary
                                                       : AppColors
                                                           .textFieldBorder,
                                                   width: 1),
@@ -1091,7 +1139,9 @@ class PaymentOrderScreen extends StatelessWidget {
                                                           .value.strip!.name
                                                           .toString(),
                                                       style:
-                                                          GoogleFonts.poppins(),
+                                                          GoogleFonts.poppins(
+                                                              color:
+                                                                  Colors.black),
                                                     ),
                                                   ),
                                                   Radio(
@@ -1104,11 +1154,12 @@ class PaymentOrderScreen extends StatelessWidget {
                                                     groupValue: controller
                                                         .selectedPaymentMethod
                                                         .value,
-                                                    activeColor:
-                                                        themeChange.getThem()
-                                                            ? AppColors
-                                                                .darkModePrimary
-                                                            : AppColors.primary,
+                                                    activeColor: themeChange
+                                                            .getThem()
+                                                        ? AppColors
+                                                            .darkModePrimary
+                                                        : AppColors
+                                                            .darkModePrimary,
                                                     onChanged: (value) {
                                                       controller
                                                               .selectedPaymentMethod
@@ -1162,7 +1213,8 @@ class PaymentOrderScreen extends StatelessWidget {
                                                     ? themeChange.getThem()
                                                         ? AppColors
                                                             .darkModePrimary
-                                                        : AppColors.primary
+                                                        : AppColors
+                                                            .darkModePrimary
                                                     : AppColors.textFieldBorder,
                                                 width: 1),
                                           ),
@@ -1199,8 +1251,8 @@ class PaymentOrderScreen extends StatelessWidget {
                                                     controller.paymentModel
                                                         .value.paypal!.name
                                                         .toString(),
-                                                    style:
-                                                        GoogleFonts.poppins(),
+                                                    style: GoogleFonts.poppins(
+                                                        color: Colors.black),
                                                   ),
                                                 ),
                                                 Radio(
@@ -1214,7 +1266,8 @@ class PaymentOrderScreen extends StatelessWidget {
                                                       themeChange.getThem()
                                                           ? AppColors
                                                               .darkModePrimary
-                                                          : AppColors.primary,
+                                                          : AppColors
+                                                              .darkModePrimary,
                                                   onChanged: (value) {
                                                     controller
                                                             .selectedPaymentMethod
@@ -1267,7 +1320,8 @@ class PaymentOrderScreen extends StatelessWidget {
                                                     ? themeChange.getThem()
                                                         ? AppColors
                                                             .darkModePrimary
-                                                        : AppColors.primary
+                                                        : AppColors
+                                                            .darkModePrimary
                                                     : AppColors.textFieldBorder,
                                                 width: 1),
                                           ),
@@ -1304,8 +1358,8 @@ class PaymentOrderScreen extends StatelessWidget {
                                                     controller.paymentModel
                                                         .value.payStack!.name
                                                         .toString(),
-                                                    style:
-                                                        GoogleFonts.poppins(),
+                                                    style: GoogleFonts.poppins(
+                                                        color: Colors.black),
                                                   ),
                                                 ),
                                                 Radio(
@@ -1319,7 +1373,8 @@ class PaymentOrderScreen extends StatelessWidget {
                                                       themeChange.getThem()
                                                           ? AppColors
                                                               .darkModePrimary
-                                                          : AppColors.primary,
+                                                          : AppColors
+                                                              .darkModePrimary,
                                                   onChanged: (value) {
                                                     controller
                                                             .selectedPaymentMethod
@@ -1375,7 +1430,8 @@ class PaymentOrderScreen extends StatelessWidget {
                                                     ? themeChange.getThem()
                                                         ? AppColors
                                                             .darkModePrimary
-                                                        : AppColors.primary
+                                                        : AppColors
+                                                            .darkModePrimary
                                                     : AppColors.textFieldBorder,
                                                 width: 1),
                                           ),
@@ -1412,8 +1468,8 @@ class PaymentOrderScreen extends StatelessWidget {
                                                     controller.paymentModel
                                                         .value.mercadoPago!.name
                                                         .toString(),
-                                                    style:
-                                                        GoogleFonts.poppins(),
+                                                    style: GoogleFonts.poppins(
+                                                        color: Colors.black),
                                                   ),
                                                 ),
                                                 Radio(
@@ -1427,7 +1483,8 @@ class PaymentOrderScreen extends StatelessWidget {
                                                       themeChange.getThem()
                                                           ? AppColors
                                                               .darkModePrimary
-                                                          : AppColors.primary,
+                                                          : AppColors
+                                                              .darkModePrimary,
                                                   onChanged: (value) {
                                                     controller
                                                             .selectedPaymentMethod
@@ -1483,7 +1540,8 @@ class PaymentOrderScreen extends StatelessWidget {
                                                     ? themeChange.getThem()
                                                         ? AppColors
                                                             .darkModePrimary
-                                                        : AppColors.primary
+                                                        : AppColors
+                                                            .darkModePrimary
                                                     : AppColors.textFieldBorder,
                                                 width: 1),
                                           ),
@@ -1520,8 +1578,8 @@ class PaymentOrderScreen extends StatelessWidget {
                                                     controller.paymentModel
                                                         .value.flutterWave!.name
                                                         .toString(),
-                                                    style:
-                                                        GoogleFonts.poppins(),
+                                                    style: GoogleFonts.poppins(
+                                                        color: Colors.black),
                                                   ),
                                                 ),
                                                 Radio(
@@ -1535,7 +1593,8 @@ class PaymentOrderScreen extends StatelessWidget {
                                                       themeChange.getThem()
                                                           ? AppColors
                                                               .darkModePrimary
-                                                          : AppColors.primary,
+                                                          : AppColors
+                                                              .darkModePrimary,
                                                   onChanged: (value) {
                                                     controller
                                                             .selectedPaymentMethod
@@ -1588,7 +1647,8 @@ class PaymentOrderScreen extends StatelessWidget {
                                                     ? themeChange.getThem()
                                                         ? AppColors
                                                             .darkModePrimary
-                                                        : AppColors.primary
+                                                        : AppColors
+                                                            .darkModePrimary
                                                     : AppColors.textFieldBorder,
                                                 width: 1),
                                           ),
@@ -1625,8 +1685,8 @@ class PaymentOrderScreen extends StatelessWidget {
                                                     controller.paymentModel
                                                         .value.payfast!.name
                                                         .toString(),
-                                                    style:
-                                                        GoogleFonts.poppins(),
+                                                    style: GoogleFonts.poppins(
+                                                        color: Colors.black),
                                                   ),
                                                 ),
                                                 Radio(
@@ -1640,7 +1700,8 @@ class PaymentOrderScreen extends StatelessWidget {
                                                       themeChange.getThem()
                                                           ? AppColors
                                                               .darkModePrimary
-                                                          : AppColors.primary,
+                                                          : AppColors
+                                                              .darkModePrimary,
                                                   onChanged: (value) {
                                                     controller
                                                             .selectedPaymentMethod
@@ -1690,7 +1751,8 @@ class PaymentOrderScreen extends StatelessWidget {
                                                     ? themeChange.getThem()
                                                         ? AppColors
                                                             .darkModePrimary
-                                                        : AppColors.primary
+                                                        : AppColors
+                                                            .darkModePrimary
                                                     : AppColors.textFieldBorder,
                                                 width: 1),
                                           ),
@@ -1727,8 +1789,8 @@ class PaymentOrderScreen extends StatelessWidget {
                                                     controller.paymentModel
                                                         .value.paytm!.name
                                                         .toString(),
-                                                    style:
-                                                        GoogleFonts.poppins(),
+                                                    style: GoogleFonts.poppins(
+                                                        color: Colors.black),
                                                   ),
                                                 ),
                                                 Radio(
@@ -1742,7 +1804,8 @@ class PaymentOrderScreen extends StatelessWidget {
                                                       themeChange.getThem()
                                                           ? AppColors
                                                               .darkModePrimary
-                                                          : AppColors.primary,
+                                                          : AppColors
+                                                              .darkModePrimary,
                                                   onChanged: (value) {
                                                     controller
                                                             .selectedPaymentMethod
@@ -1795,7 +1858,8 @@ class PaymentOrderScreen extends StatelessWidget {
                                                     ? themeChange.getThem()
                                                         ? AppColors
                                                             .darkModePrimary
-                                                        : AppColors.primary
+                                                        : AppColors
+                                                            .darkModePrimary
                                                     : AppColors.textFieldBorder,
                                                 width: 1),
                                           ),
@@ -1832,8 +1896,8 @@ class PaymentOrderScreen extends StatelessWidget {
                                                     controller.paymentModel
                                                         .value.razorpay!.name
                                                         .toString(),
-                                                    style:
-                                                        GoogleFonts.poppins(),
+                                                    style: GoogleFonts.poppins(
+                                                        color: Colors.black),
                                                   ),
                                                 ),
                                                 Radio(
@@ -1847,7 +1911,8 @@ class PaymentOrderScreen extends StatelessWidget {
                                                       themeChange.getThem()
                                                           ? AppColors
                                                               .darkModePrimary
-                                                          : AppColors.primary,
+                                                          : AppColors
+                                                              .darkModePrimary,
                                                   onChanged: (value) {
                                                     controller
                                                             .selectedPaymentMethod

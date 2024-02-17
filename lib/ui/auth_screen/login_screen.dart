@@ -192,12 +192,12 @@ class LoginScreen extends StatelessWidget {
                                 ),
                                 hintText: "Phone number".tr)),
                         const SizedBox(
-                          height: 380,
+                          height: 400,
                         ),
                         Align(
                           alignment: Alignment.bottomCenter,
                           child: Container(
-                            height: MediaQuery.of(context).size.height * .18,
+                            height: MediaQuery.of(context).size.height * .07,
                             width: double.infinity,
                             decoration: BoxDecoration(
                                 color: Colors.white,
@@ -207,32 +207,25 @@ class LoginScreen extends StatelessWidget {
                                 )
 
                             ),
-                            child: Column(
-                              children: [
-                                Spacer(),
-                                InkWell(
-                                  onTap: (){
-                                    controller.sendCode();
-                                  },
-                                  child: Container(
-                                    height: 60,
-                                    width: MediaQuery.of(context).size.width * .85,
-                                    decoration: BoxDecoration(
-                                      color: Colors.green,
-                                      borderRadius: BorderRadius.circular(35),
-                                    ),
-                                    child: Center(
-                                      child: Text("Next".tr, style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 17,
-                                      ),),
-                                    ),
-                                  ),
+                            child: InkWell(
+                              onTap: (){
+                                controller.sendCode();
+                              },
+                              child: Container(
+                                height: 60,
+                                width: MediaQuery.of(context).size.width * .85,
+                                decoration: BoxDecoration(
+                                  color: Colors.green,
+                                  borderRadius: BorderRadius.circular(35),
                                 ),
-                                Spacer(),
-
-                              ],
+                                child: Center(
+                                  child: Text("Next".tr, style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 17,
+                                  ),),
+                                ),
+                              ),
                             ),
                           ),
                         ),
@@ -390,40 +383,40 @@ class LoginScreen extends StatelessWidget {
                 ],
               ),
             ),
-            bottomNavigationBar: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-                child: Text.rich(
-                  textAlign: TextAlign.center,
-                  TextSpan(
-                    text: 'By tapping "Next" you agree to '.tr,
-                    style: GoogleFonts.poppins(),
-                    children: <TextSpan>[
-                      TextSpan(
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              Get.to(const TermsAndConditionScreen(
-                                type: "terms",
-                              ));
-                            },
-                          text: 'Terms and conditions'.tr,
-                          style: GoogleFonts.poppins(
-                              decoration: TextDecoration.underline)),
-                      TextSpan(text: ' and ', style: GoogleFonts.poppins()),
-                      TextSpan(
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              Get.to(const TermsAndConditionScreen(
-                                type: "privacy",
-                              ));
-                            },
-                          text: 'privacy policy'.tr,
-                          style: GoogleFonts.poppins(
-                              decoration: TextDecoration.underline)),
-                      // can add more TextSpans here...
-                    ],
-                  ),
-                )),
+            // bottomNavigationBar: Padding(
+            //     padding:
+            //         const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+            //     child: Text.rich(
+            //       textAlign: TextAlign.center,
+            //       TextSpan(
+            //         text: 'By tapping "Next" you agree to '.tr,
+            //         style: GoogleFonts.poppins(),
+            //         children: <TextSpan>[
+            //           TextSpan(
+            //               recognizer: TapGestureRecognizer()
+            //                 ..onTap = () {
+            //                   Get.to(const TermsAndConditionScreen(
+            //                     type: "terms",
+            //                   ));
+            //                 },
+            //               text: 'Terms and conditions'.tr,
+            //               style: GoogleFonts.poppins(
+            //                   decoration: TextDecoration.underline)),
+            //           TextSpan(text: ' and ', style: GoogleFonts.poppins()),
+            //           TextSpan(
+            //               recognizer: TapGestureRecognizer()
+            //                 ..onTap = () {
+            //                   Get.to(const TermsAndConditionScreen(
+            //                     type: "privacy",
+            //                   ));
+            //                 },
+            //               text: 'privacy policy'.tr,
+            //               style: GoogleFonts.poppins(
+            //                   decoration: TextDecoration.underline)),
+            //           // can add more TextSpans here...
+            //         ],
+            //       ),
+            //     )),
           );
         });
   }
