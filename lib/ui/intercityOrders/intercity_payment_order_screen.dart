@@ -21,7 +21,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-
 import '../../themes/button_them.dart';
 
 class InterCityPaymentOrderScreen extends StatelessWidget {
@@ -30,22 +29,22 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeChange = Provider.of<DarkThemeProvider>(context);
-
     return GetX<IntercityPaymentOrderController>(
         init: IntercityPaymentOrderController(),
         builder: (controller) {
           return Scaffold(
-              backgroundColor: AppColors.primary,
+              backgroundColor: Colors.white,
               appBar: AppBar(
-                backgroundColor: AppColors.primary,
-                title: Text("OutStation ride details".tr),
+                backgroundColor: Colors.white,
+                title: Text(
+                  "OutStation ride details".tr,
+                  style: GoogleFonts.openSans(color: Colors.black),
+                ),
                 leading: InkWell(
                     onTap: () {
                       Get.back();
                     },
-                    child: const Icon(
-                      Icons.arrow_back,
-                    )),
+                    child: const Icon(Icons.arrow_back, color: Colors.black)),
               ),
               body: Column(
                 children: [
@@ -58,7 +57,7 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                         ? Constant.loader()
                         : Container(
                             decoration: BoxDecoration(
-                                color: Theme.of(context).colorScheme.background,
+                                color: Colors.white,
                                 borderRadius: const BorderRadius.only(
                                     topLeft: Radius.circular(25),
                                     topRight: Radius.circular(25))),
@@ -74,8 +73,11 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                   builder: (context, snapshot) {
                                     if (snapshot.hasError) {
                                       return Center(
-                                          child:
-                                              Text('Something went wrong'.tr));
+                                          child: Text(
+                                        'Something went wrong'.tr,
+                                        style: GoogleFonts.openSans(
+                                            color: Colors.black),
+                                      ));
                                     }
 
                                     if (snapshot.connectionState ==
@@ -108,6 +110,7 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                             Text(
                                               "Vehicle Details".tr,
                                               style: GoogleFonts.poppins(
+                                                  color: Colors.black,
                                                   fontWeight: FontWeight.w600),
                                             ),
                                             const SizedBox(
@@ -127,9 +130,14 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                       return Constant.loader();
                                                     case ConnectionState.done:
                                                       if (snapshot.hasError) {
-                                                        return Text(snapshot
-                                                            .error
-                                                            .toString());
+                                                        return Text(
+                                                          snapshot.error
+                                                              .toString(),
+                                                          style: GoogleFonts
+                                                              .openSans(
+                                                                  color: Colors
+                                                                      .black),
+                                                        );
                                                       } else {
                                                         DriverUserModel
                                                             driverModel =
@@ -142,7 +150,7 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                                 ? AppColors
                                                                     .darkContainerBackground
                                                                 : AppColors
-                                                                    .containerBackground,
+                                                                    .darkContainerBackground,
                                                             borderRadius:
                                                                 const BorderRadius
                                                                     .all(Radius
@@ -154,7 +162,7 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                                     ? AppColors
                                                                         .darkContainerBorder
                                                                     : AppColors
-                                                                        .containerBorder,
+                                                                        .darkContainerBorder,
                                                                 width: 0.5),
                                                             boxShadow:
                                                                 themeChange
@@ -199,7 +207,7 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                                           ? Colors
                                                                               .white
                                                                           : Colors
-                                                                              .black,
+                                                                              .white,
                                                                     ),
                                                                     const SizedBox(
                                                                       width: 10,
@@ -210,6 +218,8 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                                           .vehicleType
                                                                           .toString(),
                                                                       style: GoogleFonts.poppins(
+                                                                          color: Colors
+                                                                              .black,
                                                                           fontWeight:
                                                                               FontWeight.w600),
                                                                     )
@@ -225,7 +235,7 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                                           ? Colors
                                                                               .white
                                                                           : Colors
-                                                                              .black,
+                                                                              .white,
                                                                     ),
                                                                     const SizedBox(
                                                                       width: 10,
@@ -236,6 +246,8 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                                           .vehicleColor
                                                                           .toString(),
                                                                       style: GoogleFonts.poppins(
+                                                                          color: Colors
+                                                                              .black,
                                                                           fontWeight:
                                                                               FontWeight.w600),
                                                                     )
@@ -250,7 +262,7 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                                           ? Colors
                                                                               .white
                                                                           : Colors
-                                                                              .black,
+                                                                              .white,
                                                                     ),
                                                                     const SizedBox(
                                                                       width: 10,
@@ -261,6 +273,8 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                                           .vehicleNumber
                                                                           .toString(),
                                                                       style: GoogleFonts.poppins(
+                                                                          color: Colors
+                                                                              .black,
                                                                           fontWeight:
                                                                               FontWeight.w600),
                                                                     )
@@ -272,7 +286,13 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                         );
                                                       }
                                                     default:
-                                                      return Text('Error'.tr);
+                                                      return Text(
+                                                        'Error'.tr,
+                                                        style: GoogleFonts
+                                                            .openSans(
+                                                                color: Colors
+                                                                    .black),
+                                                      );
                                                   }
                                                 }),
                                             const SizedBox(
@@ -282,6 +302,7 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                               "Pickup and drop-off locations"
                                                   .tr,
                                               style: GoogleFonts.poppins(
+                                                  color: Colors.black,
                                                   fontWeight: FontWeight.w600),
                                             ),
                                             const SizedBox(
@@ -293,7 +314,7 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                     ? AppColors
                                                         .darkContainerBackground
                                                     : AppColors
-                                                        .containerBackground,
+                                                        .darkContainerBackground,
                                                 borderRadius:
                                                     const BorderRadius.all(
                                                         Radius.circular(10)),
@@ -302,7 +323,7 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                         ? AppColors
                                                             .darkContainerBorder
                                                         : AppColors
-                                                            .containerBorder,
+                                                            .darkContainerBorder,
                                                     width: 0.5),
                                                 boxShadow: themeChange.getThem()
                                                     ? null
@@ -343,7 +364,7 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                 decoration: BoxDecoration(
                                                     color: themeChange.getThem()
                                                         ? AppColors.darkGray
-                                                        : AppColors.gray,
+                                                        : AppColors.darkGray,
                                                     borderRadius:
                                                         const BorderRadius.all(
                                                             Radius.circular(
@@ -362,6 +383,8 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                                       .status
                                                                       .toString(),
                                                                   style: GoogleFonts.poppins(
+                                                                      color: Colors
+                                                                          .black,
                                                                       fontWeight:
                                                                           FontWeight
                                                                               .w500))),
@@ -371,7 +394,9 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                                       orderModel
                                                                           .createdDate),
                                                               style: GoogleFonts
-                                                                  .poppins()),
+                                                                  .poppins(
+                                                                      color: Colors
+                                                                          .black)),
                                                         ],
                                                       ),
                                                     )),
@@ -383,7 +408,7 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                     ? AppColors
                                                         .darkContainerBackground
                                                     : AppColors
-                                                        .containerBackground,
+                                                        .darkContainerBackground,
                                                 borderRadius:
                                                     const BorderRadius.all(
                                                         Radius.circular(10)),
@@ -392,7 +417,7 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                         ? AppColors
                                                             .darkContainerBorder
                                                         : AppColors
-                                                            .containerBorder,
+                                                            .darkContainerBorder,
                                                     width: 0.5),
                                                 boxShadow: themeChange.getThem()
                                                     ? null
@@ -479,6 +504,8 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                               "Redeem Coupon"
                                                                   .tr,
                                                               style: GoogleFonts.poppins(
+                                                                  color: Colors
+                                                                      .black,
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .w700),
@@ -487,7 +514,9 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                               "Add coupon code"
                                                                   .tr,
                                                               style: GoogleFonts
-                                                                  .poppins(),
+                                                                  .poppins(
+                                                                      color: Colors
+                                                                          .black),
                                                             ),
                                                           ],
                                                         ),
@@ -511,7 +540,7 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                     ? AppColors
                                                         .darkContainerBackground
                                                     : AppColors
-                                                        .containerBackground,
+                                                        .darkContainerBackground,
                                                 borderRadius:
                                                     const BorderRadius.all(
                                                         Radius.circular(10)),
@@ -520,7 +549,7 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                         ? AppColors
                                                             .darkContainerBorder
                                                         : AppColors
-                                                            .containerBorder,
+                                                            .darkContainerBorder,
                                                     width: 0.5),
                                                 boxShadow: themeChange.getThem()
                                                     ? null
@@ -547,13 +576,15 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                       "Booking summary".tr,
                                                       style:
                                                           GoogleFonts.poppins(
+                                                              color:
+                                                                  Colors.black,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w600),
                                                     ),
                                                     const Divider(
-                                                      thickness: 1,
-                                                    ),
+                                                        thickness: 1,
+                                                        color: Colors.black),
                                                     Row(
                                                       children: [
                                                         Expanded(
@@ -573,6 +604,8 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                                   .toString()),
                                                           style: GoogleFonts
                                                               .poppins(
+                                                                  color: Colors
+                                                                      .black,
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .w600),
@@ -580,8 +613,8 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                       ],
                                                     ),
                                                     const Divider(
-                                                      thickness: 1,
-                                                    ),
+                                                        thickness: 1,
+                                                        color: Colors.black),
                                                     controller.orderModel.value
                                                                 .taxList ==
                                                             null
@@ -622,14 +655,17 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                                             amount:
                                                                                 Constant().calculateTax(amount: (double.parse(controller.orderModel.value.finalRate.toString()) - double.parse(controller.couponAmount.value.toString())).toString(), taxModel: taxModel).toString()),
                                                                         style: GoogleFonts.poppins(
-                                                                            fontWeight:
-                                                                                FontWeight.w600),
+                                                                            color:
+                                                                                Colors.black,
+                                                                            fontWeight: FontWeight.w600),
                                                                       ),
                                                                     ],
                                                                   ),
                                                                   const Divider(
                                                                     thickness:
                                                                         1,
+                                                                    color: Colors
+                                                                        .black,
                                                                   ),
                                                                 ],
                                                               );
@@ -670,6 +706,8 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                             "Payable amount".tr,
                                                             style: GoogleFonts
                                                                 .poppins(
+                                                                    color: Colors
+                                                                        .black,
                                                                     fontWeight:
                                                                         FontWeight
                                                                             .w600),
@@ -682,6 +720,8 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                                   .toString()),
                                                           style: GoogleFonts
                                                               .poppins(
+                                                                  color: Colors
+                                                                      .black,
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .w600),
@@ -721,7 +761,7 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
       IntercityPaymentOrderController controller,
       InterCityOrderModel orderModel) {
     return showModalBottomSheet(
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: Colors.white,
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
                 topRight: Radius.circular(15), topLeft: Radius.circular(15))),
@@ -749,12 +789,17 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                 onTap: () {
                                   Get.back();
                                 },
-                                child: const Icon(Icons.arrow_back_ios)),
+                                child: const Icon(
+                                  Icons.arrow_back_ios,
+                                  color: Colors.black,
+                                )),
                             Expanded(
                                 child: Center(
                                     child: Text(
                               "Select Payment Method".tr,
-                              style: GoogleFonts.poppins(),
+                              style: GoogleFonts.poppins(
+                                color: Colors.black,
+                              ),
                             ))),
                           ],
                         ),
@@ -801,7 +846,8 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                       ? themeChange.getThem()
                                                           ? AppColors
                                                               .darkModePrimary
-                                                          : AppColors.primary
+                                                          : AppColors
+                                                              .darkModePrimary
                                                       : AppColors
                                                           .textFieldBorder,
                                                   width: 1),
@@ -841,7 +887,9 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                           .value.cash!.name
                                                           .toString(),
                                                       style:
-                                                          GoogleFonts.poppins(),
+                                                          GoogleFonts.poppins(
+                                                              color:
+                                                                  Colors.black),
                                                     ),
                                                   ),
                                                   Radio(
@@ -854,11 +902,12 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                     groupValue: controller
                                                         .selectedPaymentMethod
                                                         .value,
-                                                    activeColor:
-                                                        themeChange.getThem()
-                                                            ? AppColors
-                                                                .darkModePrimary
-                                                            : AppColors.primary,
+                                                    activeColor: themeChange
+                                                            .getThem()
+                                                        ? AppColors
+                                                            .darkModePrimary
+                                                        : AppColors
+                                                            .darkModePrimary,
                                                     onChanged: (value) {
                                                       controller
                                                               .selectedPaymentMethod
@@ -916,7 +965,8 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                       ? themeChange.getThem()
                                                           ? AppColors
                                                               .darkModePrimary
-                                                          : AppColors.primary
+                                                          : AppColors
+                                                              .darkModePrimary
                                                       : AppColors
                                                           .textFieldBorder,
                                                   width: 1),
@@ -959,7 +1009,9 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                           .value.wallet!.name
                                                           .toString(),
                                                       style:
-                                                          GoogleFonts.poppins(),
+                                                          GoogleFonts.poppins(
+                                                              color:
+                                                                  Colors.black),
                                                     ),
                                                   ),
                                                   Text(
@@ -970,7 +1022,7 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                               ? AppColors
                                                                   .darkModePrimary
                                                               : AppColors
-                                                                  .primary)),
+                                                                  .darkModePrimary)),
                                                   Radio(
                                                     value: controller
                                                         .paymentModel
@@ -981,11 +1033,12 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                     groupValue: controller
                                                         .selectedPaymentMethod
                                                         .value,
-                                                    activeColor:
-                                                        themeChange.getThem()
-                                                            ? AppColors
-                                                                .darkModePrimary
-                                                            : AppColors.primary,
+                                                    activeColor: themeChange
+                                                            .getThem()
+                                                        ? AppColors
+                                                            .darkModePrimary
+                                                        : AppColors
+                                                            .darkModePrimary,
                                                     onChanged: (value) {
                                                       controller
                                                               .selectedPaymentMethod
@@ -1043,7 +1096,8 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                       ? themeChange.getThem()
                                                           ? AppColors
                                                               .darkModePrimary
-                                                          : AppColors.primary
+                                                          : AppColors
+                                                              .darkModePrimary
                                                       : AppColors
                                                           .textFieldBorder,
                                                   width: 1),
@@ -1084,7 +1138,9 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                           .value.strip!.name
                                                           .toString(),
                                                       style:
-                                                          GoogleFonts.poppins(),
+                                                          GoogleFonts.poppins(
+                                                              color:
+                                                                  Colors.black),
                                                     ),
                                                   ),
                                                   Radio(
@@ -1097,11 +1153,12 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                     groupValue: controller
                                                         .selectedPaymentMethod
                                                         .value,
-                                                    activeColor:
-                                                        themeChange.getThem()
-                                                            ? AppColors
-                                                                .darkModePrimary
-                                                            : AppColors.primary,
+                                                    activeColor: themeChange
+                                                            .getThem()
+                                                        ? AppColors
+                                                            .darkModePrimary
+                                                        : AppColors
+                                                            .darkModePrimary,
                                                     onChanged: (value) {
                                                       controller
                                                               .selectedPaymentMethod
@@ -1155,7 +1212,8 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                     ? themeChange.getThem()
                                                         ? AppColors
                                                             .darkModePrimary
-                                                        : AppColors.primary
+                                                        : AppColors
+                                                            .darkModePrimary
                                                     : AppColors.textFieldBorder,
                                                 width: 1),
                                           ),
@@ -1192,8 +1250,8 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                     controller.paymentModel
                                                         .value.paypal!.name
                                                         .toString(),
-                                                    style:
-                                                        GoogleFonts.poppins(),
+                                                    style: GoogleFonts.poppins(
+                                                        color: Colors.black),
                                                   ),
                                                 ),
                                                 Radio(
@@ -1207,7 +1265,8 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                       themeChange.getThem()
                                                           ? AppColors
                                                               .darkModePrimary
-                                                          : AppColors.primary,
+                                                          : AppColors
+                                                              .darkModePrimary,
                                                   onChanged: (value) {
                                                     controller
                                                             .selectedPaymentMethod
@@ -1260,7 +1319,8 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                     ? themeChange.getThem()
                                                         ? AppColors
                                                             .darkModePrimary
-                                                        : AppColors.primary
+                                                        : AppColors
+                                                            .darkModePrimary
                                                     : AppColors.textFieldBorder,
                                                 width: 1),
                                           ),
@@ -1297,8 +1357,8 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                     controller.paymentModel
                                                         .value.payStack!.name
                                                         .toString(),
-                                                    style:
-                                                        GoogleFonts.poppins(),
+                                                    style: GoogleFonts.poppins(
+                                                        color: Colors.black),
                                                   ),
                                                 ),
                                                 Radio(
@@ -1312,7 +1372,8 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                       themeChange.getThem()
                                                           ? AppColors
                                                               .darkModePrimary
-                                                          : AppColors.primary,
+                                                          : AppColors
+                                                              .darkModePrimary,
                                                   onChanged: (value) {
                                                     controller
                                                             .selectedPaymentMethod
@@ -1368,7 +1429,8 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                     ? themeChange.getThem()
                                                         ? AppColors
                                                             .darkModePrimary
-                                                        : AppColors.primary
+                                                        : AppColors
+                                                            .darkModePrimary
                                                     : AppColors.textFieldBorder,
                                                 width: 1),
                                           ),
@@ -1405,8 +1467,8 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                     controller.paymentModel
                                                         .value.mercadoPago!.name
                                                         .toString(),
-                                                    style:
-                                                        GoogleFonts.poppins(),
+                                                    style: GoogleFonts.poppins(
+                                                        color: Colors.black),
                                                   ),
                                                 ),
                                                 Radio(
@@ -1420,7 +1482,8 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                       themeChange.getThem()
                                                           ? AppColors
                                                               .darkModePrimary
-                                                          : AppColors.primary,
+                                                          : AppColors
+                                                              .darkModePrimary,
                                                   onChanged: (value) {
                                                     controller
                                                             .selectedPaymentMethod
@@ -1476,7 +1539,8 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                     ? themeChange.getThem()
                                                         ? AppColors
                                                             .darkModePrimary
-                                                        : AppColors.primary
+                                                        : AppColors
+                                                            .darkModePrimary
                                                     : AppColors.textFieldBorder,
                                                 width: 1),
                                           ),
@@ -1513,8 +1577,8 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                     controller.paymentModel
                                                         .value.flutterWave!.name
                                                         .toString(),
-                                                    style:
-                                                        GoogleFonts.poppins(),
+                                                    style: GoogleFonts.poppins(
+                                                        color: Colors.black),
                                                   ),
                                                 ),
                                                 Radio(
@@ -1528,7 +1592,8 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                       themeChange.getThem()
                                                           ? AppColors
                                                               .darkModePrimary
-                                                          : AppColors.primary,
+                                                          : AppColors
+                                                              .darkModePrimary,
                                                   onChanged: (value) {
                                                     controller
                                                             .selectedPaymentMethod
@@ -1581,7 +1646,8 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                     ? themeChange.getThem()
                                                         ? AppColors
                                                             .darkModePrimary
-                                                        : AppColors.primary
+                                                        : AppColors
+                                                            .darkModePrimary
                                                     : AppColors.textFieldBorder,
                                                 width: 1),
                                           ),
@@ -1618,8 +1684,8 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                     controller.paymentModel
                                                         .value.payfast!.name
                                                         .toString(),
-                                                    style:
-                                                        GoogleFonts.poppins(),
+                                                    style: GoogleFonts.poppins(
+                                                        color: Colors.black),
                                                   ),
                                                 ),
                                                 Radio(
@@ -1633,7 +1699,8 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                       themeChange.getThem()
                                                           ? AppColors
                                                               .darkModePrimary
-                                                          : AppColors.primary,
+                                                          : AppColors
+                                                              .darkModePrimary,
                                                   onChanged: (value) {
                                                     controller
                                                             .selectedPaymentMethod
@@ -1683,7 +1750,8 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                     ? themeChange.getThem()
                                                         ? AppColors
                                                             .darkModePrimary
-                                                        : AppColors.primary
+                                                        : AppColors
+                                                            .darkModePrimary
                                                     : AppColors.textFieldBorder,
                                                 width: 1),
                                           ),
@@ -1720,8 +1788,8 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                     controller.paymentModel
                                                         .value.paytm!.name
                                                         .toString(),
-                                                    style:
-                                                        GoogleFonts.poppins(),
+                                                    style: GoogleFonts.poppins(
+                                                        color: Colors.black),
                                                   ),
                                                 ),
                                                 Radio(
@@ -1735,7 +1803,8 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                       themeChange.getThem()
                                                           ? AppColors
                                                               .darkModePrimary
-                                                          : AppColors.primary,
+                                                          : AppColors
+                                                              .darkModePrimary,
                                                   onChanged: (value) {
                                                     controller
                                                             .selectedPaymentMethod
@@ -1788,7 +1857,8 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                     ? themeChange.getThem()
                                                         ? AppColors
                                                             .darkModePrimary
-                                                        : AppColors.primary
+                                                        : AppColors
+                                                            .darkModePrimary
                                                     : AppColors.textFieldBorder,
                                                 width: 1),
                                           ),
@@ -1825,8 +1895,8 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                     controller.paymentModel
                                                         .value.razorpay!.name
                                                         .toString(),
-                                                    style:
-                                                        GoogleFonts.poppins(),
+                                                    style: GoogleFonts.poppins(
+                                                        color: Colors.black),
                                                   ),
                                                 ),
                                                 Radio(
@@ -1840,7 +1910,8 @@ class InterCityPaymentOrderScreen extends StatelessWidget {
                                                       themeChange.getThem()
                                                           ? AppColors
                                                               .darkModePrimary
-                                                          : AppColors.primary,
+                                                          : AppColors
+                                                              .darkModePrimary,
                                                   onChanged: (value) {
                                                     controller
                                                             .selectedPaymentMethod
