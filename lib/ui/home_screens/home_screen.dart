@@ -16,6 +16,8 @@ import 'package:customer/themes/app_colors.dart';
 import 'package:customer/themes/button_them.dart';
 import 'package:customer/themes/responsive.dart';
 import 'package:customer/themes/text_field_them.dart';
+import 'package:customer/ui/destinationBottomSheet.dart';
+import 'package:customer/ui/placesBottomSheet.dart';
 import 'package:customer/utils/DarkThemeProvider.dart';
 import 'package:customer/utils/fire_store_utils.dart';
 import 'package:customer/utils/utils.dart';
@@ -101,8 +103,7 @@ class HomeScreen extends StatelessWidget {
                                               ),
                                               Expanded(
                                                   child: Text(
-                                                      controller.currentLocation
-                                                          .value,
+                                                      controller.currentLocation.value.toString(),
                                                       style:
                                                           GoogleFonts.poppins(
                                                               color:
@@ -206,27 +207,30 @@ class HomeScreen extends StatelessWidget {
                                                 .latitude ==
                                             null
                                         ? InkWell(
-                                            onTap: () async {
-                                              LocationResult? result =
-                                                  await Utils.showPlacePicker(
-                                                      context);
-                                              if (result != null) {
-                                                controller
-                                                        .sourceLocationController
-                                                        .value
-                                                        .text =
-                                                    result.formattedAddress
-                                                        .toString();
-                                                controller.sourceLocationLAtLng
-                                                        .value =
-                                                    LocationLatLng(
-                                                        latitude: result
-                                                            .latLng!.latitude,
-                                                        longitude: result
-                                                            .latLng!.longitude);
-                                                controller.calculateAmount();
-                                              }
-                                            },
+                                        onTap: (){
+                                          largeBottomSheet(context,controller);
+                                        },
+                                            // onTap: () async {
+                                            //   LocationResult? result =
+                                            //       await Utils.showPlacePicker(
+                                            //           context);
+                                            //   if (result != null) {
+                                            //     controller
+                                            //             .sourceLocationController
+                                            //             .value
+                                            //             .text =
+                                            //         result.formattedAddress
+                                            //             .toString();
+                                            //     controller.sourceLocationLAtLng
+                                            //             .value =
+                                            //         LocationLatLng(
+                                            //             latitude: result
+                                            //                 .latLng!.latitude,
+                                            //             longitude: result
+                                            //                 .latLng!.longitude);
+                                            //     controller.calculateAmount();
+                                            //   }
+                                            // },
                                             child: TextFieldThem.buildTextFiled(
                                                 context,
                                                 hintText: 'Enter Location'.tr,
@@ -267,6 +271,7 @@ class HomeScreen extends StatelessWidget {
                                                       CrossAxisAlignment.start,
                                                   children: [
                                                     InkWell(
+
                                                         onTap: () async {
                                                           LocationResult?
                                                               result =
@@ -330,33 +335,36 @@ class HomeScreen extends StatelessWidget {
                                                             Responsive.height(
                                                                 1, context)),
                                                     InkWell(
-                                                        onTap: () async {
-                                                          LocationResult?
-                                                              result =
-                                                              await Utils
-                                                                  .showPlacePicker(
-                                                                      context);
-                                                          if (result != null) {
-                                                            controller
-                                                                    .destinationLocationController
-                                                                    .value
-                                                                    .text =
-                                                                result
-                                                                    .formattedAddress
-                                                                    .toString();
-                                                            controller.destinationLocationLAtLng
-                                                                    .value =
-                                                                LocationLatLng(
-                                                                    latitude: result
-                                                                        .latLng!
-                                                                        .latitude,
-                                                                    longitude: result
-                                                                        .latLng!
-                                                                        .longitude);
-                                                            controller
-                                                                .calculateAmount();
-                                                          }
-                                                        },
+                                                      onTap: (){
+                                                        destinationBottomSheet(context,controller);
+                                                      },
+                                                        // onTap: () async {
+                                                        //   LocationResult?
+                                                        //       result =
+                                                        //       await Utils
+                                                        //           .showPlacePicker(
+                                                        //               context);
+                                                        //   if (result != null) {
+                                                        //     controller
+                                                        //             .destinationLocationController
+                                                        //             .value
+                                                        //             .text =
+                                                        //         result
+                                                        //             .formattedAddress
+                                                        //             .toString();
+                                                        //     controller.destinationLocationLAtLng
+                                                        //             .value =
+                                                        //         LocationLatLng(
+                                                        //             latitude: result
+                                                        //                 .latLng!
+                                                        //                 .latitude,
+                                                        //             longitude: result
+                                                        //                 .latLng!
+                                                        //                 .longitude);
+                                                        //     controller
+                                                        //         .calculateAmount();
+                                                        //   }
+                                                        // },
                                                         child: Row(
                                                           children: [
                                                             Expanded(
@@ -722,6 +730,10 @@ class HomeScreen extends StatelessWidget {
                                       btnWidthRatio:
                                           Responsive.width(100, context),
                                       onPress: () async {
+
+
+
+
                                         bool isPaymentNotCompleted =
                                             await FireStoreUtils
                                                 .paymentStatusCheck();
@@ -737,10 +749,7 @@ class HomeScreen extends StatelessWidget {
                                             .isEmpty) {
                                           ShowToastDialog.showToast(
                                               "Please select source location"
-                                                  .tr
-                                          );
-                                          print('asdasdasdasdasdasdasdasda'+controller.sourceLocationController.value.text.toString());
-
+                                                  .tr);
                                         } else if (controller
                                             .destinationLocationController
                                             .value
@@ -749,13 +758,15 @@ class HomeScreen extends StatelessWidget {
                                           ShowToastDialog.showToast(
                                               "Please select destination location"
                                                   .tr);
-                                        } else if (double.parse(
-                                                controller.distance.value) <=
-                                            2) {
-                                          ShowToastDialog.showToast(
-                                              "Please select more than two ${Constant.distanceType} location"
-                                                  .tr);
-                                        } else if (controller.selectedType.value
+                                        }
+                                        // else if (double.parse(
+                                        //         controller.distance.value) <=
+                                        //     2) {
+                                        //   ShowToastDialog.showToast(
+                                        //       "Please select more than two ${Constant.distanceType} location"
+                                        //           .tr);
+                                        // }
+                                        else if (controller.selectedType.value
                                                     .offerRate ==
                                                 true &&
                                             controller.offerYourRateController
@@ -766,7 +777,6 @@ class HomeScreen extends StatelessWidget {
                                           showAlertDialog(context);
                                           // showDialog(context: context, builder: (BuildContext context) => warningDailog());
                                         } else {
-                                          print('asdasdasdasdasdasdasdasda'+controller.sourceLocationController.value.toString());
                                           // ShowToastDialog.showLoader("Please wait");
                                           OrderModel orderModel = OrderModel();
                                           orderModel.id = Constant.getUuid();
@@ -848,6 +858,9 @@ class HomeScreen extends StatelessWidget {
                                                 .selectedTakingRide.value;
                                           }
 
+
+
+
                                           // FireStoreUtils().startStream();
                                           FireStoreUtils()
                                               .sendOrderData(orderModel)
@@ -883,7 +896,9 @@ class HomeScreen extends StatelessWidget {
                                             controller.dashboardController
                                                 .selectedDrawerIndex(2);
                                             ShowToastDialog.closeLoader();
-                                          });
+                                          },
+                                          );
+
                                         }
                                       },
                                     ),
