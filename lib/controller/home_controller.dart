@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:http/http.dart' as http;
 import 'package:customer/constant/constant.dart';
 import 'package:customer/controller/dash_board_controller.dart';
 import 'package:customer/model/airport_model.dart';
@@ -18,6 +19,15 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class HomeController extends GetxController {
+
+
+
+ dynamic uuid = "";
+ dynamic sessionToken;
+ TextEditingController locationSearchController = TextEditingController();
+
+
+
   DashBoardController dashboardController = Get.put(DashBoardController());
 
   Rx<TextEditingController> sourceLocationController = TextEditingController().obs;
@@ -131,4 +141,54 @@ class HomeController extends GetxController {
       contactList.value = (json.decode(contactListJson) as List<dynamic>).map<ContactModel>((item) => ContactModel.fromJson(item)).toList();
     }
   }
+
+
+ RxList placeList = [].obs;
+ RxInt results = 0.obs;
+ RxString selectedPlace = 'Tap to Search'.obs;
+
+ void getSuggestions(
+     String input, dynamic sessionToken, HomeController cont) async {
+   String baseURL = 'https://maps.googleapis.com/maps/api/place/autocomplete/json';
+   String kPLACES_API_KEY = 'AIzaSyB3bjRseTGgN29mO5gZSg3TYNn2ZXUFIiU';
+   String request =
+       '$baseURL?input=$input&key=$kPLACES_API_KEY&sessiontoken=$sessionToken';
+
+
+   var response = await http.get(Uri.parse(request)).then((response) {
+     if (response.statusCode == 200) {
+       List predictions = jsonDecode(response.body.toString())['predictions'];
+       List bostonPredictions = predictions.toList();
+       print("++++++++++++++++++++++++++++++++++++++++++");
+       print(predictions);
+       print(bostonPredictions);
+       // List bostonPredictions = predictions.where((prediction) {
+       //   return prediction['description'].toLowerCase().contains('boston');
+       // }).toList();
+
+       results.value = bostonPredictions.length;
+       // cont.state.placeList.value =
+       cont.placeList.value = bostonPredictions;
+
+     } else {
+
+     }
+   }).onError((error, stackTrace) {
+
+   });
+ }
+
+
+final loc = LatLng(0,0).obs;
+ Future<void> GetCoordinates(BuildContext context) async {
+
+   List<Location> coordinates =
+   await locationFromAddress(selectedPlace.toString());
+   if (coordinates.isNotEmpty) {
+     final lat = coordinates.first;
+     loc.value = LatLng(lat.latitude, lat.longitude);
+   }
+   print(loc.value.latitude);
+   print(loc.value.longitude);
+ }
 }
