@@ -30,10 +30,10 @@ import 'package:google_fonts/google_fonts.dart';
 class DashBoardController extends GetxController {
   final drawerItems = [
     DrawerItem('Home'.tr, "assets/icons/ic_home.svg"),
-    // DrawerItem('City'.tr, "assets/icons/ic_city.svg"),
-    // DrawerItem('OutStation'.tr, "assets/icons/ic_intercity.svg"),
-    // DrawerItem('Rides'.tr, "assets/icons/ic_order.svg"),
-    // DrawerItem('OutStation Rides'.tr, "assets/icons/ic_order.svg"),
+    DrawerItem('City'.tr, "assets/icons/ic_city.svg"),
+    DrawerItem('OutStation'.tr, "assets/icons/ic_intercity.svg"),
+    DrawerItem('Rides'.tr, "assets/icons/ic_order.svg"),
+    DrawerItem('OutStation Rides'.tr, "assets/icons/ic_order.svg"),
     DrawerItem('My Wallet'.tr, "assets/icons/ic_wallet.svg"),
     DrawerItem('Settings'.tr, "assets/icons/ic_settings.svg"),
     DrawerItem('Referral a friends'.tr, "assets/icons/ic_referral.svg"),
@@ -48,27 +48,27 @@ class DashBoardController extends GetxController {
     switch (pos) {
       case 0:
         return const MainScreen();
-      // case 1:
-      //   return const HomeScreen();
-      // case 2:
-      //   return const InterCityScreen();
-      // case 3:
-      //   return const OrderScreen();
-      // case 4:
-      //   return const InterCityOrderScreen();
       case 1:
-        return const WalletScreen();
+        return const HomeScreen();
       case 2:
-        return const SettingScreen();
+        return const InterCityScreen();
       case 3:
-        return const ReferralScreen();
+        return const OrderScreen();
       case 4:
-        return const InboxScreen();
+        return const InterCityOrderScreen();
       case 5:
-        return const ProfileScreen();
+        return const WalletScreen();
       case 6:
-        return const ContactUsScreen();
+        return const SettingScreen();
       case 7:
+        return const ReferralScreen();
+      case 8:
+        return const InboxScreen();
+      case 9:
+        return const ProfileScreen();
+      case 10:
+        return const ContactUsScreen();
+      case 11:
         return const FaqScreen();
       default:
         return Text("Error",style: GoogleFonts.poppins(

@@ -63,7 +63,7 @@ class Utils {
       BuildContext context, LatLng latLng) async {
     LocationResult? result = await Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => PlacePicker(
-              Constant.mapAPIKey,
+              'AIzaSyCdnrssnmZUvPplGu-jBMIzsj09CUh_6rQ',
               displayLocation: latLng,
             )));
     return result;

@@ -1,8 +1,9 @@
 import 'dart:convert';
 
+import 'package:customer/constant/show_toast_dialog.dart';
 import 'package:customer/controller/home_controller.dart';
+import 'package:customer/controller/interCity_controller.dart';
 import 'package:customer/model/order/location_lat_lng.dart';
-import 'package:customer/ui/search_textField.dart';
 // import 'package:customer/ui/serachTextField.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,8 +16,9 @@ import 'package:uuid/uuid.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../../main.dart';
+import 'search_textField.dart';
 
-Future destinationBottomSheet(BuildContext context,HomeController cont) {
+Future largeBottomSheet(BuildContext context,InterCityController cont) {
   cont.uuid = Uuid();
   cont.locationSearchController.addListener(() {
     if (cont.sessionToken == null) {
@@ -91,7 +93,7 @@ Future destinationBottomSheet(BuildContext context,HomeController cont) {
                     ],
                   ),
                   SizedBox(width: 15,),
-                  Text('Enter your Location',style: TextStyle(color: Colors.black),),
+                 Text('Enter your Location',style: TextStyle(color: Colors.black),),
                 ],
               ),
             ),
@@ -139,27 +141,36 @@ Future destinationBottomSheet(BuildContext context,HomeController cont) {
                           cont.selectedPlace.value = cont
                               .placeList[index]['description']
                               .toString();
-                          print("++++xxxxxxxxxxxxxx+++++++");
-                          print(cont.selectedPlace.value);
-                          await cont.GetCoordinates(context);
+  //                         print("++++xxxxxxxxxxxxxx+++++++");
+  //                         print(cont.selectedPlace.value);
+                         await cont.GetCoordinates(context);
                           cont.locationSearchController
                               .clear();
                           cont.placeList.value=[];
+  //
+                          if (cont.selectedPlace.value != 'Tap to Search') {
+                            // cont.sourceCityController
+                            //     .value.text =
+                            //     cityValue.result.vicinity
+                            //         .toString();
 
-                          if (true) {
                             cont
-                                .destinationLocationController
+                                .sourceLocationController
                                 .value
                                 .text =
                                 cont.selectedPlace.value
                                     .toString();
-                           cont.destinationLocationLAtLng
+                            cont.sourceLocationLAtLng
                                 .value =
                                 LocationLatLng(
                                     latitude: cont.loc.value.latitude,
-                                    longitude: cont.loc.value.longitude);
-                            cont
-                                .calculateAmount();
+
+                                    longitude: cont.loc.value.longitude,);
+
+                            cont.calculateAmount();
+                          } else {
+                            ShowToastDialog.showToast(
+                                "Please select address".tr);
                           }
 
 

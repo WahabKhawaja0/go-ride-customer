@@ -150,7 +150,8 @@ class HomeController extends GetxController {
  void getSuggestions(
      String input, dynamic sessionToken, HomeController cont) async {
    String baseURL = 'https://maps.googleapis.com/maps/api/place/autocomplete/json';
-   String kPLACES_API_KEY = 'AIzaSyB3bjRseTGgN29mO5gZSg3TYNn2ZXUFIiU';
+   String kPLACES_API_KEY = ''
+       'AIzaSyCdnrssnmZUvPplGu-jBMIzsj09CUh_6rQ';
    String request =
        '$baseURL?input=$input&key=$kPLACES_API_KEY&sessiontoken=$sessionToken';
 

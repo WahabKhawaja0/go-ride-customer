@@ -11,10 +11,11 @@ import 'package:customer/themes/app_colors.dart';
 import 'package:customer/utils/Preferences.dart';
 import 'package:customer/utils/fire_store_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
-
+import 'package:http/http.dart' as http;
 class InterCityController extends GetxController {
   DashBoardController dashboardController = Get.put(DashBoardController());
 
@@ -163,5 +164,65 @@ class InterCityController extends GetxController {
       contactList.value = (json.decode(contactListJson) as List<dynamic>).map<ContactModel>((item) => ContactModel.fromJson(item)).toList();
     }
   }
+
+
+
+
+  //Bottom Sheeet Variables
+
+
+  dynamic uuid ;
+  dynamic sessionToken;
+  RxList placeList = [].obs;
+  RxInt results = 0.obs;
+  RxString selectedPlace = 'Tap to Search'.obs;
+  TextEditingController locationSearchController = TextEditingController();
+
+  void getSuggestions(
+      String input, dynamic sessionToken, InterCityController cont) async {
+    String baseURL = 'https://maps.googleapis.com/maps/api/place/autocomplete/json';
+    String kPLACES_API_KEY = ''
+        'AIzaSyCdnrssnmZUvPplGu-jBMIzsj09CUh_6rQ';
+    String request =
+        '$baseURL?input=$input&key=$kPLACES_API_KEY&sessiontoken=$sessionToken';
+
+
+    var response = await http.get(Uri.parse(request)).then((response) {
+      if (response.statusCode == 200) {
+        List predictions = jsonDecode(response.body.toString())['predictions'];
+        List bostonPredictions = predictions.toList();
+        print("++++++++++++++++++++++++++++++++++++++++++");
+        print(predictions);
+        print(bostonPredictions);
+        // List bostonPredictions = predictions.where((prediction) {
+        //   return prediction['description'].toLowerCase().contains('boston');
+        // }).toList();
+
+        results.value = bostonPredictions.length;
+        // cont.state.placeList.value =
+        cont.placeList.value = bostonPredictions;
+
+      } else {
+
+      }
+    }).onError((error, stackTrace) {
+
+    });
+  }
+
+
+  final loc = LatLng(0,0).obs;
+  Future<void> GetCoordinates(BuildContext context) async {
+
+    List<Location> coordinates =
+    await locationFromAddress(selectedPlace.toString());
+    if (coordinates.isNotEmpty) {
+      final lat = coordinates.first;
+      loc.value = LatLng(lat.latitude, lat.longitude);
+    }
+    print(loc.value.latitude);
+    print(loc.value.longitude);
+  }
+
 
 }

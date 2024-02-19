@@ -4,6 +4,7 @@ import 'package:customer/controller/dash_board_controller.dart';
 import 'package:customer/model/user_model.dart';
 import 'package:customer/themes/app_colors.dart';
 import 'package:customer/themes/responsive.dart';
+import 'package:customer/ui/profile_screen/profile_screen.dart';
 import 'package:customer/utils/DarkThemeProvider.dart';
 import 'package:customer/utils/fire_store_utils.dart';
 import 'package:flutter/material.dart';
@@ -80,16 +81,26 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                               },
                               child: Padding(
                                 padding: const EdgeInsets.all(10.0),
-                                child: ClipOval(
-                                  child: CachedNetworkImage(
-                                    imageUrl:
-                                    driverModel.profilePic.toString(),
-                                    fit: BoxFit.cover,
-                                    placeholder: (context, url) =>
-                                        Constant.loader(),
-                                    errorWidget: (context, url, error) =>
-                                        Image.network(
-                                            Constant.userPlaceHolder),
+                                child: InkWell(
+                                  onTap:() {
+                        Get.to(ProfileScreen());
+                      },
+                                  child: Container(
+                                    height:50,
+                                    width:50,
+                                    decoration:BoxDecoration(
+                                      borderRadius: BorderRadius.circular(25),
+                                    ),
+                                    child: CachedNetworkImage(
+                                      imageUrl:
+                                      driverModel.profilePic.toString(),
+                                      fit: BoxFit.cover,
+                                      placeholder: (context, url) =>
+                                          Constant.loader(),
+                                      errorWidget: (context, url, error) =>
+                                          Image.network(
+                                              Constant.userPlaceHolder),
+                                    ),
                                   ),
                                 ),
                               ),

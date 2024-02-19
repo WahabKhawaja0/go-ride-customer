@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:bottom_picker/bottom_picker.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -17,6 +16,9 @@ import 'package:customer/themes/app_colors.dart';
 import 'package:customer/themes/button_them.dart';
 import 'package:customer/themes/responsive.dart';
 import 'package:customer/themes/text_field_them.dart';
+import 'package:customer/ui/interCity/destination_bottomSheet.dart';
+import 'package:customer/ui/interCity/places_screen.dart';
+// import 'package:customer/ui/places_screen.dart';
 import 'package:customer/utils/DarkThemeProvider.dart';
 import 'package:customer/utils/fire_store_utils.dart';
 import 'package:customer/utils/utils.dart';
@@ -45,496 +47,603 @@ class InterCityScreen extends StatelessWidget {
           backgroundColor: Colors.white,
           body: controller.isLoading.value
               ? Constant.loader()
-              : Column(
-            children: [
-              SizedBox(
-                height: Responsive.width(4, context),
-                width: Responsive.width(100, context),
-              ),
-              Expanded(
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(25),
-                          topRight: Radius.circular(25))),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: SingleChildScrollView(
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            InkWell(
-                                onTap: () async {
-                                  await Utils()
-                                      .handlePressButton(context)
-                                      .then((cityValue) {
-                                    if (cityValue != null) {
-                                      Utils.showPlacePickerWithLatLong(
-                                          context,
-                                          LatLng(
-                                              cityValue
-                                                  .result
-                                                  .geometry!
-                                                  .location
-                                                  .lat,
-                                              cityValue
-                                                  .result
-                                                  .geometry!
-                                                  .location
-                                                  .lng))
-                                          .then((value) {
-                                        if (value != null) {
-                                          controller.sourceCityController
-                                              .value.text =
-                                              cityValue.result.vicinity
-                                                  .toString();
-
-                                          controller
-                                              .sourceLocationController
-                                              .value
-                                              .text =
-                                              value.formattedAddress
-                                                  .toString();
-                                          controller.sourceLocationLAtLng
-                                              .value =
-                                              LocationLatLng(
-                                                  latitude: value
-                                                      .latLng!.latitude,
-                                                  longitude: value
-                                                      .latLng!.longitude);
-
-                                          controller.calculateAmount();
-                                        } else {
-                                          ShowToastDialog.showToast(
-                                              "Please select address".tr);
-                                        }
-                                      });
-                                    } else {
-                                      ShowToastDialog.showToast(
-                                          "Please select city".tr);
-                                    }
-                                  });
+              : Padding(
+                padding:  EdgeInsets.only(top: 40),
+                child: Column(
+                            children: [
+                SizedBox(
+                  height: Responsive.width(4, context),
+                  width: Responsive.width(100, context),
+                ),
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(25),
+                            topRight: Radius.circular(25))),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: SingleChildScrollView(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              InkWell(
+                                onTap: (){
+                                  largeBottomSheet(context, controller);
+                                  // largeBottomSheet(context, cont);
                                 },
-                                child: TextFieldThem.buildTextFiled(
-                                  context,
-                                  hintText: 'From'.tr,
-                                  controller: controller
-                                      .sourceLocationController.value,
-                                  enable: false,
-                                )),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            InkWell(
-                                onTap: () async {
-                                  await Utils()
-                                      .handlePressButton(context)
-                                      .then((cityValue) {
-                                    if (cityValue != null) {
-                                      Utils.showPlacePickerWithLatLong(
-                                          context,
-                                          LatLng(
-                                              cityValue
-                                                  .result
-                                                  .geometry!
-                                                  .location
-                                                  .lat,
-                                              cityValue
-                                                  .result
-                                                  .geometry!
-                                                  .location
-                                                  .lng))
-                                          .then((value) {
-                                        if (value != null) {
-                                          controller
-                                              .destinationCityController
-                                              .value
-                                              .text =
-                                              cityValue.result.vicinity
-                                                  .toString();
-
-                                          controller
-                                              .destinationLocationController
-                                              .value
-                                              .text =
-                                              value.formattedAddress
-                                                  .toString();
-                                          controller
-                                              .destinationLocationLAtLng
-                                              .value =
-                                              LocationLatLng(
-                                                  latitude: value
-                                                      .latLng!.latitude,
-                                                  longitude: value
-                                                      .latLng!.longitude);
-
-                                          controller.calculateAmount();
-                                        } else {
-                                          ShowToastDialog.showToast(
-                                              "Please select address".tr);
-                                        }
-                                      });
-                                    } else {
-                                      ShowToastDialog.showToast(
-                                          "Please select city".tr);
-                                    }
-                                  });
+                                  // onTap: () async {
+                                  //   await Utils()
+                                  //       .handlePressButton(context)
+                                  //       .then((cityValue) {
+                                  //     if (cityValue != null) {
+                                  //       Utils.showPlacePickerWithLatLong(
+                                  //           context,
+                                  //           LatLng(
+                                  //               cityValue
+                                  //                   .result
+                                  //                   .geometry!
+                                  //                   .location
+                                  //                   .lat,
+                                  //               cityValue
+                                  //                   .result
+                                  //                   .geometry!
+                                  //                   .location
+                                  //                   .lng))
+                                  //           .then((value) {
+                                  //         if (value != null) {
+                                  //           controller.sourceCityController
+                                  //               .value.text =
+                                  //               cityValue.result.vicinity
+                                  //                   .toString();
+                                  //
+                                  //           controller
+                                  //               .sourceLocationController
+                                  //               .value
+                                  //               .text =
+                                  //               value.formattedAddress
+                                  //                   .toString();
+                                  //           controller.sourceLocationLAtLng
+                                  //               .value =
+                                  //               LocationLatLng(
+                                  //                   latitude: value
+                                  //                       .latLng!.latitude,
+                                  //                   longitude: value
+                                  //                       .latLng!.longitude);
+                                  //
+                                  //           controller.calculateAmount();
+                                  //         } else {
+                                  //           ShowToastDialog.showToast(
+                                  //               "Please select address".tr);
+                                  //         }
+                                  //       });
+                                  //     } else {
+                                  //       ShowToastDialog.showToast(
+                                  //           "Please select city".tr);
+                                  //     }
+                                  //   });
+                                  // },
+                                  child: TextFieldThem.buildTextFiled(
+                                    context,
+                                    hintText: 'From'.tr,
+                                    controller: controller
+                                        .sourceLocationController.value,
+                                    enable: false,
+                                  )),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              InkWell(
+                                onTap : (){
+                                  destinationBottomSheet(context, controller);
                                 },
-                                child: TextFieldThem.buildTextFiled(
-                                  context,
-                                  hintText: 'To'.tr,
-                                  controller: controller
-                                      .destinationLocationController
-                                      .value,
-                                  enable: false,
-                                )),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Text("Select Option".tr,
-                                style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.w500,
-                                    color:Colors.black,
-                                    letterSpacing: 1)),
-                            const SizedBox(
-                              height: 05,
-                            ),
-                            SizedBox(
-                              height: Responsive.height(18, context),
-                              child: ListView.builder(
-                                itemCount:
-                                controller.intercityService.length,
-                                scrollDirection: Axis.horizontal,
-                                shrinkWrap: true,
-                                itemBuilder: (context, index) {
-                                  IntercityServiceModel serviceModel =
-                                  controller.intercityService[index];
-                                  return Obx(
-                                        () => InkWell(
-                                      onTap: () {
-                                        controller.selectedInterCityType
-                                            .value = serviceModel;
-                                        controller.calculateAmount();
-                                      },
-                                      child: Padding(
-                                        padding:
-                                        const EdgeInsets.all(6.0),
-                                        child: Container(
-                                          width: Responsive.width(
-                                              28, context),
-                                          decoration: BoxDecoration(
-                                              color: controller
-                                                  .selectedInterCityType
-                                                  .value ==
-                                                  serviceModel
-                                                  ? themeChange.getThem()
-                                                  ? AppColors
-                                                  .darkModePrimary
-                                                  : AppColors
-                                                  .darkModePrimary
-                                                  : themeChange.getThem()
-                                                  ? AppColors
-                                                  .darkService
-                                                  : AppColors.darkService,
-                                              borderRadius:
-                                              const BorderRadius.all(
-                                                Radius.circular(20),
-                                              )),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                            mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                            children: [
-                                              Container(
-                                                decoration: BoxDecoration(
-                                                    color:
-                                                    Colors.white,
-                                                    borderRadius:
-                                                    const BorderRadius
-                                                        .all(
-                                                      Radius.circular(20),
-                                                    )),
-                                                child: Padding(
-                                                  padding:
-                                                  const EdgeInsets
-                                                      .all(8.0),
-                                                  child:
-                                                  CachedNetworkImage(
-                                                    imageUrl: serviceModel
-                                                        .image
-                                                        .toString(),
-                                                    fit: BoxFit.contain,
-                                                    height:
-                                                    Responsive.height(
-                                                        8, context),
-                                                    width:
-                                                    Responsive.width(
-                                                        18, context),
-                                                    placeholder: (context,
-                                                        url) =>
-                                                        Constant.loader(),
-                                                    errorWidget: (context,
-                                                        url, error) =>
-                                                        Image.network(Constant
-                                                            .userPlaceHolder),
+                                  // onTap: () async {
+                                  //   await Utils()
+                                  //       .handlePressButton(context)
+                                  //       .then((cityValue) {
+                                  //     if (cityValue != null) {
+                                  //       Utils.showPlacePickerWithLatLong(
+                                  //           context,
+                                  //           LatLng(
+                                  //               cityValue
+                                  //                   .result
+                                  //                   .geometry!
+                                  //                   .location
+                                  //                   .lat,
+                                  //               cityValue
+                                  //                   .result
+                                  //                   .geometry!
+                                  //                   .location
+                                  //                   .lng))
+                                  //           .then((value) {
+                                  //         if (value != null) {
+                                  //           controller
+                                  //               .destinationCityController
+                                  //               .value
+                                  //               .text =
+                                  //               cityValue.result.vicinity
+                                  //                   .toString();
+                                  //
+                                  //           controller
+                                  //               .destinationLocationController
+                                  //               .value
+                                  //               .text =
+                                  //               value.formattedAddress
+                                  //                   .toString();
+                                  //           controller
+                                  //               .destinationLocationLAtLng
+                                  //               .value =
+                                  //               LocationLatLng(
+                                  //                   latitude: value
+                                  //                       .latLng!.latitude,
+                                  //                   longitude: value
+                                  //                       .latLng!.longitude);
+                                  //
+                                  //           controller.calculateAmount();
+                                  //         } else {
+                                  //           ShowToastDialog.showToast(
+                                  //               "Please select address".tr);
+                                  //         }
+                                  //       });
+                                  //     } else {
+                                  //       ShowToastDialog.showToast(
+                                  //           "Please select city".tr);
+                                  //     }
+                                  //   });
+                                  // },
+                                  child: TextFieldThem.buildTextFiled(
+                                    context,
+                                    hintText: 'To'.tr,
+                                    controller: controller
+                                        .destinationLocationController
+                                        .value,
+                                    enable: false,
+                                  )),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Text("Select Option".tr,
+                                  style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.w500,
+                                      color:Colors.black,
+                                      letterSpacing: 1)),
+                              const SizedBox(
+                                height: 05,
+                              ),
+                              SizedBox(
+                                height: Responsive.height(18, context),
+                                child: ListView.builder(
+                                  itemCount:
+                                  controller.intercityService.length,
+                                  scrollDirection: Axis.horizontal,
+                                  shrinkWrap: true,
+                                  itemBuilder: (context, index) {
+                                    IntercityServiceModel serviceModel =
+                                    controller.intercityService[index];
+                                    return Obx(
+                                          () => InkWell(
+                                        onTap: () {
+                                          controller.selectedInterCityType
+                                              .value = serviceModel;
+                                          controller.calculateAmount();
+                                        },
+                                        child: Padding(
+                                          padding:
+                                          const EdgeInsets.all(6.0),
+                                          child: Container(
+                                            width: Responsive.width(
+                                                28, context),
+                                            decoration: BoxDecoration(
+                                                color: controller
+                                                    .selectedInterCityType
+                                                    .value ==
+                                                    serviceModel
+                                                    ? Colors.green
+                                                    : themeChange.getThem()
+                                                    ? AppColors
+                                                    .darkService
+                                                    : AppColors.darkService,
+                                                borderRadius:
+                                                const BorderRadius.all(
+                                                  Radius.circular(20),
+                                                )),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                              children: [
+                                                Container(
+                                                  decoration: BoxDecoration(
+                                                      color:
+                                                      Colors.white,
+                                                      borderRadius:
+                                                      const BorderRadius
+                                                          .all(
+                                                        Radius.circular(20),
+                                                      )),
+                                                  child: Padding(
+                                                    padding:
+                                                    const EdgeInsets
+                                                        .all(8.0),
+                                                    child:
+                                                    CachedNetworkImage(
+                                                      imageUrl: serviceModel
+                                                          .image
+                                                          .toString(),
+                                                      fit: BoxFit.contain,
+                                                      height:
+                                                      Responsive.height(
+                                                          8, context),
+                                                      width:
+                                                      Responsive.width(
+                                                          18, context),
+                                                      placeholder: (context,
+                                                          url) =>
+                                                          Constant.loader(),
+                                                      errorWidget: (context,
+                                                          url, error) =>
+                                                          Image.network(Constant
+                                                              .userPlaceHolder),
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                              const SizedBox(
-                                                height: 10,
-                                              ),
-                                              Text(
-                                                  serviceModel.name
-                                                      .toString(),
-                                                  style:
-                                                  GoogleFonts.poppins(
-                                                      color: controller
-                                                          .selectedInterCityType
-                                                          .value ==
-                                                          serviceModel
-                                                          ? themeChange
-                                                          .getThem()
-                                                          ? Colors
-                                                          .white
-                                                          : Colors
-                                                          .white
-                                                          : themeChange
-                                                          .getThem()
-                                                          ? Colors
-                                                          .white
-                                                          : Colors
-                                                          .white)),
-                                            ],
+                                                const SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Text(
+                                                    serviceModel.name
+                                                        .toString(),
+                                                    style:
+                                                    GoogleFonts.poppins(
+                                                        color: controller
+                                                            .selectedInterCityType
+                                                            .value ==
+                                                            serviceModel
+                                                            ? themeChange
+                                                            .getThem()
+                                                            ? Colors
+                                                            .white
+                                                            : Colors
+                                                            .white
+                                                            : themeChange
+                                                            .getThem()
+                                                            ? Colors
+                                                            .white
+                                                            : Colors
+                                                            .white)),
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            InkWell(
-                                onTap: () async {
-                                  BottomPicker.dateTime(
-                                    titleStyle: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15),
-                                    onSubmit: (index) {
-                                      controller.dateAndTime = index;
-                                      DateFormat dateFormat = DateFormat(
-                                          "EEE dd MMMM , HH:mm aa");
-                                      String string =
-                                      dateFormat.format(index);
-
-                                      controller.whenController.value
-                                          .text = string;
-                                    },
-                                    minDateTime: DateTime.now(),
-                                    buttonAlignment:
-                                    MainAxisAlignment.center,
-                                    displayButtonIcon: false,
-                                    displaySubmitButton: true,
-                                    title: '',
-                                    buttonText: 'Confirm'.tr,
-                                    buttonSingleColor: AppColors.primary,
-                                    buttonTextStyle: const TextStyle(
-                                      color: Colors.white,),
-                                  ).show(context);
-                                },
-                                child: TextFieldThem.buildTextFiled(
-                                  context,
-                                  hintText: 'When'.tr,
-                                  controller:
-                                  controller.whenController.value,
-                                  enable: false,
-                                )),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            controller.selectedInterCityType.value.id ==
-                                "647f350983ba2"
-                                ? Column(
-                              children: [
-                                TextFieldThem.buildTextFiled(
-                                  context,
-                                  hintText:
-                                  'Parcel weight (In Kg.)'.tr,
-                                  controller:
-                                  controller.parcelWeight.value,
-                                  keyBoardType:
-                                  TextInputType.number,
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                TextFieldThem.buildTextFiled(
-                                  context,
-                                  hintText:
-                                  'Parcel dimension(In ft.)'.tr,
-                                  controller: controller
-                                      .parcelDimension.value,
-                                  keyBoardType:
-                                  TextInputType.number,
-                                ),
-                                parcelImageWidget(
-                                    context, controller),
-                              ],
-                            )
-                                : controller.selectedInterCityType.value
-                                .id ==
-                                "Kn2VEnPI3ikF58uK8YqY"
-                                ? Column(
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    vehicleFreightDialog(
-                                        context, controller);
+                                    );
                                   },
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius:
-                                      const BorderRadius
-                                          .all(
-                                          Radius.circular(
-                                              4)),
-                                      border: Border.all(
-                                          color: AppColors
-                                              .textFieldBorder,
-                                          width: 1),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets
-                                          .symmetric(
-                                          horizontal: 10,
-                                          vertical: 12),
-                                      child: Row(
-                                        children: [
-                                          const Icon(
-                                              Icons.fire_truck),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          Expanded(
-                                              child: Text(
-                                                controller.selectedFreightVehicle.value
-                                                    .id !=
-                                                    null &&
-                                                    controller
-                                                        .selectedFreightVehicle
-                                                        .value
-                                                        .id!
-                                                        .isNotEmpty
-                                                    ? controller
-                                                    .selectedFreightVehicle
-                                                    .value
-                                                    .name
-                                                    .toString()
-                                                    : "Select Freight Vehicle"
-                                                    .tr,
-                                                style: GoogleFonts
-                                                    .poppins(
-
-                                                ),
-                                              )),
-                                          const Icon(Icons
-                                              .arrow_drop_down_outlined)
-                                        ],
-                                      ),
-                                    ),
-                                  ),
                                 ),
-                                parcelImageWidget(
-                                    context, controller),
-                                // Row(
-                                //   children: [
-                                //     Expanded(child: Text("Loader needed".tr, style: GoogleFonts.poppins(fontWeight: FontWeight.w500, letterSpacing: 1))),
-                                //     Transform.scale(scale: 1.0,
-                                //       child: Switch(
-                                //         value: controller.loaderNeeded.value,
-                                //         activeColor:AppColors.primary ,
-                                //         onChanged: (bool value1){
-                                //           controller.loaderNeeded.value = value1;
-                                //         },
-                                //       ),
-                                //     )
-                                //   ],
-                                // )
-                              ],
-                            )
-                                : TextFieldThem.buildTextFiled(
-                              context,
-                              hintText:
-                              'Number of Passengers'.tr,
-                              controller: controller
-                                  .noOfPassengers.value,
-                              keyBoardType:
-                              TextInputType.number,
-                            ),
-                            Obx(
-                                  () => controller.sourceLocationLAtLng.value
-                                  .latitude !=
-                                  null &&
-                                  controller.destinationLocationLAtLng
-                                      .value.latitude !=
-                                      null
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              InkWell(
+                                  onTap: () async {
+                                    BottomPicker.dateTime(
+                                      titleStyle: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15),
+                                      onSubmit: (index) {
+                                        controller.dateAndTime = index;
+                                        DateFormat dateFormat = DateFormat(
+                                            "EEE dd MMMM , HH:mm aa");
+                                        String string =
+                                        dateFormat.format(index);
+
+                                        controller.whenController.value
+                                            .text = string;
+                                      },
+                                      minDateTime: DateTime.now(),
+                                      buttonAlignment:
+                                      MainAxisAlignment.center,
+                                      displayButtonIcon: false,
+                                      displaySubmitButton: true,
+                                      title: '',
+                                      buttonText: 'Confirm'.tr,
+                                      buttonSingleColor: AppColors.primary,
+                                      buttonTextStyle: const TextStyle(
+                                        color: Colors.white,),
+                                    ).show(context);
+                                  },
+                                  child: TextFieldThem.buildTextFiled(
+                                    context,
+                                    hintText: 'When'.tr,
+                                    controller:
+                                    controller.whenController.value,
+                                    enable: false,
+                                  )),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              controller.selectedInterCityType.value.id ==
+                                  "647f350983ba2"
                                   ? Column(
                                 children: [
+                                  TextFieldThem.buildTextFiled(
+                                    context,
+                                    hintText:
+                                    'Parcel weight (In Kg.)'.tr,
+                                    controller:
+                                    controller.parcelWeight.value,
+                                    keyBoardType:
+                                    TextInputType.number,
+                                  ),
                                   const SizedBox(
                                     height: 10,
                                   ),
-                                  Padding(
-                                    padding:
-                                    const EdgeInsets.symmetric(
-                                        horizontal: 10,
-                                        vertical: 5),
+                                  TextFieldThem.buildTextFiled(
+                                    context,
+                                    hintText:
+                                    'Parcel dimension(In ft.)'.tr,
+                                    controller: controller
+                                        .parcelDimension.value,
+                                    keyBoardType:
+                                    TextInputType.number,
+                                  ),
+                                  parcelImageWidget(
+                                      context, controller),
+                                ],
+                              )
+                                  : controller.selectedInterCityType.value
+                                  .id ==
+                                  "Kn2VEnPI3ikF58uK8YqY"
+                                  ? Column(
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      vehicleFreightDialog(
+                                          context, controller);
+                                    },
                                     child: Container(
-                                      decoration:
-                                      const BoxDecoration(
-                                          color: AppColors.gray,
-                                          borderRadius:
-                                          BorderRadius.all(
-                                              Radius
-                                                  .circular(
-                                                  10))),
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                        const BorderRadius
+                                            .all(
+                                            Radius.circular(
+                                                4)),
+                                        border: Border.all(
+                                            color: AppColors
+                                                .textFieldBorder,
+                                            width: 1),
+                                      ),
                                       child: Padding(
-                                          padding: const EdgeInsets
-                                              .symmetric(
-                                              horizontal: 10,
-                                              vertical: 10),
-                                          child: Center(
-                                            child: RichText(
-                                              text: TextSpan(
-                                                  text:
-                                                  'Recommended Price ${Constant.amountShow(amount: controller.amount.value)}. Approx time ${controller.duration}'
+                                        padding: const EdgeInsets
+                                            .symmetric(
+                                            horizontal: 10,
+                                            vertical: 12),
+                                        child: Row(
+                                          children: [
+                                            const Icon(
+                                                Icons.fire_truck),
+                                            const SizedBox(
+                                              width: 10,
+                                            ),
+                                            Expanded(
+                                                child: Text(
+                                                  controller.selectedFreightVehicle.value
+                                                      .id !=
+                                                      null &&
+                                                      controller
+                                                          .selectedFreightVehicle
+                                                          .value
+                                                          .id!
+                                                          .isNotEmpty
+                                                      ? controller
+                                                      .selectedFreightVehicle
+                                                      .value
+                                                      .name
+                                                      .toString()
+                                                      : "Select Freight Vehicle"
                                                       .tr,
                                                   style: GoogleFonts
                                                       .poppins(
-                                                      color: Colors
-                                                          .black),
-                                                  children: [
-                                                    TextSpan(
-                                                        text: controller.selectedInterCityType.value.offerRate ==
-                                                            true
-                                                            ? '. Enter your rate'
-                                                            .tr
-                                                            : '',
-                                                        style: GoogleFonts
-                                                            .poppins(
-                                                            color:
-                                                            Colors.black))
-                                                  ]),
+
+                                                  ),
+                                                )),
+                                            const Icon(Icons
+                                                .arrow_drop_down_outlined)
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  parcelImageWidget(
+                                      context, controller),
+                                  // Row(
+                                  //   children: [
+                                  //     Expanded(child: Text("Loader needed".tr, style: GoogleFonts.poppins(fontWeight: FontWeight.w500, letterSpacing: 1))),
+                                  //     Transform.scale(scale: 1.0,
+                                  //       child: Switch(
+                                  //         value: controller.loaderNeeded.value,
+                                  //         activeColor:AppColors.primary ,
+                                  //         onChanged: (bool value1){
+                                  //           controller.loaderNeeded.value = value1;
+                                  //         },
+                                  //       ),
+                                  //     )
+                                  //   ],
+                                  // )
+                                ],
+                              )
+                                  : TextFieldThem.buildTextFiled(
+                                context,
+                                hintText:
+                                'Number of Passengers'.tr,
+                                controller: controller
+                                    .noOfPassengers.value,
+                                keyBoardType:
+                                TextInputType.number,
+                              ),
+                              Obx(
+                                    () => controller.sourceLocationLAtLng.value
+                                    .latitude !=
+                                    null &&
+                                    controller.destinationLocationLAtLng
+                                        .value.latitude !=
+                                        null
+                                    ? Column(
+                                  children: [
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Padding(
+                                      padding:
+                                      const EdgeInsets.symmetric(
+                                          horizontal: 10,
+                                          vertical: 5),
+                                      child: Container(
+                                        decoration:
+                                        const BoxDecoration(
+                                            color: AppColors.gray,
+                                            borderRadius:
+                                            BorderRadius.all(
+                                                Radius
+                                                    .circular(
+                                                    10))),
+                                        child: Padding(
+                                            padding: const EdgeInsets
+                                                .symmetric(
+                                                horizontal: 10,
+                                                vertical: 10),
+                                            child: Center(
+                                              child: RichText(
+                                                text: TextSpan(
+                                                    text:
+                                                    'Recommended Price ${Constant.amountShow(amount: controller.amount.value)}. Approx time ${controller.duration}'
+                                                        .tr,
+                                                    style: GoogleFonts
+                                                        .poppins(
+                                                        color: Colors
+                                                            .black),
+                                                    children: [
+                                                      TextSpan(
+                                                          text: controller.selectedInterCityType.value.offerRate ==
+                                                              true
+                                                              ? '. Enter your rate'
+                                                              .tr
+                                                              : '',
+                                                          style: GoogleFonts
+                                                              .poppins(
+                                                              color:
+                                                              Colors.black))
+                                                    ]),
+                                              ),
+                                            )),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                  ],
+                                )
+                                    : Container(),
+                              ),
+                              Visibility(
+                                visible: controller.selectedInterCityType
+                                    .value.offerRate ==
+                                    true,
+                                child: Padding(
+                                    padding: const EdgeInsets.only(top: 10),
+                                    child: TextFieldThem
+                                        .buildTextFiledWithPrefixIcon(
+                                      context,
+                                      hintText: "Enter your offer rate".tr,
+                                      controller: controller
+                                          .offerYourRateController.value,
+                                      prefix: Padding(
+                                        padding: const EdgeInsets.only(
+                                            right: 10),
+                                        child: Text(Constant
+                                            .currencyModel!.symbol
+                                            .toString()),
+                                      ),
+                                    )),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              TextFieldThem.buildTextFiled(
+                                context,
+                                hintText: 'Comments'.tr,
+                                controller:
+                                controller.commentsController.value,
+                                keyBoardType: TextInputType.text,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              controller.selectedInterCityType.value.id ==
+                                  "UmQ2bjWTnlwoKqdCIlTr" ||
+                                  controller.selectedInterCityType.value
+                                      .id ==
+                                      "647f340e35553"
+                                  ? Column(
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      someOneTakingDialog(
+                                          context, controller);
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                        const BorderRadius.all(
+                                            Radius.circular(4)),
+                                        border: Border.all(
+                                            color: AppColors
+                                                .textFieldBorder,
+                                            width: 1),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets
+                                            .symmetric(
+                                            horizontal: 10,
+                                            vertical: 12),
+                                        child: Row(
+                                          children: [
+                                            const Icon(Icons.person),
+                                            const SizedBox(
+                                              width: 10,
                                             ),
-                                          )),
+                                            Expanded(
+                                                child: Text(
+                                                  controller
+                                                      .selectedTakingRide
+                                                      .value
+                                                      .fullName ==
+                                                      "Myself"
+                                                      ? "Myself".tr
+                                                      : controller
+                                                      .selectedTakingRide
+                                                      .value
+                                                      .fullName
+                                                      .toString(),
+                                                  style:
+                                                  GoogleFonts.poppins(
+                                                    color: themeChange
+                                                        .getThem()
+                                                        ? Colors.black
+                                                        : Colors.black,
+                                                  ),
+                                                )),
+                                            const Icon(Icons
+                                                .arrow_drop_down_outlined)
+                                          ],
+                                        ),
+                                      ),
                                     ),
                                   ),
                                   const SizedBox(
@@ -542,770 +651,669 @@ class InterCityScreen extends StatelessWidget {
                                   ),
                                 ],
                               )
-                                  : Container(),
-                            ),
-                            Visibility(
-                              visible: controller.selectedInterCityType
-                                  .value.offerRate ==
-                                  true,
-                              child: Padding(
-                                  padding: const EdgeInsets.only(top: 10),
-                                  child: TextFieldThem
-                                      .buildTextFiledWithPrefixIcon(
-                                    context,
-                                    hintText: "Enter your offer rate".tr,
-                                    controller: controller
-                                        .offerYourRateController.value,
-                                    prefix: Padding(
-                                      padding: const EdgeInsets.only(
-                                          right: 10),
-                                      child: Text(Constant
-                                          .currencyModel!.symbol
-                                          .toString()),
-                                    ),
-                                  )),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            TextFieldThem.buildTextFiled(
-                              context,
-                              hintText: 'Comments'.tr,
-                              controller:
-                              controller.commentsController.value,
-                              keyBoardType: TextInputType.text,
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            controller.selectedInterCityType.value.id ==
-                                "UmQ2bjWTnlwoKqdCIlTr" ||
-                                controller.selectedInterCityType.value
-                                    .id ==
-                                    "647f340e35553"
-                                ? Column(
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    someOneTakingDialog(
-                                        context, controller);
-                                  },
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius:
-                                      const BorderRadius.all(
-                                          Radius.circular(4)),
-                                      border: Border.all(
-                                          color: AppColors
-                                              .textFieldBorder,
-                                          width: 1),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets
-                                          .symmetric(
-                                          horizontal: 10,
-                                          vertical: 12),
-                                      child: Row(
-                                        children: [
-                                          const Icon(Icons.person),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          Expanded(
-                                              child: Text(
-                                                controller
-                                                    .selectedTakingRide
-                                                    .value
-                                                    .fullName ==
-                                                    "Myself"
-                                                    ? "Myself".tr
-                                                    : controller
-                                                    .selectedTakingRide
-                                                    .value
-                                                    .fullName
-                                                    .toString(),
-                                                style:
-                                                GoogleFonts.poppins(
-                                                  color: themeChange
-                                                      .getThem()
-                                                      ? Colors.black
-                                                      : Colors.black,
-                                                ),
-                                              )),
-                                          const Icon(Icons
-                                              .arrow_drop_down_outlined)
-                                        ],
-                                      ),
-                                    ),
+                                  : const SizedBox(),
+                              InkWell(
+                                onTap: () {
+                                  paymentMethodDialog(context, controller);
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(4)),
+                                    border: Border.all(
+                                        color: AppColors.textFieldBorder,
+                                        width: 1),
                                   ),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                              ],
-                            )
-                                : const SizedBox(),
-                            InkWell(
-                              onTap: () {
-                                paymentMethodDialog(context, controller);
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(4)),
-                                  border: Border.all(
-                                      color: AppColors.textFieldBorder,
-                                      width: 1),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 12),
-                                  child: Row(
-                                    children: [
-                                      SvgPicture.asset(
-                                        'assets/icons/ic_payment.svg',
-                                        width: 26,
-                                      ),
-                                      const SizedBox(
-                                        width: 10,
-                                      ),
-                                      Expanded(
-                                          child: Text(
-                                            controller.selectedPaymentMethod
-                                                .value.isNotEmpty
-                                                ? controller
-                                                .selectedPaymentMethod
-                                                .value
-                                                : "Select Payment type".tr,
-                                            style: GoogleFonts.poppins(
-                                              color: themeChange.getThem()
-                                                  ? Colors.black
-                                                  : Colors.black,
-                                            ),
-                                          )),
-                                      const Icon(
-                                          Icons.arrow_drop_down_outlined)
-                                    ],
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 12),
+                                    child: Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                          'assets/icons/ic_payment.svg',
+                                          width: 26,
+                                        ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        Expanded(
+                                            child: Text(
+                                              controller.selectedPaymentMethod
+                                                  .value.isNotEmpty
+                                                  ? controller
+                                                  .selectedPaymentMethod
+                                                  .value
+                                                  : "Select Payment type".tr,
+                                              style: GoogleFonts.poppins(
+                                                color: themeChange.getThem()
+                                                    ? Colors.black
+                                                    : Colors.black,
+                                              ),
+                                            )),
+                                        const Icon(
+                                            Icons.arrow_drop_down_outlined)
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            ButtonThem.buildButton(
-                              context,
-                              title: controller.selectedInterCityType
-                                  .value.id ==
-                                  "Kn2VEnPI3ikF58uK8YqY"
-                                  ? "Order Freight"
-                                  : controller.selectedInterCityType.value
-                                  .id ==
-                                  "647f350983ba2"
-                                  ? "Order Parcel"
-                                  : "Ride Placed".tr,
-                              btnWidthRatio:
-                              Responsive.width(100, context),
-                              onPress: () async {
-                                bool isPaymentNotCompleted =
-                                await FireStoreUtils
-                                    .paymentStatusCheckIntercity();
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              ButtonThem.buildButton(
+                                context,
+                                title: controller.selectedInterCityType
+                                    .value.id ==
+                                    "Kn2VEnPI3ikF58uK8YqY"
+                                    ? "Order Freight"
+                                    : controller.selectedInterCityType.value
+                                    .id ==
+                                    "647f350983ba2"
+                                    ? "Order Parcel"
+                                    : "Ride Placed".tr,
+                                btnWidthRatio:
+                                Responsive.width(100, context),
+                                onPress: () async {
+                                  bool isPaymentNotCompleted =
+                                  await FireStoreUtils
+                                      .paymentStatusCheckIntercity();
 
-                                if (isPaymentNotCompleted) {
-                                  showAlertDialog(context);
-                                  // showDialog(context: context, builder: (BuildContext context) => warningDailog());
-                                } else {
-                                  if (controller.selectedInterCityType
-                                      .value.id ==
-                                      "647f350983ba2") {
-                                    if (controller
-                                        .sourceLocationController
-                                        .value
-                                        .text
-                                        .isEmpty) {
-                                      ShowToastDialog.showToast(
-                                          "Please select source location"
-                                              .tr);
-                                    } else if (controller
-                                        .destinationLocationController
-                                        .value
-                                        .text
-                                        .isEmpty) {
-                                      ShowToastDialog.showToast(
-                                          "Please select destination location"
-                                              .tr);
-                                    } else if (controller
-                                        .selectedPaymentMethod
-                                        .value
-                                        .isEmpty) {
-                                      ShowToastDialog.showToast(
-                                          "Please select Payment Method"
-                                              .tr);
-                                    } else if (controller.parcelWeight
-                                        .value.text.isEmpty) {
-                                      ShowToastDialog.showToast(
-                                          "Please enter parcel weight"
-                                              .tr);
-                                    } else if (controller.parcelDimension
-                                        .value.text.isEmpty) {
-                                      ShowToastDialog.showToast(
-                                          "Please enter parcel dimension"
-                                              .tr);
-                                    } else if (controller.whenController
-                                        .value.text.isEmpty) {
-                                      ShowToastDialog.showToast(
-                                          "Please select date and time"
-                                              .tr);
-                                    } else if (controller
-                                        .selectedInterCityType
-                                        .value
-                                        .offerRate ==
-                                        true &&
-                                        controller.offerYourRateController
-                                            .value.text.isEmpty) {
-                                      ShowToastDialog.showToast(
-                                          "Please Enter offer rate".tr);
-                                    } else {
-                                      ShowToastDialog.showLoader(
-                                          "Please wait".tr);
-
-                                      List<dynamic> parcelImages = [];
-                                      for (var element
-                                      in controller.images) {
-                                        Url url = await Constant()
-                                            .uploadChatImageToFireStorage(
-                                            File(element.path));
-                                        parcelImages.add(url.url);
-                                      }
-
-                                      InterCityOrderModel
-                                      intercityOrderModel =
-                                      InterCityOrderModel();
-                                      intercityOrderModel.id =
-                                          Constant.getUuid();
-                                      intercityOrderModel.userId =
-                                          FireStoreUtils.getCurrentUid();
-                                      intercityOrderModel
-                                          .sourceLocationName =
-                                          controller
-                                              .sourceLocationController
-                                              .value
-                                              .text;
-                                      intercityOrderModel.sourceCity =
-                                          controller.sourceCityController
-                                              .value.text;
-                                      intercityOrderModel
-                                          .sourceLocationLAtLng =
-                                          controller
-                                              .sourceLocationLAtLng.value;
-
-                                      intercityOrderModel.parcelImage =
-                                          parcelImages;
-                                      intercityOrderModel.parcelWeight =
-                                          controller
-                                              .parcelWeight.value.text;
-                                      intercityOrderModel
-                                          .parcelDimension =
-                                          controller
-                                              .parcelDimension.value.text;
-
-                                      intercityOrderModel
-                                          .destinationLocationName =
-                                          controller
-                                              .destinationLocationController
-                                              .value
-                                              .text;
-                                      intercityOrderModel
-                                          .destinationCity =
-                                          controller
-                                              .destinationCityController
-                                              .value
-                                              .text;
-                                      intercityOrderModel
-                                          .destinationLocationLAtLng =
-                                          controller
-                                              .destinationLocationLAtLng
-                                              .value;
-                                      intercityOrderModel.distance =
-                                          controller.distance.value;
-                                      intercityOrderModel.offerRate =
-                                      controller.selectedInterCityType
-                                          .value.offerRate ==
-                                          true
-                                          ? controller
-                                          .offerYourRateController
+                                  if (isPaymentNotCompleted) {
+                                    showAlertDialog(context);
+                                    // showDialog(context: context, builder: (BuildContext context) => warningDailog());
+                                  } else {
+                                    if (controller.selectedInterCityType
+                                        .value.id ==
+                                        "647f350983ba2") {
+                                      if (controller
+                                          .sourceLocationController
                                           .value
                                           .text
-                                          : controller.amount.value;
-                                      intercityOrderModel
-                                          .intercityServiceId =
-                                          controller.selectedInterCityType
-                                              .value.id;
-                                      intercityOrderModel
-                                          .intercityService =
-                                          controller.selectedInterCityType
-                                              .value;
-                                      GeoFirePoint position =
-                                      GeoFlutterFire().point(
-                                          latitude: controller
-                                              .sourceLocationLAtLng
-                                              .value
-                                              .latitude!,
-                                          longitude: controller
-                                              .sourceLocationLAtLng
-                                              .value
-                                              .longitude!);
+                                          .isEmpty) {
+                                        ShowToastDialog.showToast(
+                                            "Please select source location"
+                                                .tr);
+                                      } else if (controller
+                                          .destinationLocationController
+                                          .value
+                                          .text
+                                          .isEmpty) {
+                                        ShowToastDialog.showToast(
+                                            "Please select destination location"
+                                                .tr);
+                                      } else if (controller
+                                          .selectedPaymentMethod
+                                          .value
+                                          .isEmpty) {
+                                        ShowToastDialog.showToast(
+                                            "Please select Payment Method"
+                                                .tr);
+                                      } else if (controller.parcelWeight
+                                          .value.text.isEmpty) {
+                                        ShowToastDialog.showToast(
+                                            "Please enter parcel weight"
+                                                .tr);
+                                      } else if (controller.parcelDimension
+                                          .value.text.isEmpty) {
+                                        ShowToastDialog.showToast(
+                                            "Please enter parcel dimension"
+                                                .tr);
+                                      } else if (controller.whenController
+                                          .value.text.isEmpty) {
+                                        ShowToastDialog.showToast(
+                                            "Please select date and time"
+                                                .tr);
+                                      } else if (controller
+                                          .selectedInterCityType
+                                          .value
+                                          .offerRate ==
+                                          true &&
+                                          controller.offerYourRateController
+                                              .value.text.isEmpty) {
+                                        ShowToastDialog.showToast(
+                                            "Please Enter offer rate".tr);
+                                      } else {
+                                        ShowToastDialog.showLoader(
+                                            "Please wait".tr);
 
-                                      intercityOrderModel.position =
-                                          Positions(
-                                              geoPoint: position.geoPoint,
-                                              geohash: position.hash);
-                                      intercityOrderModel.createdDate =
-                                          Timestamp.now();
-                                      intercityOrderModel.status =
-                                          Constant.ridePlaced;
-                                      intercityOrderModel.paymentType =
-                                          controller.selectedPaymentMethod
-                                              .value;
-                                      intercityOrderModel.paymentStatus =
-                                      false;
-                                      intercityOrderModel.whenTime =
-                                          DateFormat("HH:mm").format(
-                                              controller.dateAndTime!);
-                                      intercityOrderModel.whenDates =
-                                          DateFormat("dd-MMM-yyyy")
-                                              .format(controller
-                                              .dateAndTime!);
-                                      intercityOrderModel.comments =
-                                          controller.commentsController
-                                              .value.text;
-                                      intercityOrderModel.otp =
-                                          Constant.getReferralCode();
-                                      intercityOrderModel.taxList =
-                                          Constant.taxList;
-                                      intercityOrderModel
-                                          .adminCommission = controller
-                                          .selectedInterCityType
-                                          .value
-                                          .adminCommission!
-                                          .isEnabled ==
-                                          false
-                                          ? controller
-                                          .selectedInterCityType
-                                          .value
-                                          .adminCommission!
-                                          : Constant.adminCommission;
-                                      intercityOrderModel.distanceType =
-                                          Constant.distanceType;
-                                      FireStoreUtils.setInterCityOrder(
-                                          intercityOrderModel)
-                                          .then((value) {
-                                        ShowToastDialog.closeLoader();
-                                        if (value == true) {
-                                          ShowToastDialog.showToast(
-                                              "Ride Placed successfully"
-                                                  .tr);
-                                          controller.dashboardController
-                                              .selectedDrawerIndex(3);
+                                        List<dynamic> parcelImages = [];
+                                        for (var element
+                                        in controller.images) {
+                                          Url url = await Constant()
+                                              .uploadChatImageToFireStorage(
+                                              File(element.path));
+                                          parcelImages.add(url.url);
                                         }
-                                      });
-                                    }
-                                  } else if (controller
-                                      .selectedInterCityType
-                                      .value
-                                      .id ==
-                                      "Kn2VEnPI3ikF58uK8YqY") {
-                                    if (controller
-                                        .sourceLocationController
-                                        .value
-                                        .text
-                                        .isEmpty) {
-                                      ShowToastDialog.showToast(
-                                          "Please select source location"
-                                              .tr);
-                                    } else if (controller
-                                        .destinationLocationController
-                                        .value
-                                        .text
-                                        .isEmpty) {
-                                      ShowToastDialog.showToast(
-                                          "Please select destination location"
-                                              .tr);
-                                    } else if (controller
-                                        .selectedPaymentMethod
-                                        .value
-                                        .isEmpty) {
-                                      ShowToastDialog.showToast(
-                                          "Please select Payment Method"
-                                              .tr);
+
+                                        InterCityOrderModel
+                                        intercityOrderModel =
+                                        InterCityOrderModel();
+                                        intercityOrderModel.id =
+                                            Constant.getUuid();
+                                        intercityOrderModel.userId =
+                                            FireStoreUtils.getCurrentUid();
+                                        intercityOrderModel
+                                            .sourceLocationName =
+                                            controller
+                                                .sourceLocationController
+                                                .value
+                                                .text;
+                                        intercityOrderModel.sourceCity =
+                                            controller.sourceCityController
+                                                .value.text;
+                                        intercityOrderModel
+                                            .sourceLocationLAtLng =
+                                            controller
+                                                .sourceLocationLAtLng.value;
+
+                                        intercityOrderModel.parcelImage =
+                                            parcelImages;
+                                        intercityOrderModel.parcelWeight =
+                                            controller
+                                                .parcelWeight.value.text;
+                                        intercityOrderModel
+                                            .parcelDimension =
+                                            controller
+                                                .parcelDimension.value.text;
+
+                                        intercityOrderModel
+                                            .destinationLocationName =
+                                            controller
+                                                .destinationLocationController
+                                                .value
+                                                .text;
+                                        intercityOrderModel
+                                            .destinationCity =
+                                            controller
+                                                .destinationCityController
+                                                .value
+                                                .text;
+                                        intercityOrderModel
+                                            .destinationLocationLAtLng =
+                                            controller
+                                                .destinationLocationLAtLng
+                                                .value;
+                                        intercityOrderModel.distance =
+                                            controller.distance.value;
+                                        intercityOrderModel.offerRate =
+                                        controller.selectedInterCityType
+                                            .value.offerRate ==
+                                            true
+                                            ? controller
+                                            .offerYourRateController
+                                            .value
+                                            .text
+                                            : controller.amount.value;
+                                        intercityOrderModel
+                                            .intercityServiceId =
+                                            controller.selectedInterCityType
+                                                .value.id;
+                                        intercityOrderModel
+                                            .intercityService =
+                                            controller.selectedInterCityType
+                                                .value;
+                                        GeoFirePoint position =
+                                        GeoFlutterFire().point(
+                                            latitude: controller
+                                                .sourceLocationLAtLng
+                                                .value
+                                                .latitude!,
+                                            longitude: controller
+                                                .sourceLocationLAtLng
+                                                .value
+                                                .longitude!);
+
+                                        intercityOrderModel.position =
+                                            Positions(
+                                                geoPoint: position.geoPoint,
+                                                geohash: position.hash);
+                                        intercityOrderModel.createdDate =
+                                            Timestamp.now();
+                                        intercityOrderModel.status =
+                                            Constant.ridePlaced;
+                                        intercityOrderModel.paymentType =
+                                            controller.selectedPaymentMethod
+                                                .value;
+                                        intercityOrderModel.paymentStatus =
+                                        false;
+                                        intercityOrderModel.whenTime =
+                                            DateFormat("HH:mm").format(
+                                                controller.dateAndTime!);
+                                        intercityOrderModel.whenDates =
+                                            DateFormat("dd-MMM-yyyy")
+                                                .format(controller
+                                                .dateAndTime!);
+                                        intercityOrderModel.comments =
+                                            controller.commentsController
+                                                .value.text;
+                                        intercityOrderModel.otp =
+                                            Constant.getReferralCode();
+                                        intercityOrderModel.taxList =
+                                            Constant.taxList;
+                                        intercityOrderModel
+                                            .adminCommission = controller
+                                            .selectedInterCityType
+                                            .value
+                                            .adminCommission!
+                                            .isEnabled ==
+                                            false
+                                            ? controller
+                                            .selectedInterCityType
+                                            .value
+                                            .adminCommission!
+                                            : Constant.adminCommission;
+                                        intercityOrderModel.distanceType =
+                                            Constant.distanceType;
+                                        FireStoreUtils.setInterCityOrder(
+                                            intercityOrderModel)
+                                            .then((value) {
+                                          ShowToastDialog.closeLoader();
+                                          if (value == true) {
+                                            ShowToastDialog.showToast(
+                                                "Ride Placed successfully"
+                                                    .tr);
+                                            controller.dashboardController
+                                                .selectedDrawerIndex(3);
+                                          }
+                                        });
+                                      }
                                     } else if (controller
                                         .selectedInterCityType
-                                        .value
-                                        .offerRate ==
-                                        true &&
-                                        controller.offerYourRateController
-                                            .value.text.isEmpty) {
-                                      ShowToastDialog.showToast(
-                                          "Please Enter offer rate".tr);
-                                    } else if (controller.whenController
-                                        .value.text.isEmpty) {
-                                      ShowToastDialog.showToast(
-                                          "Please select date and time"
-                                              .tr);
-                                    } else if (controller
-                                        .selectedFreightVehicle
                                         .value
                                         .id ==
-                                        null ||
-                                        controller.selectedFreightVehicle
-                                            .value.id!.isEmpty) {
-                                      ShowToastDialog.showToast(
-                                          "Please select cargo vehicle size."
-                                              .tr);
-                                    } else {
-                                      ShowToastDialog.showLoader(
-                                          "Please wait".tr);
-
-                                      List<dynamic> parcelImages = [];
-                                      for (var element
-                                      in controller.images) {
-                                        Url url = await Constant()
-                                            .uploadChatImageToFireStorage(
-                                            File(element.path));
-                                        parcelImages.add(url.url);
-                                      }
-
-                                      InterCityOrderModel
-                                      intercityOrderModel =
-                                      InterCityOrderModel();
-                                      intercityOrderModel.id =
-                                          Constant.getUuid();
-                                      intercityOrderModel.userId =
-                                          FireStoreUtils.getCurrentUid();
-                                      intercityOrderModel
-                                          .sourceLocationName =
-                                          controller
-                                              .sourceLocationController
-                                              .value
-                                              .text;
-                                      intercityOrderModel.sourceCity =
-                                          controller.sourceCityController
-                                              .value.text;
-                                      intercityOrderModel
-                                          .sourceLocationLAtLng =
-                                          controller
-                                              .sourceLocationLAtLng.value;
-
-                                      intercityOrderModel.parcelImage =
-                                          parcelImages;
-                                      intercityOrderModel.parcelWeight =
-                                          controller
-                                              .parcelWeight.value.text;
-                                      intercityOrderModel
-                                          .parcelDimension =
-                                          controller
-                                              .parcelDimension.value.text;
-
-                                      intercityOrderModel
-                                          .destinationLocationName =
-                                          controller
-                                              .destinationLocationController
-                                              .value
-                                              .text;
-                                      intercityOrderModel
-                                          .destinationCity =
-                                          controller
-                                              .destinationCityController
-                                              .value
-                                              .text;
-                                      intercityOrderModel
-                                          .destinationLocationLAtLng =
-                                          controller
-                                              .destinationLocationLAtLng
-                                              .value;
-                                      intercityOrderModel.distance =
-                                          controller.distance.value;
-                                      intercityOrderModel.offerRate =
-                                      controller.selectedInterCityType
-                                          .value.offerRate ==
-                                          true
-                                          ? controller
-                                          .offerYourRateController
+                                        "Kn2VEnPI3ikF58uK8YqY") {
+                                      if (controller
+                                          .sourceLocationController
                                           .value
                                           .text
-                                          : controller.amount.value;
-                                      intercityOrderModel
-                                          .intercityServiceId =
-                                          controller.selectedInterCityType
-                                              .value.id;
-                                      intercityOrderModel
-                                          .intercityService =
-                                          controller.selectedInterCityType
-                                              .value;
-                                      GeoFirePoint position =
-                                      GeoFlutterFire().point(
-                                          latitude: controller
-                                              .sourceLocationLAtLng
-                                              .value
-                                              .latitude!,
-                                          longitude: controller
-                                              .sourceLocationLAtLng
-                                              .value
-                                              .longitude!);
-
-                                      intercityOrderModel.position =
-                                          Positions(
-                                              geoPoint: position.geoPoint,
-                                              geohash: position.hash);
-                                      intercityOrderModel.createdDate =
-                                          Timestamp.now();
-                                      intercityOrderModel.status =
-                                          Constant.ridePlaced;
-                                      intercityOrderModel.paymentType =
-                                          controller.selectedPaymentMethod
-                                              .value;
-                                      intercityOrderModel.paymentStatus =
-                                      false;
-                                      intercityOrderModel.whenTime =
-                                          DateFormat("HH:mm").format(
-                                              controller.dateAndTime!);
-                                      intercityOrderModel.whenDates =
-                                          DateFormat("dd-MMM-yyyy")
-                                              .format(controller
-                                              .dateAndTime!);
-                                      intercityOrderModel.comments =
-                                          controller.commentsController
-                                              .value.text;
-                                      intercityOrderModel.otp =
-                                          Constant.getReferralCode();
-                                      intercityOrderModel.taxList =
-                                          Constant.taxList;
-                                      intercityOrderModel
-                                          .adminCommission = controller
+                                          .isEmpty) {
+                                        ShowToastDialog.showToast(
+                                            "Please select source location"
+                                                .tr);
+                                      } else if (controller
+                                          .destinationLocationController
+                                          .value
+                                          .text
+                                          .isEmpty) {
+                                        ShowToastDialog.showToast(
+                                            "Please select destination location"
+                                                .tr);
+                                      } else if (controller
+                                          .selectedPaymentMethod
+                                          .value
+                                          .isEmpty) {
+                                        ShowToastDialog.showToast(
+                                            "Please select Payment Method"
+                                                .tr);
+                                      } else if (controller
                                           .selectedInterCityType
                                           .value
-                                          .adminCommission!
-                                          .isEnabled ==
-                                          false
-                                          ? controller
-                                          .selectedInterCityType
+                                          .offerRate ==
+                                          true &&
+                                          controller.offerYourRateController
+                                              .value.text.isEmpty) {
+                                        ShowToastDialog.showToast(
+                                            "Please Enter offer rate".tr);
+                                      } else if (controller.whenController
+                                          .value.text.isEmpty) {
+                                        ShowToastDialog.showToast(
+                                            "Please select date and time"
+                                                .tr);
+                                      } else if (controller
+                                          .selectedFreightVehicle
                                           .value
-                                          .adminCommission!
-                                          : Constant.adminCommission;
-                                      intercityOrderModel.distanceType =
-                                          Constant.distanceType;
-                                      intercityOrderModel.freightVehicle =
-                                          controller
-                                              .selectedFreightVehicle
-                                              .value;
+                                          .id ==
+                                          null ||
+                                          controller.selectedFreightVehicle
+                                              .value.id!.isEmpty) {
+                                        ShowToastDialog.showToast(
+                                            "Please select cargo vehicle size."
+                                                .tr);
+                                      } else {
+                                        ShowToastDialog.showLoader(
+                                            "Please wait".tr);
 
-                                      print(controller
-                                          .selectedFreightVehicle.value);
-                                      FireStoreUtils.setInterCityOrder(
-                                          intercityOrderModel)
-                                          .then((value) {
-                                        ShowToastDialog.closeLoader();
-                                        if (value == true) {
-                                          ShowToastDialog.showToast(
-                                              "Ride Placed successfully"
-                                                  .tr);
-                                          controller.dashboardController
-                                              .selectedDrawerIndex(3);
+                                        List<dynamic> parcelImages = [];
+                                        for (var element
+                                        in controller.images) {
+                                          Url url = await Constant()
+                                              .uploadChatImageToFireStorage(
+                                              File(element.path));
+                                          parcelImages.add(url.url);
                                         }
-                                      });
-                                    }
-                                  } else {
-                                    if (controller
-                                        .sourceLocationController
-                                        .value
-                                        .text
-                                        .isEmpty) {
-                                      ShowToastDialog.showToast(
-                                          "Please select source location"
-                                              .tr);
-                                    } else if (controller
-                                        .destinationLocationController
-                                        .value
-                                        .text
-                                        .isEmpty) {
-                                      ShowToastDialog.showToast(
-                                          "Please select destination location"
-                                              .tr);
-                                    } else if (controller
-                                        .selectedPaymentMethod
-                                        .value
-                                        .isEmpty) {
-                                      ShowToastDialog.showToast(
-                                          "Please select Payment Method"
-                                              .tr);
-                                    } else if (controller.noOfPassengers
-                                        .value.text.isEmpty) {
-                                      ShowToastDialog.showToast(
-                                          "Please enter Number of passenger"
-                                              .tr);
-                                    } else if (controller.whenController
-                                        .value.text.isEmpty) {
-                                      ShowToastDialog.showToast(
-                                          "Please select date and time"
-                                              .tr);
-                                    } else if (controller
-                                        .selectedInterCityType
-                                        .value
-                                        .offerRate ==
-                                        true &&
-                                        controller.offerYourRateController
-                                            .value.text.isEmpty) {
-                                      ShowToastDialog.showToast(
-                                          "Please Enter offer rate".tr);
-                                    } else {
-                                      ShowToastDialog.showLoader(
-                                          "Please wait".tr);
-                                      InterCityOrderModel
-                                      intercityOrderModel =
-                                      InterCityOrderModel();
-                                      intercityOrderModel.id =
-                                          Constant.getUuid();
-                                      intercityOrderModel.userId =
-                                          FireStoreUtils.getCurrentUid();
-                                      intercityOrderModel
-                                          .sourceLocationName =
-                                          controller
-                                              .sourceLocationController
-                                              .value
-                                              .text;
-                                      intercityOrderModel.sourceCity =
-                                          controller.sourceCityController
-                                              .value.text;
-                                      intercityOrderModel
-                                          .sourceLocationLAtLng =
-                                          controller
-                                              .sourceLocationLAtLng.value;
 
-                                      intercityOrderModel
-                                          .destinationLocationName =
-                                          controller
-                                              .destinationLocationController
-                                              .value
-                                              .text;
-                                      intercityOrderModel
-                                          .destinationCity =
-                                          controller
-                                              .destinationCityController
-                                              .value
-                                              .text;
-                                      intercityOrderModel
-                                          .destinationLocationLAtLng =
-                                          controller
-                                              .destinationLocationLAtLng
-                                              .value;
-                                      intercityOrderModel.distance =
-                                          controller.distance.value;
-                                      intercityOrderModel.offerRate =
-                                      controller.selectedInterCityType
-                                          .value.offerRate ==
-                                          true
-                                          ? controller
-                                          .offerYourRateController
-                                          .value
-                                          .text
-                                          : controller.amount.value;
-                                      intercityOrderModel
-                                          .intercityServiceId =
-                                          controller.selectedInterCityType
-                                              .value.id;
-                                      intercityOrderModel
-                                          .intercityService =
-                                          controller.selectedInterCityType
-                                              .value;
-                                      GeoFirePoint position =
-                                      GeoFlutterFire().point(
-                                          latitude: controller
-                                              .sourceLocationLAtLng
-                                              .value
-                                              .latitude!,
-                                          longitude: controller
-                                              .sourceLocationLAtLng
-                                              .value
-                                              .longitude!);
-
-                                      intercityOrderModel.position =
-                                          Positions(
-                                              geoPoint: position.geoPoint,
-                                              geohash: position.hash);
-                                      intercityOrderModel.createdDate =
-                                          Timestamp.now();
-                                      intercityOrderModel.status =
-                                          Constant.ridePlaced;
-                                      intercityOrderModel.paymentType =
-                                          controller.selectedPaymentMethod
-                                              .value;
-                                      intercityOrderModel.paymentStatus =
-                                      false;
-                                      intercityOrderModel.whenTime =
-                                          DateFormat("HH:mm").format(
-                                              controller.dateAndTime!);
-                                      intercityOrderModel.whenDates =
-                                          DateFormat("dd-MMM-yyyy")
-                                              .format(controller
-                                              .dateAndTime!);
-                                      intercityOrderModel
-                                          .numberOfPassenger =
-                                          controller
-                                              .noOfPassengers.value.text;
-                                      intercityOrderModel.comments =
-                                          controller.commentsController
-                                              .value.text;
-                                      intercityOrderModel.otp =
-                                          Constant.getReferralCode();
-                                      intercityOrderModel.taxList =
-                                          Constant.taxList;
-                                      intercityOrderModel
-                                          .adminCommission = controller
-                                          .selectedInterCityType
-                                          .value
-                                          .adminCommission!
-                                          .isEnabled ==
-                                          false
-                                          ? controller
-                                          .selectedInterCityType
-                                          .value
-                                          .adminCommission!
-                                          : Constant.adminCommission;
-                                      intercityOrderModel.distanceType =
-                                          Constant.distanceType;
-                                      if (controller.selectedTakingRide
-                                          .value.fullName !=
-                                          "Myself") {
-                                        intercityOrderModel.someOneElse =
+                                        InterCityOrderModel
+                                        intercityOrderModel =
+                                        InterCityOrderModel();
+                                        intercityOrderModel.id =
+                                            Constant.getUuid();
+                                        intercityOrderModel.userId =
+                                            FireStoreUtils.getCurrentUid();
+                                        intercityOrderModel
+                                            .sourceLocationName =
                                             controller
-                                                .selectedTakingRide.value;
+                                                .sourceLocationController
+                                                .value
+                                                .text;
+                                        intercityOrderModel.sourceCity =
+                                            controller.sourceCityController
+                                                .value.text;
+                                        intercityOrderModel
+                                            .sourceLocationLAtLng =
+                                            controller
+                                                .sourceLocationLAtLng.value;
+
+                                        intercityOrderModel.parcelImage =
+                                            parcelImages;
+                                        intercityOrderModel.parcelWeight =
+                                            controller
+                                                .parcelWeight.value.text;
+                                        intercityOrderModel
+                                            .parcelDimension =
+                                            controller
+                                                .parcelDimension.value.text;
+
+                                        intercityOrderModel
+                                            .destinationLocationName =
+                                            controller
+                                                .destinationLocationController
+                                                .value
+                                                .text;
+                                        intercityOrderModel
+                                            .destinationCity =
+                                            controller
+                                                .destinationCityController
+                                                .value
+                                                .text;
+                                        intercityOrderModel
+                                            .destinationLocationLAtLng =
+                                            controller
+                                                .destinationLocationLAtLng
+                                                .value;
+                                        intercityOrderModel.distance =
+                                            controller.distance.value;
+                                        intercityOrderModel.offerRate =
+                                        controller.selectedInterCityType
+                                            .value.offerRate ==
+                                            true
+                                            ? controller
+                                            .offerYourRateController
+                                            .value
+                                            .text
+                                            : controller.amount.value;
+                                        intercityOrderModel
+                                            .intercityServiceId =
+                                            controller.selectedInterCityType
+                                                .value.id;
+                                        intercityOrderModel
+                                            .intercityService =
+                                            controller.selectedInterCityType
+                                                .value;
+                                        GeoFirePoint position =
+                                        GeoFlutterFire().point(
+                                            latitude: controller
+                                                .sourceLocationLAtLng
+                                                .value
+                                                .latitude!,
+                                            longitude: controller
+                                                .sourceLocationLAtLng
+                                                .value
+                                                .longitude!);
+
+                                        intercityOrderModel.position =
+                                            Positions(
+                                                geoPoint: position.geoPoint,
+                                                geohash: position.hash);
+                                        intercityOrderModel.createdDate =
+                                            Timestamp.now();
+                                        intercityOrderModel.status =
+                                            Constant.ridePlaced;
+                                        intercityOrderModel.paymentType =
+                                            controller.selectedPaymentMethod
+                                                .value;
+                                        intercityOrderModel.paymentStatus =
+                                        false;
+                                        intercityOrderModel.whenTime =
+                                            DateFormat("HH:mm").format(
+                                                controller.dateAndTime!);
+                                        intercityOrderModel.whenDates =
+                                            DateFormat("dd-MMM-yyyy")
+                                                .format(controller
+                                                .dateAndTime!);
+                                        intercityOrderModel.comments =
+                                            controller.commentsController
+                                                .value.text;
+                                        intercityOrderModel.otp =
+                                            Constant.getReferralCode();
+                                        intercityOrderModel.taxList =
+                                            Constant.taxList;
+                                        intercityOrderModel
+                                            .adminCommission = controller
+                                            .selectedInterCityType
+                                            .value
+                                            .adminCommission!
+                                            .isEnabled ==
+                                            false
+                                            ? controller
+                                            .selectedInterCityType
+                                            .value
+                                            .adminCommission!
+                                            : Constant.adminCommission;
+                                        intercityOrderModel.distanceType =
+                                            Constant.distanceType;
+                                        intercityOrderModel.freightVehicle =
+                                            controller
+                                                .selectedFreightVehicle
+                                                .value;
+
+                                        print(controller
+                                            .selectedFreightVehicle.value);
+                                        FireStoreUtils.setInterCityOrder(
+                                            intercityOrderModel)
+                                            .then((value) {
+                                          ShowToastDialog.closeLoader();
+                                          if (value == true) {
+                                            ShowToastDialog.showToast(
+                                                "Ride Placed successfully"
+                                                    .tr);
+                                            controller.dashboardController
+                                                .selectedDrawerIndex(3);
+                                          }
+                                        });
                                       }
-                                      FireStoreUtils.setInterCityOrder(
-                                          intercityOrderModel)
-                                          .then((value) {
-                                        ShowToastDialog.closeLoader();
-                                        if (value == true) {
-                                          ShowToastDialog.showToast(
-                                              "Ride Placed successfully"
-                                                  .tr);
-                                          controller.dashboardController
-                                              .selectedDrawerIndex(3);
+                                    } else {
+                                      if (controller
+                                          .sourceLocationController
+                                          .value
+                                          .text
+                                          .isEmpty) {
+                                        ShowToastDialog.showToast(
+                                            "Please select source location"
+                                                .tr);
+                                      } else if (controller
+                                          .destinationLocationController
+                                          .value
+                                          .text
+                                          .isEmpty) {
+                                        ShowToastDialog.showToast(
+                                            "Please select destination location"
+                                                .tr);
+                                      } else if (controller
+                                          .selectedPaymentMethod
+                                          .value
+                                          .isEmpty) {
+                                        ShowToastDialog.showToast(
+                                            "Please select Payment Method"
+                                                .tr);
+                                      } else if (controller.noOfPassengers
+                                          .value.text.isEmpty) {
+                                        ShowToastDialog.showToast(
+                                            "Please enter Number of passenger"
+                                                .tr);
+                                      } else if (controller.whenController
+                                          .value.text.isEmpty) {
+                                        ShowToastDialog.showToast(
+                                            "Please select date and time"
+                                                .tr);
+                                      } else if (controller
+                                          .selectedInterCityType
+                                          .value
+                                          .offerRate ==
+                                          true &&
+                                          controller.offerYourRateController
+                                              .value.text.isEmpty) {
+                                        ShowToastDialog.showToast(
+                                            "Please Enter offer rate".tr);
+                                      } else {
+                                        ShowToastDialog.showLoader(
+                                            "Please wait".tr);
+                                        InterCityOrderModel
+                                        intercityOrderModel =
+                                        InterCityOrderModel();
+                                        intercityOrderModel.id =
+                                            Constant.getUuid();
+                                        intercityOrderModel.userId =
+                                            FireStoreUtils.getCurrentUid();
+                                        intercityOrderModel
+                                            .sourceLocationName =
+                                            controller
+                                                .sourceLocationController
+                                                .value
+                                                .text;
+                                        intercityOrderModel.sourceCity =
+                                            controller.sourceCityController
+                                                .value.text;
+                                        intercityOrderModel
+                                            .sourceLocationLAtLng =
+                                            controller
+                                                .sourceLocationLAtLng.value;
+
+                                        intercityOrderModel
+                                            .destinationLocationName =
+                                            controller
+                                                .destinationLocationController
+                                                .value
+                                                .text;
+                                        intercityOrderModel
+                                            .destinationCity =
+                                            controller
+                                                .destinationCityController
+                                                .value
+                                                .text;
+                                        intercityOrderModel
+                                            .destinationLocationLAtLng =
+                                            controller
+                                                .destinationLocationLAtLng
+                                                .value;
+                                        intercityOrderModel.distance =
+                                            controller.distance.value;
+                                        intercityOrderModel.offerRate =
+                                        controller.selectedInterCityType
+                                            .value.offerRate ==
+                                            true
+                                            ? controller
+                                            .offerYourRateController
+                                            .value
+                                            .text
+                                            : controller.amount.value;
+                                        intercityOrderModel
+                                            .intercityServiceId =
+                                            controller.selectedInterCityType
+                                                .value.id;
+                                        intercityOrderModel
+                                            .intercityService =
+                                            controller.selectedInterCityType
+                                                .value;
+                                        GeoFirePoint position =
+                                        GeoFlutterFire().point(
+                                            latitude: controller
+                                                .sourceLocationLAtLng
+                                                .value
+                                                .latitude!,
+                                            longitude: controller
+                                                .sourceLocationLAtLng
+                                                .value
+                                                .longitude!);
+
+                                        intercityOrderModel.position =
+                                            Positions(
+                                                geoPoint: position.geoPoint,
+                                                geohash: position.hash);
+                                        intercityOrderModel.createdDate =
+                                            Timestamp.now();
+                                        intercityOrderModel.status =
+                                            Constant.ridePlaced;
+                                        intercityOrderModel.paymentType =
+                                            controller.selectedPaymentMethod
+                                                .value;
+                                        intercityOrderModel.paymentStatus =
+                                        false;
+                                        intercityOrderModel.whenTime =
+                                            DateFormat("HH:mm").format(
+                                                controller.dateAndTime!);
+                                        intercityOrderModel.whenDates =
+                                            DateFormat("dd-MMM-yyyy")
+                                                .format(controller
+                                                .dateAndTime!);
+                                        intercityOrderModel
+                                            .numberOfPassenger =
+                                            controller
+                                                .noOfPassengers.value.text;
+                                        intercityOrderModel.comments =
+                                            controller.commentsController
+                                                .value.text;
+                                        intercityOrderModel.otp =
+                                            Constant.getReferralCode();
+                                        intercityOrderModel.taxList =
+                                            Constant.taxList;
+                                        intercityOrderModel
+                                            .adminCommission = controller
+                                            .selectedInterCityType
+                                            .value
+                                            .adminCommission!
+                                            .isEnabled ==
+                                            false
+                                            ? controller
+                                            .selectedInterCityType
+                                            .value
+                                            .adminCommission!
+                                            : Constant.adminCommission;
+                                        intercityOrderModel.distanceType =
+                                            Constant.distanceType;
+                                        if (controller.selectedTakingRide
+                                            .value.fullName !=
+                                            "Myself") {
+                                          intercityOrderModel.someOneElse =
+                                              controller
+                                                  .selectedTakingRide.value;
                                         }
-                                      });
+                                        FireStoreUtils.setInterCityOrder(
+                                            intercityOrderModel)
+                                            .then((value) {
+                                          ShowToastDialog.closeLoader();
+                                          if (value == true) {
+                                            ShowToastDialog.showToast(
+                                                "Ride Placed successfully"
+                                                    .tr);
+                                            controller.dashboardController
+                                                .selectedDrawerIndex(3);
+                                          }
+                                        });
+                                      }
                                     }
                                   }
-                                }
-                              },
-                            ),
-                          ],
+                                },
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
+                            ],
+                          ),
               ),
-            ],
-          ),
         );
       },
     );

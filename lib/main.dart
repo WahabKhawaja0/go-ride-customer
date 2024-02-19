@@ -64,6 +64,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
             title: 'GoRide',
             debugShowCheckedModeBanner: false,
             theme: Styles.themeData(
+
                 // themeChangeProvider.darkTheme == 0
                 //     ? true
                 //     : themeChangeProvider.darkTheme == 1

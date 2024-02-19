@@ -25,7 +25,7 @@ class Styles {
         textTheme: ButtonTextTheme.primary, //  <-- dark text for light background
         colorScheme: Theme.of(context).colorScheme.copyWith(primary: isDarkTheme ? AppColors.darkModePrimary : AppColors.primary),
       ),
-      appBarTheme: AppBarTheme(centerTitle: true, iconTheme: const IconThemeData(color: Colors.white), titleTextStyle: GoogleFonts.poppins(color: Colors.white, fontSize: 16)),
+      appBarTheme: AppBarTheme(centerTitle: true, iconTheme: const IconThemeData(color: Colors.black), titleTextStyle: GoogleFonts.poppins(color: Colors.white, fontSize: 16)),
     );
   }
 }

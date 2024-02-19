@@ -115,6 +115,12 @@ class OrderScreen extends StatelessWidget {
                                     .snapshots(),
                                 builder: (BuildContext context,
                                     AsyncSnapshot<QuerySnapshot> snapshot) {
+                                  print("_________________________");
+                                  print("docs data");
+                                  if(snapshot.hasData){
+                                    print(snapshot.data!.docs.length);
+                                  }
+
                                   if (snapshot.hasError) {
                                     return Center(
                                         child: Text('Something went wrong'.tr,
@@ -196,10 +202,8 @@ class OrderScreen extends StatelessWidget {
                                                 border: Border.all(
                                                     color: themeChange
                                                         .getThem()
-                                                        ? AppColors
-                                                        .darkContainerBorder
-                                                        : AppColors
-                                                        .darkContainerBorder,
+                                                        ? Colors.green.withOpacity(0.5)
+                                                        : Colors.green.withOpacity(0.5),
                                                     width: 0.5),
                                                 boxShadow:
                                                 themeChange.getThem()
@@ -232,7 +236,7 @@ class OrderScreen extends StatelessWidget {
                                                                 .toString(),
                                                             style: GoogleFonts
                                                                 .poppins(
-                                                                color: Colors.black,
+                                                                color: Colors.green,
 
                                                                 fontWeight:
                                                                 FontWeight
@@ -267,7 +271,7 @@ class OrderScreen extends StatelessWidget {
                                                                       .decimalDigits!)),
                                                           style: GoogleFonts
                                                               .poppins(
-                                                              color: Colors.black,
+                                                              color: Colors.green,
 
                                                               fontWeight:
                                                               FontWeight.bold),
@@ -334,10 +338,8 @@ class OrderScreen extends StatelessWidget {
                                                       decoration: BoxDecoration(
                                                           color: themeChange
                                                               .getThem()
-                                                              ? AppColors
-                                                              .darkGray
-                                                              : AppColors
-                                                              .darkGray,
+                                                              ? Colors.white
+                                                              : Colors.white,
                                                           borderRadius:
                                                           const BorderRadius
                                                               .all(
@@ -418,10 +420,8 @@ class OrderScreen extends StatelessWidget {
                                                         decoration: BoxDecoration(
                                                             color: themeChange
                                                                 .getThem()
-                                                                ? AppColors
-                                                                .darkGray
-                                                                : AppColors
-                                                                .darkGray,
+                                                                ? Colors.white
+                                                                : Colors.white,
                                                             borderRadius:
                                                             const BorderRadius
                                                                 .all(
