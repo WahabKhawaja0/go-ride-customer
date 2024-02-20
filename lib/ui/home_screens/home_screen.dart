@@ -732,10 +732,6 @@ class HomeScreen extends StatelessWidget {
                                       btnWidthRatio:
                                           Responsive.width(100, context),
                                       onPress: () async {
-
-
-
-
                                         bool isPaymentNotCompleted =
                                             await FireStoreUtils
                                                 .paymentStatusCheck();
@@ -896,8 +892,9 @@ class HomeScreen extends StatelessWidget {
                                             ShowToastDialog.showToast(
                                                 "Ride Placed successfully".tr);
                                             controller.dashboardController
-                                                .selectedDrawerIndex(2);
+                                                .selectedDrawerIndex(3);
                                             ShowToastDialog.closeLoader();
+                                            Navigator.pop(context);
                                           },
                                           );
 

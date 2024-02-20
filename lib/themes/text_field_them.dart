@@ -23,10 +23,10 @@ class TextFieldThem {
         enabled: enable,
         keyboardType: keyBoardType,
         maxLines: maxLine,
-        style: GoogleFonts.poppins(color: themeChange.getThem() ? Colors.white : Colors.black),
+        style: GoogleFonts.poppins(color: themeChange.getThem() ? Colors.black : Colors.black),
         decoration: InputDecoration(
             filled: true,
-            fillColor: themeChange.getThem() ? AppColors.darkTextField : AppColors.textField,
+            fillColor: themeChange.getThem() ? AppColors.textField : AppColors.textField,
             contentPadding: EdgeInsets.only(left: 10, right: 10, top: maxLine == 1 ? 0 : 10),
             disabledBorder: OutlineInputBorder(
               borderRadius: const BorderRadius.all(Radius.circular(4)),

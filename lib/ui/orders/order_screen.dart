@@ -982,6 +982,11 @@ class OrderScreen extends StatelessWidget {
                                     .snapshots(),
                                 builder: (BuildContext context,
                                     AsyncSnapshot<QuerySnapshot> snapshot) {
+                                  if(snapshot.hasData){
+                                    print("_______________");
+                                    print(snapshot.data!.docs.length);
+                                    print("lenfalksdflksdjfla length");
+                                  }
                                   if (snapshot.hasError) {
                                     return Center(
                                         child: Text('Something went wrong'.tr,style: GoogleFonts.poppins(
@@ -1057,7 +1062,7 @@ class OrderScreen extends StatelessWidget {
                                                               .toString(),
                                                           style: GoogleFonts
                                                               .poppins(
-                                                              color: Colors.black,
+                                                              color: Colors.green,
 
                                                               fontWeight:
                                                               FontWeight.w500),
@@ -1076,7 +1081,7 @@ class OrderScreen extends StatelessWidget {
                                                                     .decimalDigits!)),
                                                         style: GoogleFonts
                                                             .poppins(
-                                                            color: Colors.black,
+                                                            color: Colors.green,
 
                                                             fontWeight:
                                                             FontWeight
@@ -1105,10 +1110,8 @@ class OrderScreen extends StatelessWidget {
                                                       decoration: BoxDecoration(
                                                           color: themeChange
                                                               .getThem()
-                                                              ? AppColors
-                                                              .darkGray
-                                                              : AppColors
-                                                              .darkGray,
+                                                              ? Colors.white
+                                                              : Colors.white,
                                                           borderRadius:
                                                           const BorderRadius
                                                               .all(

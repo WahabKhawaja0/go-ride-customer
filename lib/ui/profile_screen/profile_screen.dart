@@ -30,89 +30,103 @@ class ProfileScreen extends StatelessWidget {
         init: ProfileController(),
         builder: (controller) {
           return Scaffold(
+            appBar: AppBar(
+              backgroundColor: Colors.white,
+              title: Text('Profile',style: GoogleFonts.poppins(
+                // fontSize: 16,
+                color: Colors.black,
+                fontWeight: FontWeight.w600,
+              ),
+              ),
+
+              centerTitle: true,
+            ),
               backgroundColor: Colors.white,
               body: Column(
                 children: [
-                  Container(
-                    height: Responsive.width(45, context),
-                    width: Responsive.width(100, context),
-                    color: Colors.white,
-                    child: Stack(
-                      alignment: Alignment.bottomCenter,
-                      children: [
-                        Positioned(
-                          bottom: 50,
-                          child: Center(
-                            child: controller.profileImage.isEmpty
-                                ? ClipRRect(
-                              borderRadius: BorderRadius.circular(60),
-                              child: CachedNetworkImage(
-                                imageUrl: Constant.userPlaceHolder,
-                                fit: BoxFit.fill,
-                                height: Responsive.width(30, context),
-                                width: Responsive.width(30, context),
-                                placeholder: (context, url) =>
-                                    Constant.loader(),
-                                errorWidget: (context, url, error) =>
-                                    Image.network(
-                                        Constant.userPlaceHolder),
-                              ),
-                            )
-                                : ClipRRect(
-                              borderRadius: BorderRadius.circular(60),
-                              child: Constant().hasValidUrl(controller
-                                  .profileImage.value) ==
-                                  false
-                                  ? Image.file(
-                                File(controller.profileImage.value),
-                                height:
-                                Responsive.width(30, context),
-                                width:
-                                Responsive.width(30, context),
-                                fit: BoxFit.fill,
+                  Padding(
+                    padding:  EdgeInsets.only(top: 20),
+                    child: Container(
+                      height: Responsive.width(45, context),
+                      width: Responsive.width(100, context),
+                      color: Colors.white,
+                      child: Stack(
+                        alignment: Alignment.bottomCenter,
+                        children: [
+                          Positioned(
+                            bottom: 50,
+                            child: Center(
+                              child: controller.profileImage.isEmpty
+                                  ? ClipRRect(
+                                borderRadius: BorderRadius.circular(60),
+                                child: CachedNetworkImage(
+                                  imageUrl: Constant.userPlaceHolder,
+                                  fit: BoxFit.fill,
+                                  height: Responsive.width(30, context),
+                                  width: Responsive.width(30, context),
+                                  placeholder: (context, url) =>
+                                      Constant.loader(),
+                                  errorWidget: (context, url, error) =>
+                                      Image.network(
+                                          Constant.userPlaceHolder),
+                                ),
                               )
-                                  : CachedNetworkImage(
-                                imageUrl: controller
-                                    .profileImage.value
-                                    .toString(),
-                                fit: BoxFit.fill,
-                                height:
-                                Responsive.width(30, context),
-                                width:
-                                Responsive.width(30, context),
-                                placeholder: (context, url) =>
-                                    Constant.loader(),
-                                errorWidget: (context, url,
-                                    error) =>
-                                    Image.network(
-                                        Constant.userPlaceHolder),
+                                  : ClipRRect(
+                                borderRadius: BorderRadius.circular(60),
+                                child: Constant().hasValidUrl(controller
+                                    .profileImage.value) ==
+                                    false
+                                    ? Image.file(
+                                  File(controller.profileImage.value),
+                                  height:
+                                  Responsive.width(30, context),
+                                  width:
+                                  Responsive.width(30, context),
+                                  fit: BoxFit.fill,
+                                )
+                                    : CachedNetworkImage(
+                                  imageUrl: controller
+                                      .profileImage.value
+                                      .toString(),
+                                  fit: BoxFit.fill,
+                                  height:
+                                  Responsive.width(30, context),
+                                  width:
+                                  Responsive.width(30, context),
+                                  placeholder: (context, url) =>
+                                      Constant.loader(),
+                                  errorWidget: (context, url,
+                                      error) =>
+                                      Image.network(
+                                          Constant.userPlaceHolder),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        Positioned(
-                          bottom: 50,
-                          right: Responsive.width(36, context),
-                          child: InkWell(
-                            onTap: () {
-                              buildBottomSheet(context, controller);
-                            },
-                            child: ClipOval(
-                              child: Container(
-                                color: Colors.white,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: SvgPicture.asset(
-                                    'assets/icons/ic_edit_profile.svg',
-                                    width: 22,
-                                    height: 22,
+                          Positioned(
+                            bottom: 50,
+                            right: Responsive.width(36, context),
+                            child: InkWell(
+                              onTap: () {
+                                buildBottomSheet(context, controller);
+                              },
+                              child: ClipOval(
+                                child: Container(
+                                  color: Colors.white,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: SvgPicture.asset(
+                                      'assets/icons/ic_edit_profile.svg',
+                                      width: 22,
+                                      height: 22,
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   Expanded(
@@ -186,8 +200,8 @@ class ProfileScreen extends StatelessWidget {
                                               },
                                               dialogBackgroundColor:
                                               themeChange.getThem()
-                                                  ? Colors.black
-                                                  :Colors.black,
+                                                  ? Colors.white
+                                                  :Colors.white,
                                               initialSelection: controller
                                                   .countryCode.value,
                                               comparator: (a, b) =>

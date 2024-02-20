@@ -113,7 +113,7 @@ class MainScreen extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const InterCityOrderScreen(),
+                      builder: (context) => const  OrderScreen(),
                     ),
                   );
                 },
