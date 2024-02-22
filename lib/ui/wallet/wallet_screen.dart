@@ -245,7 +245,7 @@ class WalletScreen extends StatelessWidget {
                                                                         walletTransactionModel
                                                                             .createdDate),
                                                                     style: GoogleFonts.poppins(
-                                                                        color: Colors.black,
+                                                                        color: Colors.white,
 
                                                                         fontWeight:
                                                                             FontWeight.w600),
@@ -275,7 +275,7 @@ class WalletScreen extends StatelessWidget {
                                                                         .note
                                                                         .toString(),
                                                                     style: GoogleFonts.poppins(
-                                                                        color: Colors.black,
+                                                                        color: Colors.white,
 
                                                                         fontWeight:
                                                                             FontWeight.w400),

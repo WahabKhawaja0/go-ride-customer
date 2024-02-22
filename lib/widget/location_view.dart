@@ -22,9 +22,9 @@ class LocationView extends StatelessWidget {
       children: [
         Column(
           children: [
-            SvgPicture.asset(themeChange.getThem() ? 'assets/icons/ic_source_dark.svg' : 'assets/icons/ic_source.svg', width: 18),
+            SvgPicture.asset(themeChange.getThem() ? 'assets/icons/ic_source_dark.svg' : 'assets/icons/ic_source_dark.svg', width: 18),
             Dash(direction: Axis.vertical, length: Responsive.height(4, context), dashLength: 6, dashColor: AppColors.dottedDivider),
-            SvgPicture.asset(themeChange.getThem() ? 'assets/icons/ic_destination_dark.svg' : 'assets/icons/ic_destination.svg', width: 18),
+            SvgPicture.asset(themeChange.getThem() ? 'assets/icons/ic_destination_dark.svg' : 'assets/icons/ic_destination_dark.svg', width: 18),
           ],
         ),
         const SizedBox(

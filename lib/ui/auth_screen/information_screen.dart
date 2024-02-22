@@ -95,7 +95,7 @@ class InformationScreen extends StatelessWidget {
                               isDense: true,
                               filled: true,
                               fillColor: themeChange.getThem()
-                                  ? AppColors.darkTextField
+                                  ? AppColors.textField
                                   : AppColors.textField,
                               contentPadding:
                                   const EdgeInsets.symmetric(vertical: 12),
@@ -110,6 +110,8 @@ class InformationScreen extends StatelessWidget {
 
 
                                 searchDecoration: InputDecoration(
+                                  fillColor: Colors.white,
+                                  filled: true,
                                   prefixIcon: Icon(Icons.search , color: Colors.green),
                                   disabledBorder: OutlineInputBorder(
                                     borderRadius: const BorderRadius.all(Radius.circular(4)),
@@ -121,7 +123,8 @@ class InformationScreen extends StatelessWidget {
                                   ),
                                   enabledBorder: UnderlineInputBorder(
                                     borderRadius: const BorderRadius.all(Radius.circular(4)),
-                                    borderSide: BorderSide(),
+                                    borderSide: BorderSide(
+                                    ),
                                   ),
                                   errorBorder: UnderlineInputBorder(
                                       borderRadius: const BorderRadius.all(Radius.circular(4)),

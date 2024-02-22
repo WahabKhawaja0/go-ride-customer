@@ -30,20 +30,10 @@ class ProfileScreen extends StatelessWidget {
         init: ProfileController(),
         builder: (controller) {
           return Scaffold(
-            appBar: AppBar(
-              backgroundColor: Colors.white,
-              title: Text('Profile',style: GoogleFonts.poppins(
-                // fontSize: 16,
-                color: Colors.black,
-                fontWeight: FontWeight.w600,
-              ),
-              ),
-
-              centerTitle: true,
-            ),
               backgroundColor: Colors.white,
               body: Column(
                 children: [
+                  SizedBox(height: 100,),
                   Padding(
                     padding:  EdgeInsets.only(top: 20),
                     child: Container(

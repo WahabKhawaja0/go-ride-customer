@@ -138,7 +138,8 @@ class FaqScreen extends StatelessWidget {
                                 default:
                                   return Text('Error'.tr);
                               }
-                            }),
+                            },
+                        ),
                       ),
                     ],
                   ),

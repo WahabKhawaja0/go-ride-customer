@@ -2,9 +2,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:customer/constant/constant.dart';
 import 'package:customer/model/driver_user_model.dart';
 import 'package:customer/themes/app_colors.dart';
+import 'package:customer/utils/DarkThemeProvider.dart';
 import 'package:customer/utils/fire_store_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class DriverView extends StatelessWidget {
   final String? driverId;
@@ -14,6 +16,7 @@ class DriverView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeChange = Provider.of<DarkThemeProvider>(context);
     return FutureBuilder<DriverUserModel?>(
         future: FireStoreUtils.getDriver(driverId.toString()),
         builder: (context, snapshot) {
@@ -48,7 +51,7 @@ class DriverView extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("Asynchronous user", style: GoogleFonts.poppins(fontWeight: FontWeight.w600)),
+                                Text("Asynchronous user", style: GoogleFonts.poppins(fontWeight: FontWeight.w600,color: Colors.white,)),
                                 Row(
                                   children: [
                                     Expanded(
@@ -62,13 +65,13 @@ class DriverView extends StatelessWidget {
                                           const SizedBox(
                                             width: 5,
                                           ),
-                                          Text(Constant.calculateReview(reviewCount: "0.0", reviewSum: "0.0"), style: GoogleFonts.poppins(fontWeight: FontWeight.w500)),
+                                          Text(Constant.calculateReview(reviewCount: "0.0", reviewSum: "0.0"), style: GoogleFonts.poppins(fontWeight: FontWeight.w500,color: Colors.white,)),
                                         ],
                                       ),
                                     ),
                                     Text(
                                       Constant.amountShow(amount: amount.toString()),
-                                      style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
+                                      style: GoogleFonts.poppins(fontWeight: FontWeight.bold,color: themeChange.getThem() ?Colors.white : Colors.white,),
                                     ),
                                   ],
                                 )
@@ -104,7 +107,7 @@ class DriverView extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(driverModel.fullName.toString(), style: GoogleFonts.poppins(fontWeight: FontWeight.w600)),
+                              Text(driverModel.fullName.toString(), style: GoogleFonts.poppins(fontWeight: FontWeight.w600,color: Colors.white,)),
                               Row(
                                 children: [
                                   Expanded(
@@ -119,13 +122,13 @@ class DriverView extends StatelessWidget {
                                           width: 5,
                                         ),
                                         Text(Constant.calculateReview(reviewCount: driverModel.reviewsCount.toString(), reviewSum: driverModel.reviewsSum.toString()),
-                                            style: GoogleFonts.poppins(fontWeight: FontWeight.w500)),
+                                            style: GoogleFonts.poppins(fontWeight: FontWeight.w500,color: Colors.white,)),
                                       ],
                                     ),
                                   ),
                                   Text(
                                     Constant.amountShow(amount: amount.toString()),
-                                    style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
+                                    style: GoogleFonts.poppins(fontWeight: FontWeight.bold,color: Colors.white,),
                                   ),
                                 ],
                               )

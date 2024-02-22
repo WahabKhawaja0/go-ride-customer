@@ -913,7 +913,7 @@ class InterCityScreen extends StatelessWidget {
                                                 "Ride Placed successfully"
                                                     .tr);
                                             controller.dashboardController
-                                                .selectedDrawerIndex(3);
+                                                .selectedDrawerIndex(4);
                                           }
                                         });
                                       }

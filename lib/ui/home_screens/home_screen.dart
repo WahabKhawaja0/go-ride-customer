@@ -620,7 +620,7 @@ class HomeScreen extends StatelessWidget {
                                             Constant.currencyModel!.symbol
                                                 .toString(),
                                             style: GoogleFonts.poppins(
-                                              color: Colors.black,),
+                                              color: themeChange.getThem() ? Colors.black : Colors.black),
                                           ),
                                         ),
                                       ),

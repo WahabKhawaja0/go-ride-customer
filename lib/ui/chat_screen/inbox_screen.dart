@@ -130,7 +130,7 @@ class InboxScreen extends StatelessWidget {
                                 ],
                               ),
                               subtitle:
-                              Text("Ride Id : #${inboxModel.orderId}".tr),
+                              Text("Ride Id : #${inboxModel.orderId}".tr,style: TextStyle(color: Colors.black),),
                             ),
                           ),
                         ),

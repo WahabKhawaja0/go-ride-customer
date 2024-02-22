@@ -891,10 +891,8 @@ class OrderScreen extends StatelessWidget {
                                                           decoration: BoxDecoration(
                                                               color: themeChange
                                                                   .getThem()
-                                                                  ? AppColors
-                                                                  .darkGray
-                                                                  : AppColors
-                                                                  .darkGray,
+                                                                  ? Colors.white
+                                                                  : Colors.white,
                                                               borderRadius:
                                                               const BorderRadius
                                                                   .all(
@@ -919,7 +917,7 @@ class OrderScreen extends StatelessWidget {
                                                                                 .toString(),
                                                                             style: GoogleFonts
                                                                                 .poppins(
-                                                                                color: Colors.black,
+                                                                                color: Colors.green,
 
                                                                                 fontWeight: FontWeight
                                                                                     .w500))),
@@ -931,7 +929,7 @@ class OrderScreen extends StatelessWidget {
                                                                         style:
                                                                         GoogleFonts
                                                                             .poppins(
-                                                                          color: Colors.black,
+                                                                          color: Colors.green,
 
                                                                         )),
                                                                   ],
@@ -964,7 +962,8 @@ class OrderScreen extends StatelessWidget {
                                                       ),
                                                     ],
                                                   ),
-                                                )),
+                                                ),
+                                            ),
                                           ),
                                         );
                                       });

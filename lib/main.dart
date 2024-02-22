@@ -64,12 +64,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
             title: 'GoRide',
             debugShowCheckedModeBanner: false,
             theme: Styles.themeData(
-
-                // themeChangeProvider.darkTheme == 0
-                //     ? true
-                //     : themeChangeProvider.darkTheme == 1
-                //         ? false
-                //         : themeChangeProvider.getSystemThem(),
                 false,
                 context),
             localizationsDelegates: const [
@@ -83,6 +77,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                 init: GlobalSettingController(),
                 builder: (context) {
                   return const SplashScreen();
+                  // return InformationScreen();
                 }));
       }),
     );

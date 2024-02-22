@@ -77,13 +77,13 @@ class LoginScreen extends StatelessWidget {
                             textAlign: TextAlign.start,
                             style: GoogleFonts.poppins(
                                 color: themeChange.getThem()
-                                    ? Colors.white
+                                    ? Colors.black
                                     : Colors.black),
                             decoration: InputDecoration(
                                 isDense: true,
                                 filled: true,
                                 fillColor: themeChange.getThem()
-                                    ? AppColors.darkTextField
+                                    ? AppColors.textField
                                     : AppColors.textField,
                                 contentPadding:
                                     const EdgeInsets.symmetric(vertical: 5),

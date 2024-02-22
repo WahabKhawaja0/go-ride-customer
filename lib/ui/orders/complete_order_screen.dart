@@ -31,7 +31,7 @@ class CompleteOrderScreen extends StatelessWidget {
               backgroundColor: Colors.white,
               appBar: AppBar(
                 backgroundColor: Colors.white,
-                title:  Text("Ride Details".tr),
+                title:  Text("Ride Details".tr,style: TextStyle(color:Colors.black),),
                 leading: InkWell(
                     onTap: () {
                       Get.back();
@@ -39,6 +39,7 @@ class CompleteOrderScreen extends StatelessWidget {
                     child: const Icon(
                       Icons.arrow_back,
                       color: Colors.black,
+
                     )),
               ),
               body: Column(
@@ -87,6 +88,7 @@ class CompleteOrderScreen extends StatelessWidget {
                                                     "Order ID".tr,
                                                     style: GoogleFonts.poppins(
                                                       fontWeight: FontWeight.w600,
+                                                        color:themeChange.getThem() ? Colors.white : Colors.white,
                                                     ),
                                                   ),
                                                 ),
@@ -105,7 +107,7 @@ class CompleteOrderScreen extends StatelessWidget {
                                                       padding: const EdgeInsets.symmetric(horizontal: 10),
                                                       child: Text(
                                                         "Copy".tr,
-                                                        style: GoogleFonts.poppins(fontWeight: FontWeight.w700),
+                                                        style: GoogleFonts.poppins(fontWeight: FontWeight.w700,color:themeChange.getThem() ? Colors.white : Colors.white,),
                                                       ),
                                                     ),
                                                   ),
@@ -118,7 +120,7 @@ class CompleteOrderScreen extends StatelessWidget {
                                             Text(
                                               "#${controller.orderModel.value.id!.toUpperCase()}",
                                               style: GoogleFonts.poppins(
-                                                fontWeight: FontWeight.w400,
+                                                fontWeight: FontWeight.w400,color:themeChange.getThem() ? Colors.white : Colors.white,
                                               ),
                                             ),
                                           ],
@@ -135,7 +137,7 @@ class CompleteOrderScreen extends StatelessWidget {
                                     ),
                                     Text(
                                       "Vehicle Details",
-                                      style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
+                                      style: GoogleFonts.poppins(fontWeight: FontWeight.w600,color:themeChange.getThem() ? Colors.black : Colors.black,),
                                     ),
                                     const SizedBox(
                                       height: 10,
@@ -178,7 +180,7 @@ class CompleteOrderScreen extends StatelessWidget {
                                                             ),
                                                             Text(
                                                               driverModel.vehicleInformation!.vehicleType.toString(),
-                                                              style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
+                                                              style: GoogleFonts.poppins(fontWeight: FontWeight.w600,color:Colors.white),
                                                             )
                                                           ],
                                                         ),
@@ -228,7 +230,7 @@ class CompleteOrderScreen extends StatelessWidget {
                                     ),
                                     Text(
                                       "Pickup and drop-off locations".tr,
-                                      style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
+                                      style: GoogleFonts.poppins(fontWeight: FontWeight.w600,color:Colors.black),
                                     ),
                                     const SizedBox(
                                       height: 10,
@@ -390,7 +392,7 @@ class CompleteOrderScreen extends StatelessWidget {
                                                 ),
                                                 Text(
                                                   Constant.amountShow(amount: controller.calculateAmount().toString()),
-                                                  style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
+                                                  style: GoogleFonts.poppins(fontWeight: FontWeight.w600,color:Colors.green),
                                                 ),
                                               ],
                                             ),

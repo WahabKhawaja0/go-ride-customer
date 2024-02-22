@@ -59,7 +59,7 @@ class ReviewScreen extends StatelessWidget {
                             Text(
                               '${controller.driverModel.value.fullName}',
                               textAlign: TextAlign.center,
-                              style: GoogleFonts.poppins(letterSpacing: 0.8, fontWeight: FontWeight.w800),
+                              style: GoogleFonts.poppins(letterSpacing: 0.8, fontWeight: FontWeight.w800,color: Colors.black),
                             ),
                             const SizedBox(
                               height: 8,
@@ -77,7 +77,7 @@ class ReviewScreen extends StatelessWidget {
                                   width: 5,
                                 ),
                                 Text(Constant.calculateReview(reviewCount: controller.driverModel.value.reviewsCount.toString(), reviewSum: controller.driverModel.value.reviewsSum.toString()),
-                                    style: GoogleFonts.poppins(fontWeight: FontWeight.w500)),
+                                    style: GoogleFonts.poppins(fontWeight: FontWeight.w500,color:Colors.black)),
                               ],
                             ),
                             const SizedBox(
@@ -87,15 +87,15 @@ class ReviewScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Text("${controller.driverModel.value.vehicleInformation!.vehicleNumber}", style: GoogleFonts.poppins(fontWeight: FontWeight.w700)),
+                                Text("${controller.driverModel.value.vehicleInformation!.vehicleNumber}", style: GoogleFonts.poppins(fontWeight: FontWeight.w700,color:Colors.black)),
                                 const SizedBox(
                                   width: 10,
                                 ),
-                                Text("${controller.driverModel.value.vehicleInformation!.vehicleType}", style: GoogleFonts.poppins(fontWeight: FontWeight.w500)),
+                                Text("${controller.driverModel.value.vehicleInformation!.vehicleType}", style: GoogleFonts.poppins(fontWeight: FontWeight.w500,color:Colors.black)),
                                 const SizedBox(
                                   width: 10,
                                 ),
-                                Text("${controller.driverModel.value.vehicleInformation!.vehicleColor}", style: GoogleFonts.poppins(fontWeight: FontWeight.w700)),
+                                Text("${controller.driverModel.value.vehicleInformation!.vehicleColor}", style: GoogleFonts.poppins(fontWeight: FontWeight.w700,color:Colors.black)),
                               ],
                             ),
                             const SizedBox(
@@ -107,14 +107,14 @@ class ReviewScreen extends StatelessWidget {
                               child: Text(
                                 'Rate for'.tr,
                                 textAlign: TextAlign.center,
-                                style: GoogleFonts.poppins(letterSpacing: 0.8),
+                                style: GoogleFonts.poppins(letterSpacing: 0.8,color:Colors.green),
                               ),
                             ),
                             Padding(
                               padding: const EdgeInsets.only(top: 8),
                               child: Text(
                                 "${controller.driverModel.value.fullName}",
-                                style: GoogleFonts.poppins(fontWeight: FontWeight.bold, letterSpacing: 2),
+                                style: GoogleFonts.poppins(fontWeight: FontWeight.bold, letterSpacing: 2,color:Colors.black),
                               ),
                             ),
                             Padding(

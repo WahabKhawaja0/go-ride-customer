@@ -232,7 +232,7 @@ class InterCityOrderScreen extends StatelessWidget {
                                                                           .toString(),
                                                                       style: GoogleFonts.poppins(
                                                                           color: Colors
-                                                                              .black,
+                                                                              .white,
                                                                           fontWeight:
                                                                               FontWeight.w500),
                                                                     ),
@@ -249,7 +249,7 @@ class InterCityOrderScreen extends StatelessWidget {
                                                                                 double.parse(orderModel.finalRate.toString()).toStringAsFixed(Constant.currencyModel!.decimalDigits!)),
                                                                     style: GoogleFonts.poppins(
                                                                         color: Colors
-                                                                            .black,
+                                                                            .white,
                                                                         fontWeight:
                                                                             FontWeight.bold),
                                                                   ),
@@ -291,9 +291,7 @@ class InterCityOrderScreen extends StatelessWidget {
                                                             Container(
                                                               decoration: BoxDecoration(
                                                                   color: Colors
-                                                                      .grey
-                                                                      .withOpacity(
-                                                                          0.30),
+                                                                      .white,
                                                                   borderRadius:
                                                                       const BorderRadius
                                                                           .all(
@@ -325,8 +323,7 @@ class InterCityOrderScreen extends StatelessWidget {
                                                               decoration: BoxDecoration(
                                                                   color: Colors
                                                                       .green
-                                                                      .withOpacity(
-                                                                          0.30),
+                                                                      ,
                                                                   borderRadius:
                                                                       const BorderRadius
                                                                           .all(
@@ -374,10 +371,8 @@ class InterCityOrderScreen extends StatelessWidget {
                                                             ? Container(
                                                                 decoration: BoxDecoration(
                                                                     color: themeChange.getThem()
-                                                                        ? AppColors
-                                                                            .darkGray
-                                                                        : AppColors
-                                                                            .darkGray,
+                                                                        ? Colors.white
+                                                                        : Colors.white,
                                                                     borderRadius:
                                                                         const BorderRadius
                                                                             .all(
@@ -435,10 +430,8 @@ class InterCityOrderScreen extends StatelessWidget {
                                                             decoration: BoxDecoration(
                                                                 color: themeChange
                                                                         .getThem()
-                                                                    ? AppColors
-                                                                        .darkGray
-                                                                    : AppColors
-                                                                        .darkGray,
+                                                                    ? Colors.white
+                                                                    : Colors.white,
                                                                 borderRadius:
                                                                     const BorderRadius
                                                                         .all(
@@ -703,6 +696,10 @@ class InterCityOrderScreen extends StatelessWidget {
                                     .snapshots(),
                                 builder: (BuildContext context,
                                     AsyncSnapshot<QuerySnapshot> snapshot) {
+                                  if(snapshot.hasData){
+                                    print("_____________");
+                                    print(snapshot.data!.docs.length);
+                                  }
                                   if (snapshot.hasError) {
                                     return Center(
                                         child: Text(
@@ -719,7 +716,7 @@ class InterCityOrderScreen extends StatelessWidget {
                                   return snapshot.data!.docs.isEmpty
                                       ? Center(
                                           child: Text(
-                                              "No completed rides Found".tr),
+                                              "No completed rides Found".tr,style: TextStyle(color: Colors.black),),
                                         )
                                       : ListView.builder(
                                           itemCount: snapshot.data!.docs.length,
@@ -814,9 +811,7 @@ class InterCityOrderScreen extends StatelessWidget {
                                                               Container(
                                                                 decoration: BoxDecoration(
                                                                     color: Colors
-                                                                        .grey
-                                                                        .withOpacity(
-                                                                            0.30),
+                                                                        .white,
                                                                     borderRadius:
                                                                         const BorderRadius
                                                                             .all(
@@ -830,7 +825,7 @@ class InterCityOrderScreen extends StatelessWidget {
                                                                           4),
                                                                   child: Text(orderModel
                                                                       .paymentType
-                                                                      .toString()),
+                                                                      .toString(),style: TextStyle(color: Colors.black),),
                                                                 ),
                                                               ),
                                                               const SizedBox(
@@ -840,8 +835,7 @@ class InterCityOrderScreen extends StatelessWidget {
                                                                 decoration: BoxDecoration(
                                                                     color: Colors
                                                                         .green
-                                                                        .withOpacity(
-                                                                            0.30),
+                                                                        ,
                                                                     borderRadius:
                                                                         const BorderRadius
                                                                             .all(
@@ -861,7 +855,7 @@ class InterCityOrderScreen extends StatelessWidget {
                                                                     style: GoogleFonts
                                                                         .poppins(
                                                                       color: Colors
-                                                                          .black,
+                                                                          .white,
                                                                     ),
                                                                   ),
                                                                 ),
@@ -888,10 +882,8 @@ class InterCityOrderScreen extends StatelessWidget {
                                                             decoration: BoxDecoration(
                                                                 color: themeChange
                                                                         .getThem()
-                                                                    ? AppColors
-                                                                        .darkGray
-                                                                    : AppColors
-                                                                        .darkGray,
+                                                                    ? Colors.white
+                                                                    : Colors.white,
                                                                 borderRadius:
                                                                     const BorderRadius
                                                                         .all(
@@ -910,14 +902,14 @@ class InterCityOrderScreen extends StatelessWidget {
                                                                       Expanded(
                                                                           child: Text(
                                                                               orderModel.status.toString(),
-                                                                              style: GoogleFonts.poppins(color: Colors.black, fontWeight: FontWeight.w600))),
+                                                                              style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.w600))),
                                                                       Text(
                                                                           Constant().formatTimestamp(orderModel
                                                                               .createdDate),
                                                                           style:
                                                                               GoogleFonts.poppins(
                                                                             color:
-                                                                                Colors.black,
+                                                                                Colors.white,
                                                                           )),
                                                                     ],
                                                                   ),
