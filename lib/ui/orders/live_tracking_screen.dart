@@ -18,7 +18,7 @@ class LiveTrackingScreen extends StatelessWidget {
           appBar: AppBar(
             elevation: 2,
             backgroundColor: Colors.white,
-            title:  Text("Map view".tr),
+            title:  Text("Map view".tr,style: TextStyle(color: Colors.black),),
             leading: InkWell(
                 onTap: () {
                   Get.back();

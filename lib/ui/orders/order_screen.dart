@@ -192,9 +192,9 @@ class OrderScreen extends StatelessWidget {
                                               decoration: BoxDecoration(
                                                 color: themeChange.getThem()
                                                     ? AppColors
-                                                    .darkContainerBackground
+                                                    .containerBackground
                                                     : AppColors
-                                                    .darkContainerBackground,
+                                                    .containerBackground,
                                                 borderRadius:
                                                 const BorderRadius.all(
                                                     Radius.circular(
@@ -338,8 +338,8 @@ class OrderScreen extends StatelessWidget {
                                                       decoration: BoxDecoration(
                                                           color: themeChange
                                                               .getThem()
-                                                              ? Colors.white
-                                                              : Colors.white,
+                                                              ? Colors.grey.withOpacity(0.5)
+                                                              : Colors.grey.withOpacity(0.5),
                                                           borderRadius:
                                                           const BorderRadius
                                                               .all(
@@ -420,8 +420,8 @@ class OrderScreen extends StatelessWidget {
                                                         decoration: BoxDecoration(
                                                             color: themeChange
                                                                 .getThem()
-                                                                ? Colors.white
-                                                                : Colors.white,
+                                                                ? Colors.grey.withOpacity(0.5)
+                                                                : Colors.grey.withOpacity(0.5),
                                                             borderRadius:
                                                             const BorderRadius
                                                                 .all(
@@ -602,9 +602,9 @@ class OrderScreen extends StatelessWidget {
                                                                       color: themeChange
                                                                           .getThem()
                                                                           ? Colors
-                                                                          .black
+                                                                          .white
                                                                           : Colors
-                                                                          .black),
+                                                                          .white),
                                                                 ),
                                                               ),
                                                             ),
@@ -649,9 +649,9 @@ class OrderScreen extends StatelessWidget {
                                                                       color: themeChange
                                                                           .getThem()
                                                                           ? Colors
-                                                                          .black
+                                                                          .white
                                                                           : Colors
-                                                                          .black),
+                                                                          .white),
                                                                 ),
                                                               ),
                                                             )
@@ -794,9 +794,9 @@ class OrderScreen extends StatelessWidget {
                                             decoration: BoxDecoration(
                                               color: themeChange.getThem()
                                                   ? AppColors
-                                                  .darkContainerBackground
+                                                  .containerBackground
                                                   : AppColors
-                                                  .darkContainerBackground,
+                                                  .containerBackground,
                                               borderRadius:
                                               const BorderRadius.all(
                                                   Radius.circular(10)),
@@ -1017,9 +1017,9 @@ class OrderScreen extends StatelessWidget {
                                             decoration: BoxDecoration(
                                               color: themeChange.getThem()
                                                   ? AppColors
-                                                  .darkContainerBackground
+                                                  .containerBackground
                                                   : AppColors
-                                                  .darkContainerBackground,
+                                                  .containerBackground,
                                               borderRadius:
                                               const BorderRadius.all(
                                                   Radius.circular(10)),
@@ -1109,8 +1109,8 @@ class OrderScreen extends StatelessWidget {
                                                       decoration: BoxDecoration(
                                                           color: themeChange
                                                               .getThem()
-                                                              ? Colors.white
-                                                              : Colors.white,
+                                                              ? Colors.grey.withOpacity(0.5)
+                                                              :Colors.grey.withOpacity(0.5),
                                                           borderRadius:
                                                           const BorderRadius
                                                               .all(

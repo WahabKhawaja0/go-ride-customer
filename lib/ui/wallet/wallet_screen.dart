@@ -171,9 +171,9 @@ class WalletScreen extends StatelessWidget {
                                                 decoration: BoxDecoration(
                                                   color: themeChange.getThem()
                                                       ? AppColors
-                                                          .darkContainerBackground
+                                                          .primary
                                                       : AppColors
-                                                          .darkContainerBackground,
+                                                          .primary,
                                                   borderRadius:
                                                       const BorderRadius.all(
                                                           Radius.circular(10)),
@@ -210,8 +210,7 @@ class WalletScreen extends StatelessWidget {
                                                     children: [
                                                       Container(
                                                           decoration: BoxDecoration(
-                                                              color: AppColors
-                                                                  .lightGray,
+                                                              color: Colors.white,
                                                               borderRadius:
                                                                   BorderRadius
                                                                       .circular(
@@ -263,7 +262,7 @@ class WalletScreen extends StatelessWidget {
                                                                           ? Colors
                                                                               .red
                                                                           : Colors
-                                                                              .green),
+                                                                              .white),
                                                                 ),
                                                               ],
                                                             ),
@@ -286,7 +285,7 @@ class WalletScreen extends StatelessWidget {
                                                                     .toString()
                                                                     .toUpperCase(),
                                                                 style: GoogleFonts.poppins(
-                                                                    color: Colors.black,),
+                                                                    color: Colors.white,),
                                                                 )
                                                               ],
                                                             ),

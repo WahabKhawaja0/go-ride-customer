@@ -186,7 +186,7 @@ class InterCityController extends GetxController {
     String request =
         '$baseURL?input=$input&key=$kPLACES_API_KEY&sessiontoken=$sessionToken';
 
-
+print("insdie parwpier");
     var response = await http.get(Uri.parse(request)).then((response) {
       if (response.statusCode == 200) {
         List predictions = jsonDecode(response.body.toString())['predictions'];
@@ -203,6 +203,8 @@ class InterCityController extends GetxController {
         cont.placeList.value = bostonPredictions;
 
       } else {
+        print(jsonDecode(response.body));
+        print(response.statusCode);
 
       }
     }).onError((error, stackTrace) {

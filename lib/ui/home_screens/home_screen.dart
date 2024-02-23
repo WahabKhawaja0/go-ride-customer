@@ -48,12 +48,12 @@ class HomeScreen extends StatelessWidget {
             backgroundColor: Colors.white,
             appBar: AppBar(
               backgroundColor: Colors.white,
-              leading: IconButton(
-                onPressed: (){
-                  Navigator.pop(context);
-                },
-                icon: Icon(Icons.arrow_back,color: Colors.black,),
-              ),
+              // leading: IconButton(
+              //   onPressed: (){
+              //     Navigator.pop(context);
+              //   },
+              //   icon: Icon(Icons.arrow_back,color: Colors.black,),
+              // ),
             ),
             body: controller.isLoading.value
                 ? Constant.loader()
@@ -109,7 +109,7 @@ class HomeScreen extends StatelessWidget {
                                                       style:
                                                           GoogleFonts.poppins(
                                                               color:
-                                                                  Colors.black,
+                                                                  themeChange.getThem() ? Colors.black: Colors.black,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w400))),

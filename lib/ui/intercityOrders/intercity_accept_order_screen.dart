@@ -32,14 +32,15 @@ class InterCityAcceptOrderScreen extends StatelessWidget {
           return Scaffold(
             backgroundColor: Colors.white,
             appBar: AppBar(
-              backgroundColor: Colors.white,
-              title:  Text("OutStation ride details".tr),
+              backgroundColor: Colors.green,
+              title:  Text("OutStation ride details".tr,style: TextStyle(color: Colors.white),),
               leading: InkWell(
                   onTap: () {
                     Get.back();
                   },
                   child: const Icon(
                     Icons.arrow_back,
+                    color: Colors.white,
                   )),
             ),
             body: Column(
@@ -51,7 +52,9 @@ class InterCityAcceptOrderScreen extends StatelessWidget {
                 Expanded(
                   child: Container(
                     decoration:
-                    BoxDecoration(color: themeChange.getThem() ? AppColors.darkGray : AppColors.darkGray, borderRadius: BorderRadius.only(topLeft: Radius.circular(25), topRight: Radius.circular(25))),
+                    BoxDecoration(color: themeChange.getThem() ? Colors.white : Colors.white,
+                        border: Border.all(color: Colors.black54),
+                        borderRadius: BorderRadius.only(topLeft: Radius.circular(25), topRight: Radius.circular(25))),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: Padding(
@@ -80,14 +83,14 @@ class InterCityAcceptOrderScreen extends StatelessWidget {
                                           Expanded(
                                             child: Text(
                                               orderModel.status.toString(),
-                                              style: GoogleFonts.poppins(fontWeight: FontWeight.w500),
+                                              style: GoogleFonts.poppins(fontWeight: FontWeight.w500,color: Colors.black),
                                             ),
                                           ),
                                           Text(
                                             orderModel.status == Constant.ridePlaced
                                                 ? Constant.amountShow(amount: orderModel.offerRate.toString())
                                                 : Constant.amountShow(amount: orderModel.finalRate == null?"0.0":orderModel.finalRate.toString()),
-                                            style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
+                                            style: GoogleFonts.poppins(fontWeight: FontWeight.bold,color: Colors.black),
                                           ),
                                         ],
                                       ),
@@ -177,7 +180,7 @@ class InterCityAcceptOrderScreen extends StatelessWidget {
                                                                 padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
                                                                 child: Container(
                                                                   decoration: BoxDecoration(
-                                                                    color: themeChange.getThem() ? AppColors.darkContainerBackground : AppColors.darkContainerBackground,
+                                                                    color: themeChange.getThem() ? AppColors.containerBackground : AppColors.containerBackground,
                                                                     borderRadius: const BorderRadius.all(Radius.circular(10)),
                                                                     border: Border.all(color: themeChange.getThem() ? AppColors.darkContainerBorder : AppColors.darkContainerBorder, width: 0.5),
                                                                     boxShadow: themeChange.getThem()
@@ -193,64 +196,69 @@ class InterCityAcceptOrderScreen extends StatelessWidget {
                                                                       const SizedBox(
                                                                         height: 10,
                                                                       ),
-                                                                      Container(
-                                                                        decoration: BoxDecoration(color: themeChange.getThem() ? AppColors.darkGray : AppColors.darkGray),
-                                                                        child: Padding(
-                                                                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                                                                            child: Row(
-                                                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                              crossAxisAlignment: CrossAxisAlignment.center,
-                                                                              children: [
-                                                                                Row(
-                                                                                  children: [
-                                                                                    SvgPicture.asset(
-                                                                                      'assets/icons/ic_car.svg',
-                                                                                      width: 18,
-                                                                                      color: themeChange.getThem() ? Colors.white : Colors.white,
-                                                                                    ),
-                                                                                    const SizedBox(
-                                                                                      width: 10,
-                                                                                    ),
-                                                                                    Text(
-                                                                                      driverModel.vehicleInformation!.vehicleType.toString(),
-                                                                                      style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
-                                                                                    )
-                                                                                  ],
-                                                                                ),
-                                                                                Row(
-                                                                                  children: [
-                                                                                    SvgPicture.asset(
-                                                                                      'assets/icons/ic_color.svg',
-                                                                                      width: 18,
-                                                                                      color: themeChange.getThem() ? Colors.white : Colors.white,
-                                                                                    ),
-                                                                                    const SizedBox(
-                                                                                      width: 10,
-                                                                                    ),
-                                                                                    Text(
-                                                                                      driverModel.vehicleInformation!.vehicleColor.toString(),
-                                                                                      style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
-                                                                                    )
-                                                                                  ],
-                                                                                ),
-                                                                                Row(
-                                                                                  children: [
-                                                                                    Image.asset(
-                                                                                      'assets/icons/ic_number.png',
-                                                                                      width: 18,
-                                                                                      color: themeChange.getThem() ? Colors.white : Colors.white,
-                                                                                    ),
-                                                                                    const SizedBox(
-                                                                                      width: 10,
-                                                                                    ),
-                                                                                    Text(
-                                                                                      driverModel.vehicleInformation!.vehicleNumber.toString(),
-                                                                                      style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
-                                                                                    )
-                                                                                  ],
-                                                                                ),
-                                                                              ],
-                                                                            )),
+                                                                      Padding(
+                                                                        padding: const EdgeInsets.all(8.0),
+                                                                        child: Container(
+                                                                          decoration: BoxDecoration(
+                                                                              borderRadius : BorderRadius.circular(10),
+                                                                              color: themeChange.getThem() ? AppColors.primary : AppColors.primary),
+                                                                          child: Padding(
+                                                                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                                                                              child: Row(
+                                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                                                children: [
+                                                                                  Row(
+                                                                                    children: [
+                                                                                      SvgPicture.asset(
+                                                                                        'assets/icons/ic_car.svg',
+                                                                                        width: 18,
+                                                                                        color: themeChange.getThem() ? Colors.white : Colors.white,
+                                                                                      ),
+                                                                                      const SizedBox(
+                                                                                        width: 10,
+                                                                                      ),
+                                                                                      Text(
+                                                                                        driverModel.vehicleInformation!.vehicleType.toString(),
+                                                                                        style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
+                                                                                      )
+                                                                                    ],
+                                                                                  ),
+                                                                                  Row(
+                                                                                    children: [
+                                                                                      SvgPicture.asset(
+                                                                                        'assets/icons/ic_color.svg',
+                                                                                        width: 18,
+                                                                                        color: themeChange.getThem() ? Colors.white : Colors.white,
+                                                                                      ),
+                                                                                      const SizedBox(
+                                                                                        width: 10,
+                                                                                      ),
+                                                                                      Text(
+                                                                                        driverModel.vehicleInformation!.vehicleColor.toString(),
+                                                                                        style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
+                                                                                      )
+                                                                                    ],
+                                                                                  ),
+                                                                                  Row(
+                                                                                    children: [
+                                                                                      Image.asset(
+                                                                                        'assets/icons/ic_number.png',
+                                                                                        width: 18,
+                                                                                        color: themeChange.getThem() ? Colors.white : Colors.white,
+                                                                                      ),
+                                                                                      const SizedBox(
+                                                                                        width: 10,
+                                                                                      ),
+                                                                                      Text(
+                                                                                        driverModel.vehicleInformation!.vehicleNumber.toString(),
+                                                                                        style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
+                                                                                      )
+                                                                                    ],
+                                                                                  ),
+                                                                                ],
+                                                                              )),
+                                                                        ),
                                                                       ),
                                                                       const SizedBox(
                                                                         height: 10,

@@ -36,7 +36,9 @@ class ButtonThem {
             title.toUpperCase(),
             textAlign: TextAlign.center,
             style: GoogleFonts.poppins(
-                fontSize: txtSize, fontWeight: FontWeight.w600),
+                fontSize: txtSize, fontWeight: FontWeight.w600,
+            color: themeChange.getThem() ? Colors.white : Colors.white,
+            ),
           ),
         ),
       ),
@@ -65,11 +67,11 @@ class ButtonThem {
         child: ElevatedButton(
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all<Color>(
-                themeChange.getThem() ? Colors.transparent : Colors.white),
-            foregroundColor: MaterialStateProperty.all<Color>(
-                themeChange.getThem()
-                    ? AppColors.darkModePrimary
-                    : Colors.white),
+                themeChange.getThem() ? Colors.white : Colors.white),
+            // foregroundColor: MaterialStateProperty.all<Color>(
+            //     themeChange.getThem()
+            //         ? Colors.white
+            //         : Colors.white),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(borderRadius),

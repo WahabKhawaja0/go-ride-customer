@@ -51,7 +51,7 @@ class DriverView extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("Asynchronous user", style: GoogleFonts.poppins(fontWeight: FontWeight.w600,color: Colors.white,)),
+                                Text("Asynchronous user", style: GoogleFonts.poppins(fontWeight: FontWeight.w600,color: Colors.black,)),
                                 Row(
                                   children: [
                                     Expanded(
@@ -65,13 +65,13 @@ class DriverView extends StatelessWidget {
                                           const SizedBox(
                                             width: 5,
                                           ),
-                                          Text(Constant.calculateReview(reviewCount: "0.0", reviewSum: "0.0"), style: GoogleFonts.poppins(fontWeight: FontWeight.w500,color: Colors.white,)),
+                                          Text(Constant.calculateReview(reviewCount: "0.0", reviewSum: "0.0"), style: GoogleFonts.poppins(fontWeight: FontWeight.w500,color: Colors.black,)),
                                         ],
                                       ),
                                     ),
                                     Text(
                                       Constant.amountShow(amount: amount.toString()),
-                                      style: GoogleFonts.poppins(fontWeight: FontWeight.bold,color: themeChange.getThem() ?Colors.white : Colors.white,),
+                                      style: GoogleFonts.poppins(fontWeight: FontWeight.bold,color: themeChange.getThem() ?Colors.black : Colors.black,),
                                     ),
                                   ],
                                 )
@@ -107,7 +107,7 @@ class DriverView extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(driverModel.fullName.toString(), style: GoogleFonts.poppins(fontWeight: FontWeight.w600,color: Colors.white,)),
+                              Text(driverModel.fullName.toString(), style: GoogleFonts.poppins(fontWeight: FontWeight.w600,color: Colors.black,)),
                               Row(
                                 children: [
                                   Expanded(
@@ -122,13 +122,13 @@ class DriverView extends StatelessWidget {
                                           width: 5,
                                         ),
                                         Text(Constant.calculateReview(reviewCount: driverModel.reviewsCount.toString(), reviewSum: driverModel.reviewsSum.toString()),
-                                            style: GoogleFonts.poppins(fontWeight: FontWeight.w500,color: Colors.white,)),
+                                            style: GoogleFonts.poppins(fontWeight: FontWeight.w500,color: Colors.black,)),
                                       ],
                                     ),
                                   ),
                                   Text(
                                     Constant.amountShow(amount: amount.toString()),
-                                    style: GoogleFonts.poppins(fontWeight: FontWeight.bold,color: Colors.white,),
+                                    style: GoogleFonts.poppins(fontWeight: FontWeight.bold,color: Colors.black,),
                                   ),
                                 ],
                               )

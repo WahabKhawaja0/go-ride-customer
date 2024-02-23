@@ -186,9 +186,9 @@ class InterCityOrderScreen extends StatelessWidget {
                                                   decoration: BoxDecoration(
                                                     color: themeChange.getThem()
                                                         ? AppColors
-                                                            .darkContainerBackground
+                                                            .containerBackground
                                                         : AppColors
-                                                            .darkContainerBackground,
+                                                            .containerBackground,
                                                     borderRadius:
                                                         const BorderRadius.all(
                                                             Radius.circular(
@@ -232,7 +232,7 @@ class InterCityOrderScreen extends StatelessWidget {
                                                                           .toString(),
                                                                       style: GoogleFonts.poppins(
                                                                           color: Colors
-                                                                              .white,
+                                                                              .black,
                                                                           fontWeight:
                                                                               FontWeight.w500),
                                                                     ),
@@ -249,7 +249,7 @@ class InterCityOrderScreen extends StatelessWidget {
                                                                                 double.parse(orderModel.finalRate.toString()).toStringAsFixed(Constant.currencyModel!.decimalDigits!)),
                                                                     style: GoogleFonts.poppins(
                                                                         color: Colors
-                                                                            .white,
+                                                                            .black,
                                                                         fontWeight:
                                                                             FontWeight.bold),
                                                                   ),
@@ -291,7 +291,7 @@ class InterCityOrderScreen extends StatelessWidget {
                                                             Container(
                                                               decoration: BoxDecoration(
                                                                   color: Colors
-                                                                      .white,
+                                                                      .green,
                                                                   borderRadius:
                                                                       const BorderRadius
                                                                           .all(
@@ -562,8 +562,8 @@ class InterCityOrderScreen extends StatelessWidget {
                                                                           Icons
                                                                               .chat,
                                                                           color: themeChange.getThem()
-                                                                              ? Colors.black
-                                                                              : Colors.black),
+                                                                              ? Colors.white
+                                                                              : Colors.white),
                                                                     ),
                                                                   ),
                                                                 ),
@@ -596,8 +596,8 @@ class InterCityOrderScreen extends StatelessWidget {
                                                                           Icons
                                                                               .call,
                                                                           color: themeChange.getThem()
-                                                                              ? Colors.black
-                                                                              : Colors.black),
+                                                                              ? Colors.white
+                                                                              : Colors.white),
                                                                     ),
                                                                   ),
                                                                 )
@@ -734,10 +734,8 @@ class InterCityOrderScreen extends StatelessWidget {
                                               child: Container(
                                                 decoration: BoxDecoration(
                                                   color: themeChange.getThem()
-                                                      ? AppColors
-                                                          .darkContainerBackground
-                                                      : AppColors
-                                                          .darkContainerBackground,
+                                                      ? Colors.white
+                                                      :  Colors.white,
                                                   borderRadius:
                                                       const BorderRadius.all(
                                                           Radius.circular(10)),
@@ -811,7 +809,7 @@ class InterCityOrderScreen extends StatelessWidget {
                                                               Container(
                                                                 decoration: BoxDecoration(
                                                                     color: Colors
-                                                                        .white,
+                                                                        .green,
                                                                     borderRadius:
                                                                         const BorderRadius
                                                                             .all(
@@ -825,7 +823,7 @@ class InterCityOrderScreen extends StatelessWidget {
                                                                           4),
                                                                   child: Text(orderModel
                                                                       .paymentType
-                                                                      .toString(),style: TextStyle(color: Colors.black),),
+                                                                      .toString(),style: TextStyle(color: Colors.white),),
                                                                 ),
                                                               ),
                                                               const SizedBox(
@@ -902,14 +900,14 @@ class InterCityOrderScreen extends StatelessWidget {
                                                                       Expanded(
                                                                           child: Text(
                                                                               orderModel.status.toString(),
-                                                                              style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.w600))),
+                                                                              style: GoogleFonts.poppins(color: Colors.black, fontWeight: FontWeight.w600))),
                                                                       Text(
                                                                           Constant().formatTimestamp(orderModel
                                                                               .createdDate),
                                                                           style:
                                                                               GoogleFonts.poppins(
                                                                             color:
-                                                                                Colors.white,
+                                                                                Colors.black,
                                                                           )),
                                                                     ],
                                                                   ),
@@ -1009,9 +1007,9 @@ class InterCityOrderScreen extends StatelessWidget {
                                                 decoration: BoxDecoration(
                                                   color: themeChange.getThem()
                                                       ? AppColors
-                                                          .darkContainerBackground
+                                                          .containerBackground
                                                       : AppColors
-                                                          .darkContainerBackground,
+                                                          .containerBackground,
                                                   borderRadius:
                                                       const BorderRadius.all(
                                                           Radius.circular(10)),
@@ -1083,9 +1081,7 @@ class InterCityOrderScreen extends StatelessWidget {
                                                           Container(
                                                             decoration: BoxDecoration(
                                                                 color: Colors
-                                                                    .grey
-                                                                    .withOpacity(
-                                                                        0.30),
+                                                                    .green,
                                                                 borderRadius:
                                                                     const BorderRadius
                                                                         .all(
@@ -1107,7 +1103,7 @@ class InterCityOrderScreen extends StatelessWidget {
                                                                     GoogleFonts
                                                                         .poppins(
                                                                   color: Colors
-                                                                      .black,
+                                                                      .white,
                                                                 ),
                                                               ),
                                                             ),
@@ -1119,8 +1115,7 @@ class InterCityOrderScreen extends StatelessWidget {
                                                             decoration: BoxDecoration(
                                                                 color: Colors
                                                                     .green
-                                                                    .withOpacity(
-                                                                        0.30),
+                                                                    ,
                                                                 borderRadius:
                                                                     const BorderRadius
                                                                         .all(
@@ -1143,7 +1138,7 @@ class InterCityOrderScreen extends StatelessWidget {
                                                                     GoogleFonts
                                                                         .poppins(
                                                                   color: Colors
-                                                                      .black,
+                                                                      .white,
                                                                 ),
                                                               ),
                                                             ),
@@ -1171,10 +1166,9 @@ class InterCityOrderScreen extends StatelessWidget {
                                                           decoration: BoxDecoration(
                                                               color: themeChange
                                                                       .getThem()
-                                                                  ? AppColors
-                                                                      .darkGray
+                                                                  ? Colors.green
                                                                   : AppColors
-                                                                      .darkGray,
+                                                                      .primary,
                                                               borderRadius:
                                                                   const BorderRadius
                                                                       .all(
@@ -1205,7 +1199,7 @@ class InterCityOrderScreen extends StatelessWidget {
                                                                     style: GoogleFonts
                                                                         .poppins(
                                                                       color: Colors
-                                                                          .black,
+                                                                          .white,
                                                                     ),
                                                                   )),
                                                                   Text(
@@ -1214,7 +1208,7 @@ class InterCityOrderScreen extends StatelessWidget {
                                                                               .createdDate),
                                                                       style: GoogleFonts.poppins(
                                                                           color: Colors
-                                                                              .black,
+                                                                              .white,
                                                                           fontSize:
                                                                               12)),
                                                                 ],

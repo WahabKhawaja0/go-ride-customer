@@ -56,7 +56,7 @@ class CompleteOrderScreen extends StatelessWidget {
                           ? Constant.loader()
                           : Container(
                         decoration:
-                        BoxDecoration(color: Theme.of(context).colorScheme.background, borderRadius: const BorderRadius.only(topLeft: Radius.circular(25), topRight: Radius.circular(25))),
+                        BoxDecoration(color: Colors.white, borderRadius: const BorderRadius.only(topLeft: Radius.circular(25), topRight: Radius.circular(25))),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: Padding(
@@ -69,7 +69,7 @@ class CompleteOrderScreen extends StatelessWidget {
                                   children: [
                                     Container(
                                       decoration: BoxDecoration(
-                                        color: themeChange.getThem() ? AppColors.darkContainerBackground : AppColors.darkContainerBackground,
+                                        color: themeChange.getThem() ? AppColors.primary : AppColors.primary,
                                         borderRadius: const BorderRadius.all(Radius.circular(10)),
                                         border: Border.all(color: themeChange.getThem() ? AppColors.darkContainerBorder : AppColors.darkContainerBorder, width: 0.5),
                                         boxShadow: themeChange.getThem()
@@ -155,7 +155,7 @@ class CompleteOrderScreen extends StatelessWidget {
                                                 DriverUserModel driverModel = snapshot.data!;
                                                 return Container(
                                                   decoration: BoxDecoration(
-                                                    color: themeChange.getThem() ? AppColors.darkContainerBackground : AppColors.darkContainerBackground,
+                                                    color: themeChange.getThem() ? AppColors.primary : AppColors.primary,
                                                     borderRadius: const BorderRadius.all(Radius.circular(10)),
                                                     border: Border.all(color: themeChange.getThem() ? AppColors.darkContainerBorder : AppColors.darkContainerBorder, width: 0.5),
                                                     boxShadow: themeChange.getThem()
@@ -196,7 +196,7 @@ class CompleteOrderScreen extends StatelessWidget {
                                                             ),
                                                             Text(
                                                               driverModel.vehicleInformation!.vehicleColor.toString(),
-                                                              style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
+                                                              style: GoogleFonts.poppins(fontWeight: FontWeight.w600,color: Colors.white),
                                                             )
                                                           ],
                                                         ),
@@ -212,7 +212,7 @@ class CompleteOrderScreen extends StatelessWidget {
                                                             ),
                                                             Text(
                                                               driverModel.vehicleInformation!.vehicleNumber.toString(),
-                                                              style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
+                                                              style: GoogleFonts.poppins(fontWeight: FontWeight.w600,color: Colors.white),
                                                             )
                                                           ],
                                                         ),
@@ -237,7 +237,7 @@ class CompleteOrderScreen extends StatelessWidget {
                                     ),
                                     Container(
                                       decoration: BoxDecoration(
-                                        color: themeChange.getThem() ? AppColors.darkContainerBackground : AppColors.darkContainerBackground,
+                                        color: themeChange.getThem() ? Colors.white : Colors.white,
                                         borderRadius: const BorderRadius.all(Radius.circular(10)),
                                         border: Border.all(color: themeChange.getThem() ? AppColors.darkContainerBorder : AppColors.darkContainerBorder, width: 0.5),
                                         boxShadow: themeChange.getThem()
@@ -255,14 +255,14 @@ class CompleteOrderScreen extends StatelessWidget {
                                     Padding(
                                       padding: const EdgeInsets.symmetric(vertical: 20),
                                       child: Container(
-                                        decoration: BoxDecoration(color: themeChange.getThem() ? AppColors.darkGray : AppColors.darkGray, borderRadius: const BorderRadius.all(Radius.circular(10))),
+                                        decoration: BoxDecoration(color: themeChange.getThem() ? AppColors.primary : AppColors.primary, borderRadius: const BorderRadius.all(Radius.circular(10))),
                                         child: Padding(
                                             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
                                             child: Center(
                                               child: Row(
                                                 children: [
-                                                  Expanded(child: Text(controller.orderModel.value.status.toString(), style: GoogleFonts.poppins(fontWeight: FontWeight.w500))),
-                                                  Text(Constant().formatTimestamp(controller.orderModel.value.createdDate), style: GoogleFonts.poppins()),
+                                                  Expanded(child: Text(controller.orderModel.value.status.toString(), style: GoogleFonts.poppins(fontWeight: FontWeight.w500,color: Colors.white))),
+                                                  Text(Constant().formatTimestamp(controller.orderModel.value.createdDate), style: GoogleFonts.poppins(color: Colors.white)),
                                                 ],
                                               ),
                                             )),
@@ -270,7 +270,7 @@ class CompleteOrderScreen extends StatelessWidget {
                                     ),
                                     Container(
                                       decoration: BoxDecoration(
-                                        color: themeChange.getThem() ? AppColors.darkContainerBackground : AppColors.darkContainerBackground,
+                                        color: themeChange.getThem() ? AppColors.primary : AppColors.primary,
                                         borderRadius: const BorderRadius.all(Radius.circular(10)),
                                         border: Border.all(color: themeChange.getThem() ? AppColors.darkContainerBorder : AppColors.darkContainerBorder, width: 0.5),
                                         boxShadow: themeChange.getThem()
@@ -292,12 +292,12 @@ class CompleteOrderScreen extends StatelessWidget {
                                                 ),
                                                 Container(
                                                   decoration:
-                                                  BoxDecoration(color: themeChange.getThem() ? AppColors.darkGray : AppColors.darkGray, borderRadius: const BorderRadius.all(Radius.circular(5))),
+                                                  BoxDecoration(color: themeChange.getThem() ? AppColors.darkGray.withOpacity(0.5) : AppColors.darkGray.withOpacity(0.5), borderRadius: const BorderRadius.all(Radius.circular(5))),
                                                   child: Padding(
                                                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
                                                     child: Text(
                                                       controller.orderModel.value.paymentType.toString(),
-                                                      style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
+                                                      style: GoogleFonts.poppins(fontWeight: FontWeight.w600,color: Colors.white),
                                                     ),
                                                   ),
                                                 ),
@@ -311,12 +311,12 @@ class CompleteOrderScreen extends StatelessWidget {
                                                 Expanded(
                                                   child: Text(
                                                     "Ride Amount".tr,
-                                                    style: GoogleFonts.poppins(color: AppColors.subTitleColor),
+                                                    style: GoogleFonts.poppins(color: Colors.white),
                                                   ),
                                                 ),
                                                 Text(
                                                   Constant.amountShow(amount: controller.orderModel.value.finalRate),
-                                                  style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
+                                                  style: GoogleFonts.poppins(fontWeight: FontWeight.w600,color: Colors.white),
                                                 ),
                                               ],
                                             ),
@@ -338,7 +338,7 @@ class CompleteOrderScreen extends StatelessWidget {
                                                         Expanded(
                                                           child: Text(
                                                             "${taxModel.title.toString()} (${taxModel.type == "fix" ? Constant.amountShow(amount: taxModel.tax) : "${taxModel.tax}%"})",
-                                                            style: GoogleFonts.poppins(color: AppColors.subTitleColor),
+                                                            style: GoogleFonts.poppins(color: Colors.white),
                                                           ),
                                                         ),
                                                         Text(
@@ -350,7 +350,7 @@ class CompleteOrderScreen extends StatelessWidget {
                                                                       .toString(),
                                                                   taxModel: taxModel)
                                                                   .toString()),
-                                                          style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
+                                                          style: GoogleFonts.poppins(fontWeight: FontWeight.w600,color: Colors.white),
                                                         ),
                                                       ],
                                                     ),
@@ -366,7 +366,7 @@ class CompleteOrderScreen extends StatelessWidget {
                                                 Expanded(
                                                   child: Text(
                                                     "Discount".tr,
-                                                    style: GoogleFonts.poppins(color: AppColors.subTitleColor),
+                                                    style: GoogleFonts.poppins(color: Colors.white),
                                                   ),
                                                 ),
                                                 Row(

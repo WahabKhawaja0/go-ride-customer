@@ -22,8 +22,8 @@ class LocationView extends StatelessWidget {
       children: [
         Column(
           children: [
-            SvgPicture.asset(themeChange.getThem() ? 'assets/icons/ic_source_dark.svg' : 'assets/icons/ic_source_dark.svg', width: 18),
-            Dash(direction: Axis.vertical, length: Responsive.height(4, context), dashLength: 6, dashColor: AppColors.dottedDivider),
+            SvgPicture.asset(themeChange.getThem() ? 'assets/icons/ic_source.svg' : 'assets/icons/ic_source.svg', width: 18),
+            Dash(direction: Axis.vertical, length: Responsive.height(4, context), dashLength: 6, dashColor: Colors.black54),
             SvgPicture.asset(themeChange.getThem() ? 'assets/icons/ic_destination_dark.svg' : 'assets/icons/ic_destination_dark.svg', width: 18),
           ],
         ),
@@ -34,9 +34,9 @@ class LocationView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(sourceLocation.toString(), maxLines: 2, style: GoogleFonts.poppins()),
+              Text(sourceLocation.toString(), maxLines: 2, style: GoogleFonts.poppins(color: themeChange.getThem() ? Colors.black : Colors.black)),
               SizedBox(height: sourceLocation!.length > 35 ? Responsive.height(1, context) : Responsive.height(3, context)),
-              Text(destinationLocation.toString(), maxLines: 2, style: GoogleFonts.poppins())
+              Text(destinationLocation.toString(), maxLines: 2, style: GoogleFonts.poppins(color: themeChange.getThem() ? Colors.black : Colors.black))
             ],
           ),
         ),
