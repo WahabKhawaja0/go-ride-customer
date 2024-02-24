@@ -35,6 +35,15 @@ class InterCityOrderScreen extends StatelessWidget {
     final themeChange = Provider.of<DarkThemeProvider>(context);
 
     return Scaffold(
+      appBar: AppBar(
+              backgroundColor: Colors.white,
+              leading: IconButton(
+                onPressed: (){
+                  Navigator.pop(context);
+                },
+                icon: Icon(Icons.arrow_back,color: Colors.black,),
+              ),
+            ),
       backgroundColor: Colors.white,
       body: Column(
         children: [
