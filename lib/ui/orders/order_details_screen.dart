@@ -233,7 +233,7 @@ class OrderDetailsScreen extends StatelessWidget {
                                                                                         ),
                                                                                         Text(
                                                                                           driverModel.vehicleInformation!.vehicleType.toString(),
-                                                                                          style: GoogleFonts.poppins(fontWeight: FontWeight.w600,color: Colors.black),
+                                                                                          style: GoogleFonts.poppins(fontWeight: FontWeight.w600,color: Colors.white),
                                                                                         )
                                                                                       ],
                                                                                     ),
@@ -249,7 +249,7 @@ class OrderDetailsScreen extends StatelessWidget {
                                                                                         ),
                                                                                         Text(
                                                                                           driverModel.vehicleInformation!.vehicleColor.toString(),
-                                                                                          style: GoogleFonts.poppins(fontWeight: FontWeight.w600,color: Colors.black),
+                                                                                          style: GoogleFonts.poppins(fontWeight: FontWeight.w600,color: Colors.white),
                                                                                         )
                                                                                       ],
                                                                                     ),
@@ -265,7 +265,7 @@ class OrderDetailsScreen extends StatelessWidget {
                                                                                         ),
                                                                                         Text(
                                                                                           driverModel.vehicleInformation!.vehicleNumber.toString(),
-                                                                                          style: GoogleFonts.poppins(fontWeight: FontWeight.w600,color: Colors.black),
+                                                                                          style: GoogleFonts.poppins(fontWeight: FontWeight.w600,color: Colors.white),
                                                                                         )
                                                                                       ],
                                                                                     ),

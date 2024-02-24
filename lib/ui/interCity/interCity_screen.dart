@@ -45,15 +45,6 @@ class InterCityScreen extends StatelessWidget {
       builder: (controller) {
         return Scaffold(
           backgroundColor: Colors.white,
-          appBar: AppBar(
-              backgroundColor: Colors.white,
-              leading: IconButton(
-                onPressed: (){
-                  Navigator.pop(context);
-                },
-                icon: Icon(Icons.arrow_back,color: Colors.black,),
-              ),
-            ),
           body: controller.isLoading.value
               ? Constant.loader()
               : Padding(
@@ -1491,8 +1482,8 @@ class InterCityScreen extends StatelessWidget {
                                                       .value,
                                                   activeColor:
                                                   themeChange.getThem()
-                                                      ? AppColors.primary
-                                                      :AppColors.primary,
+                                                      ? Colors.green
+                                                      :Colors.green,
                                                   onChanged: (value) {
                                                     controller
                                                         .selectedPaymentMethod
