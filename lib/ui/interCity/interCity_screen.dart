@@ -1482,8 +1482,8 @@ class InterCityScreen extends StatelessWidget {
                                                       .value,
                                                   activeColor:
                                                   themeChange.getThem()
-                                                      ? AppColors.primary
-                                                      :AppColors.primary,
+                                                      ? Colors.green
+                                                      :Colors.green,
                                                   onChanged: (value) {
                                                     controller
                                                         .selectedPaymentMethod
