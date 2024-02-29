@@ -6,6 +6,7 @@ import 'package:customer/themes/Styles.dart';
 import 'package:customer/ui/auth_screen/information_screen.dart';
 import 'package:customer/ui/auth_screen/login_screen.dart';
 import 'package:customer/ui/auth_screen/otp_screen.dart';
+import 'package:customer/ui/home_screens/home_screen.dart';
 import 'package:customer/ui/on_boarding_screen.dart';
 import 'package:customer/ui/splash_screen.dart';
 import 'package:customer/utils/DarkThemeProvider.dart';

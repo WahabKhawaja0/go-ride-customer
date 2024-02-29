@@ -16,6 +16,7 @@ import 'package:customer/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
+import 'package:location/location.dart' as loct;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class HomeController extends GetxController {
@@ -49,15 +50,37 @@ class HomeController extends GetxController {
     AppColors.serviceColor2,
     AppColors.serviceColor3,
   ];
+  late  GoogleMapController mapController ;
+ // late GoogleMapController mapController;
+
 
   @override
   void onInit() {
     // TODO: implement onInit
+    // mapController;
     getServiceType();
     getPaymentData();
     getContact();
+    _getCurrentLocation();
     super.onInit();
   }
+
+ Rx<LatLng> currentPosition = Rx<LatLng>(LatLng(0.0, 0.0));
+
+
+
+ Future<void> _getCurrentLocation() async {
+   // loc.Location location = loc.Location();
+   loct.Location location = loct.Location();
+   loct.LocationData locationData = await location.getLocation();
+   currentPosition.value = LatLng(locationData.latitude!, locationData.longitude!);
+ }
+
+ void animateToCurrentLocation() {
+   mapController.animateCamera(
+     CameraUpdate.newLatLngZoom(currentPosition.value, 14),
+   );
+ }
 
   getServiceType() async {
     await FireStoreUtils.getService().then((value) {

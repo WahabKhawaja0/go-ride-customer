@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:location/location.dart' as loct;
 import 'package:customer/constant/constant.dart';
 import 'package:customer/controller/dash_board_controller.dart';
 import 'package:customer/model/contact_model.dart';
@@ -46,6 +46,24 @@ class InterCityController extends GetxController {
 
   RxList<XFile> images = <XFile>[].obs;
 
+  late GoogleMapController mapController;
+  Rx<LatLng> currentPosition = Rx<LatLng>(LatLng(0.0, 0.0));
+
+
+
+  Future<void> _getCurrentLocation() async {
+    // loc.Location location = loc.Location();
+    loct.Location location = loct.Location();
+    loct.LocationData locationData = await location.getLocation();
+    currentPosition.value = LatLng(locationData.latitude!, locationData.longitude!);
+  }
+
+  void animateToCurrentLocation() {
+    mapController.animateCamera(
+      CameraUpdate.newLatLngZoom(currentPosition.value, 14),
+    );
+  }
+
   var colors = [
     AppColors.serviceColor1,
     AppColors.serviceColor2,
@@ -57,6 +75,8 @@ class InterCityController extends GetxController {
     // TODO: implement onInit
     getPaymentData();
     getIntercityService();
+    _getCurrentLocation();
+
 
     super.onInit();
   }

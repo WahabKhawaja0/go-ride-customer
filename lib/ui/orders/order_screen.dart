@@ -246,7 +246,7 @@ class OrderScreen extends StatelessWidget {
                                                             style: GoogleFonts
                                                                 .poppins(
                                                                 color: Colors.green,
-
+                                                                fontSize: 18,
                                                                 fontWeight:
                                                                 FontWeight
                                                                     .w500),
@@ -281,6 +281,7 @@ class OrderScreen extends StatelessWidget {
                                                           style: GoogleFonts
                                                               .poppins(
                                                               color: Colors.green,
+                                                              fontSize: 18,
 
                                                               fontWeight:
                                                               FontWeight.bold),
@@ -1071,7 +1072,7 @@ class OrderScreen extends StatelessWidget {
                                                           style: GoogleFonts
                                                               .poppins(
                                                               color: Colors.green,
-
+fontSize: 18,
                                                               fontWeight:
                                                               FontWeight.w500),
                                                         ),
@@ -1090,7 +1091,7 @@ class OrderScreen extends StatelessWidget {
                                                         style: GoogleFonts
                                                             .poppins(
                                                             color: Colors.green,
-
+fontSize: 18,
                                                             fontWeight:
                                                             FontWeight
                                                                 .bold),

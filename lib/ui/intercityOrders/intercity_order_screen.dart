@@ -242,6 +242,7 @@ class InterCityOrderScreen extends StatelessWidget {
                                                                       style: GoogleFonts.poppins(
                                                                           color: Colors
                                                                               .black,
+                                                                          fontSize: 18,
                                                                           fontWeight:
                                                                               FontWeight.w500),
                                                                     ),
@@ -258,7 +259,8 @@ class InterCityOrderScreen extends StatelessWidget {
                                                                                 double.parse(orderModel.finalRate.toString()).toStringAsFixed(Constant.currencyModel!.decimalDigits!)),
                                                                     style: GoogleFonts.poppins(
                                                                         color: Colors
-                                                                            .black,
+                                                                            .green,
+                                                                        fontSize: 18,
                                                                         fontWeight:
                                                                             FontWeight.bold),
                                                                   ),
@@ -1061,6 +1063,7 @@ class InterCityOrderScreen extends StatelessWidget {
                                                                     style: GoogleFonts.poppins(
                                                                         color: Colors
                                                                             .black,
+                                                                        fontSize: 18,
                                                                         fontWeight:
                                                                             FontWeight.w500),
                                                                   ),
@@ -1075,7 +1078,8 @@ class InterCityOrderScreen extends StatelessWidget {
                                                                               .decimalDigits!)),
                                                                   style: GoogleFonts.poppins(
                                                                       color: Colors
-                                                                          .black,
+                                                                          .green,
+                                                                      fontSize: 18,
                                                                       fontWeight:
                                                                           FontWeight
                                                                               .bold),

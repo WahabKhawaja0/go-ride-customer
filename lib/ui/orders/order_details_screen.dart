@@ -89,14 +89,14 @@ class OrderDetailsScreen extends StatelessWidget {
                                             Expanded(
                                               child: Text(
                                                 orderModel.status.toString(),
-                                                style: GoogleFonts.poppins(fontWeight: FontWeight.w500,color: Colors.black),
+                                                style: GoogleFonts.poppins(fontWeight: FontWeight.w500,fontSize: 18,color: Colors.black),
                                               ),
                                             ),
                                             Text(
                                               orderModel.status == Constant.ridePlaced
                                                   ? Constant.amountShow(amount: orderModel.offerRate.toString())
                                                   : Constant.amountShow(amount: orderModel.finalRate == null?"0.0":orderModel.finalRate.toString()),
-                                              style: GoogleFonts.poppins(fontWeight: FontWeight.bold,color: Colors.black),
+                                              style: GoogleFonts.poppins(fontWeight: FontWeight.bold,color: Colors.green,fontSize: 18),
                                             ),
                                           ],
                                         ),

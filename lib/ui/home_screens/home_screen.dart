@@ -18,8 +18,6 @@ import 'package:customer/themes/responsive.dart';
 import 'package:customer/themes/text_field_them.dart';
 import 'package:customer/ui/destination_bottomSheet.dart';
 import 'package:customer/ui/places_screen.dart';
-// import 'package:customer/ui/destinationBottomSheet.dart';
-// import 'package:customer/ui/placesBottomSheet.dart';
 import 'package:customer/utils/DarkThemeProvider.dart';
 import 'package:customer/utils/fire_store_utils.dart';
 import 'package:customer/utils/utils.dart';
@@ -31,16 +29,14 @@ import 'package:fluttercontactpicker/fluttercontactpicker.dart';
 import 'package:geoflutterfire2/geoflutterfire2.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:place_picker/place_picker.dart';
 import 'package:provider/provider.dart';
-
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     final themeChange = Provider.of<DarkThemeProvider>(context);
-
     return GetX<HomeController>(
         init: HomeController(),
         builder: (controller) {
@@ -59,6 +55,48 @@ class HomeScreen extends StatelessWidget {
                 ? Constant.loader()
                 : Column(
                     children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Obx(
+                              () => ClipRRect( // Wrap with ClipRRect for border radius
+                            borderRadius: BorderRadius.circular(15),
+                            child: Container(
+                              height: 200,
+                              decoration: BoxDecoration(
+                                // color: Colors.red,
+
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(.1),
+                                    blurRadius: 1,
+                                    spreadRadius: 1,
+                                    offset: Offset(1, 1),
+                                  ),
+                                ],
+                              ),
+                              child: GoogleMap(
+                                onMapCreated: (con) {
+                                  controller.mapController = con;
+                                  controller.animateToCurrentLocation();
+                                  // controller.getCurrentLocation();
+                                },
+                                initialCameraPosition: CameraPosition(
+                                  target: controller.currentPosition.value,
+                                  zoom: 14,
+                                ),
+                                markers: {
+                                  Marker(
+                                    markerId: MarkerId('currentLocation'),
+                                    position: controller.currentPosition.value,
+                                  ),
+                                },
+                              ),
+
+                            ),
+                          ),
+                        ),
+                      ),
+
                       SizedBox(
                         height: Responsive.width(22, context),
                         width: Responsive.width(100, context),
