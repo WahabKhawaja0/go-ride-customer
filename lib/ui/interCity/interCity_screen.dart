@@ -25,6 +25,7 @@ import 'package:customer/utils/fire_store_utils.dart';
 import 'package:customer/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttercontactpicker/fluttercontactpicker.dart';
 import 'package:geoflutterfire2/geoflutterfire2.dart';
@@ -49,7 +50,8 @@ class InterCityScreen extends StatelessWidget {
           backgroundColor: Colors.white,
           body: controller.isLoading.value
               ? Constant.loader()
-              : Padding(
+              : Stack(
+                children: [Padding(
                   padding: EdgeInsets.only(top: 40),
                   child: Column(
                     children: [
@@ -73,7 +75,7 @@ class InterCityScreen extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Obx(
-                                    () => ClipRRect( // Wrap with ClipRRect for border radius
+                                          () => ClipRRect( // Wrap with ClipRRect for border radius
                                         borderRadius: BorderRadius.circular(15),
                                         child: Container(
                                           height: 200,
@@ -90,22 +92,22 @@ class InterCityScreen extends StatelessWidget {
                                             ],
                                           ),
                                           child: GoogleMap(
-                                              onMapCreated: (con) {
-                                                controller.mapController = con;
-                                                controller.animateToCurrentLocation();
-                                                // controller.getCurrentLocation();
-                                              },
-                                              initialCameraPosition: CameraPosition(
-                                                target: controller.currentPosition.value,
-                                                zoom: 14,
-                                              ),
-                                              markers: {
-                                                Marker(
-                                                  markerId: MarkerId('currentLocation'),
-                                                  position: controller.currentPosition.value,
-                                                ),
-                                              },
+                                            onMapCreated: (con) {
+                                              controller.mapController = con;
+                                              controller.animateToCurrentLocation();
+                                              // controller.getCurrentLocation();
+                                            },
+                                            initialCameraPosition: CameraPosition(
+                                              target: controller.currentPosition.value,
+                                              zoom: 14,
                                             ),
+                                            markers: {
+                                              Marker(
+                                                markerId: MarkerId('currentLocation'),
+                                                position: controller.currentPosition.value,
+                                              ),
+                                            },
+                                          ),
 
                                         ),
                                       ),
@@ -261,15 +263,15 @@ class InterCityScreen extends StatelessWidget {
                                       height: Responsive.height(18, context),
                                       child: ListView.builder(
                                         itemCount:
-                                            controller.intercityService.length,
+                                        controller.intercityService.length,
                                         scrollDirection: Axis.horizontal,
                                         shrinkWrap: true,
                                         itemBuilder: (context, index) {
                                           IntercityServiceModel serviceModel =
-                                              controller
-                                                  .intercityService[index];
+                                          controller
+                                              .intercityService[index];
                                           return Obx(
-                                            () => InkWell(
+                                                () => InkWell(
                                               onTap: () {
                                                 controller.selectedInterCityType
                                                     .value = serviceModel;
@@ -277,71 +279,71 @@ class InterCityScreen extends StatelessWidget {
                                               },
                                               child: Padding(
                                                 padding:
-                                                    const EdgeInsets.all(6.0),
+                                                const EdgeInsets.all(6.0),
                                                 child: Container(
                                                   width: Responsive.width(
                                                       28, context),
                                                   decoration: BoxDecoration(
                                                       color: controller
-                                                                  .selectedInterCityType
-                                                                  .value ==
-                                                              serviceModel
+                                                          .selectedInterCityType
+                                                          .value ==
+                                                          serviceModel
                                                           ? Colors.green
                                                           : themeChange
-                                                                  .getThem()
-                                                              ? AppColors
-                                                                  .darkService
-                                                              : AppColors
-                                                                  .darkService,
+                                                          .getThem()
+                                                          ? AppColors
+                                                          .darkService
+                                                          : AppColors
+                                                          .darkService,
                                                       borderRadius:
-                                                          const BorderRadius
-                                                              .all(
+                                                      const BorderRadius
+                                                          .all(
                                                         Radius.circular(20),
                                                       )),
                                                   child: Column(
                                                     crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
+                                                    CrossAxisAlignment
+                                                        .center,
                                                     mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
+                                                    MainAxisAlignment
+                                                        .center,
                                                     children: [
                                                       Container(
                                                         decoration:
-                                                            BoxDecoration(
-                                                                color: Colors
-                                                                    .white,
-                                                                borderRadius:
-                                                                    const BorderRadius
-                                                                        .all(
-                                                                  Radius
-                                                                      .circular(
-                                                                          20),
-                                                                )),
+                                                        BoxDecoration(
+                                                            color: Colors
+                                                                .white,
+                                                            borderRadius:
+                                                            const BorderRadius
+                                                                .all(
+                                                              Radius
+                                                                  .circular(
+                                                                  20),
+                                                            )),
                                                         child: Padding(
                                                           padding:
-                                                              const EdgeInsets
-                                                                  .all(8.0),
+                                                          const EdgeInsets
+                                                              .all(8.0),
                                                           child:
-                                                              CachedNetworkImage(
+                                                          CachedNetworkImage(
                                                             imageUrl:
-                                                                serviceModel
-                                                                    .image
-                                                                    .toString(),
+                                                            serviceModel
+                                                                .image
+                                                                .toString(),
                                                             fit: BoxFit.contain,
                                                             height: Responsive
                                                                 .height(
-                                                                    8, context),
+                                                                8, context),
                                                             width: Responsive
                                                                 .width(18,
-                                                                    context),
+                                                                context),
                                                             placeholder: (context,
-                                                                    url) =>
+                                                                url) =>
                                                                 Constant
                                                                     .loader(),
                                                             errorWidget: (context,
-                                                                    url,
-                                                                    error) =>
+                                                                url,
+                                                                error) =>
                                                                 Image.network(
                                                                     Constant
                                                                         .userPlaceHolder),
@@ -357,11 +359,11 @@ class InterCityScreen extends StatelessWidget {
                                                           style: GoogleFonts.poppins(
                                                               color: controller.selectedInterCityType.value == serviceModel
                                                                   ? themeChange.getThem()
-                                                                      ? Colors.white
-                                                                      : Colors.white
+                                                                  ? Colors.white
+                                                                  : Colors.white
                                                                   : themeChange.getThem()
-                                                                      ? Colors.white
-                                                                      : Colors.white)),
+                                                                  ? Colors.white
+                                                                  : Colors.white)),
                                                     ],
                                                   ),
                                                 ),
@@ -383,23 +385,23 @@ class InterCityScreen extends StatelessWidget {
                                             onSubmit: (index) {
                                               controller.dateAndTime = index;
                                               DateFormat dateFormat =
-                                                  DateFormat(
-                                                      "EEE dd MMMM , HH:mm aa");
+                                              DateFormat(
+                                                  "EEE dd MMMM , HH:mm aa");
                                               String string =
-                                                  dateFormat.format(index);
+                                              dateFormat.format(index);
 
                                               controller.whenController.value
                                                   .text = string;
                                             },
                                             minDateTime: DateTime.now(),
                                             buttonAlignment:
-                                                MainAxisAlignment.center,
+                                            MainAxisAlignment.center,
                                             displayButtonIcon: false,
                                             displaySubmitButton: true,
                                             title: '',
                                             buttonText: 'Confirm'.tr,
                                             buttonSingleColor:
-                                                AppColors.primary,
+                                            AppColors.primary,
                                             buttonTextStyle: const TextStyle(
                                               color: Colors.white,
                                             ),
@@ -409,207 +411,207 @@ class InterCityScreen extends StatelessWidget {
                                           context,
                                           hintText: 'When'.tr,
                                           controller:
-                                              controller.whenController.value,
+                                          controller.whenController.value,
                                           enable: false,
                                         )),
                                     const SizedBox(
                                       height: 10,
                                     ),
                                     controller.selectedInterCityType.value.id ==
-                                            "647f350983ba2"
+                                        "647f350983ba2"
                                         ? Column(
-                                            children: [
-                                              TextFieldThem.buildTextFiled(
-                                                context,
-                                                hintText:
-                                                    'Parcel weight (In Kg.)'.tr,
-                                                controller: controller
-                                                    .parcelWeight.value,
-                                                keyBoardType:
-                                                    TextInputType.number,
-                                              ),
-                                              const SizedBox(
-                                                height: 10,
-                                              ),
-                                              TextFieldThem.buildTextFiled(
-                                                context,
-                                                hintText:
-                                                    'Parcel dimension(In ft.)'
-                                                        .tr,
-                                                controller: controller
-                                                    .parcelDimension.value,
-                                                keyBoardType:
-                                                    TextInputType.number,
-                                              ),
-                                              parcelImageWidget(
-                                                  context, controller),
-                                            ],
-                                          )
+                                      children: [
+                                        TextFieldThem.buildTextFiled(
+                                          context,
+                                          hintText:
+                                          'Parcel weight (In Kg.)'.tr,
+                                          controller: controller
+                                              .parcelWeight.value,
+                                          keyBoardType:
+                                          TextInputType.number,
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        TextFieldThem.buildTextFiled(
+                                          context,
+                                          hintText:
+                                          'Parcel dimension(In ft.)'
+                                              .tr,
+                                          controller: controller
+                                              .parcelDimension.value,
+                                          keyBoardType:
+                                          TextInputType.number,
+                                        ),
+                                        parcelImageWidget(
+                                            context, controller),
+                                      ],
+                                    )
                                         : controller.selectedInterCityType.value
-                                                    .id ==
-                                                "Kn2VEnPI3ikF58uK8YqY"
-                                            ? Column(
+                                        .id ==
+                                        "Kn2VEnPI3ikF58uK8YqY"
+                                        ? Column(
+                                      children: [
+                                        InkWell(
+                                          onTap: () {
+                                            vehicleFreightDialog(
+                                                context, controller);
+                                          },
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                              const BorderRadius
+                                                  .all(
+                                                  Radius.circular(
+                                                      4)),
+                                              border: Border.all(
+                                                  color: AppColors
+                                                      .textFieldBorder,
+                                                  width: 1),
+                                            ),
+                                            child: Padding(
+                                              padding:
+                                              const EdgeInsets
+                                                  .symmetric(
+                                                  horizontal: 10,
+                                                  vertical: 12),
+                                              child: Row(
                                                 children: [
-                                                  InkWell(
-                                                    onTap: () {
-                                                      vehicleFreightDialog(
-                                                          context, controller);
-                                                    },
-                                                    child: Container(
-                                                      decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            const BorderRadius
-                                                                .all(
-                                                                Radius.circular(
-                                                                    4)),
-                                                        border: Border.all(
-                                                            color: AppColors
-                                                                .textFieldBorder,
-                                                            width: 1),
-                                                      ),
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .symmetric(
-                                                                horizontal: 10,
-                                                                vertical: 12),
-                                                        child: Row(
-                                                          children: [
-                                                            const Icon(Icons
-                                                                .fire_truck),
-                                                            const SizedBox(
-                                                              width: 10,
-                                                            ),
-                                                            Expanded(
-                                                                child: Text(
-                                                              controller.selectedFreightVehicle.value
-                                                                              .id !=
-                                                                          null &&
-                                                                      controller
-                                                                          .selectedFreightVehicle
-                                                                          .value
-                                                                          .id!
-                                                                          .isNotEmpty
-                                                                  ? controller
-                                                                      .selectedFreightVehicle
-                                                                      .value
-                                                                      .name
-                                                                      .toString()
-                                                                  : "Select Freight Vehicle"
-                                                                      .tr,
-                                                              style: GoogleFonts
-                                                                  .poppins(),
-                                                            )),
-                                                            const Icon(Icons
-                                                                .arrow_drop_down_outlined)
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
+                                                  const Icon(Icons
+                                                      .fire_truck),
+                                                  const SizedBox(
+                                                    width: 10,
                                                   ),
-                                                  parcelImageWidget(
-                                                      context, controller),
-                                                  // Row(
-                                                  //   children: [
-                                                  //     Expanded(child: Text("Loader needed".tr, style: GoogleFonts.poppins(fontWeight: FontWeight.w500, letterSpacing: 1))),
-                                                  //     Transform.scale(scale: 1.0,
-                                                  //       child: Switch(
-                                                  //         value: controller.loaderNeeded.value,
-                                                  //         activeColor:AppColors.primary ,
-                                                  //         onChanged: (bool value1){
-                                                  //           controller.loaderNeeded.value = value1;
-                                                  //         },
-                                                  //       ),
-                                                  //     )
-                                                  //   ],
-                                                  // )
+                                                  Expanded(
+                                                      child: Text(
+                                                        controller.selectedFreightVehicle.value
+                                                            .id !=
+                                                            null &&
+                                                            controller
+                                                                .selectedFreightVehicle
+                                                                .value
+                                                                .id!
+                                                                .isNotEmpty
+                                                            ? controller
+                                                            .selectedFreightVehicle
+                                                            .value
+                                                            .name
+                                                            .toString()
+                                                            : "Select Freight Vehicle"
+                                                            .tr,
+                                                        style: GoogleFonts
+                                                            .poppins(),
+                                                      )),
+                                                  const Icon(Icons
+                                                      .arrow_drop_down_outlined)
                                                 ],
-                                              )
-                                            : TextFieldThem.buildTextFiled(
-                                                context,
-                                                hintText:
-                                                    'Number of Passengers'.tr,
-                                                controller: controller
-                                                    .noOfPassengers.value,
-                                                keyBoardType:
-                                                    TextInputType.number,
                                               ),
+                                            ),
+                                          ),
+                                        ),
+                                        parcelImageWidget(
+                                            context, controller),
+                                        // Row(
+                                        //   children: [
+                                        //     Expanded(child: Text("Loader needed".tr, style: GoogleFonts.poppins(fontWeight: FontWeight.w500, letterSpacing: 1))),
+                                        //     Transform.scale(scale: 1.0,
+                                        //       child: Switch(
+                                        //         value: controller.loaderNeeded.value,
+                                        //         activeColor:AppColors.primary ,
+                                        //         onChanged: (bool value1){
+                                        //           controller.loaderNeeded.value = value1;
+                                        //         },
+                                        //       ),
+                                        //     )
+                                        //   ],
+                                        // )
+                                      ],
+                                    )
+                                        : TextFieldThem.buildTextFiled(
+                                      context,
+                                      hintText:
+                                      'Number of Passengers'.tr,
+                                      controller: controller
+                                          .noOfPassengers.value,
+                                      keyBoardType:
+                                      TextInputType.number,
+                                    ),
                                     Obx(
-                                      () => controller.sourceLocationLAtLng
-                                                      .value.latitude !=
-                                                  null &&
-                                              controller
-                                                      .destinationLocationLAtLng
-                                                      .value
-                                                      .latitude !=
-                                                  null
+                                          () => controller.sourceLocationLAtLng
+                                          .value.latitude !=
+                                          null &&
+                                          controller
+                                              .destinationLocationLAtLng
+                                              .value
+                                              .latitude !=
+                                              null
                                           ? Column(
-                                              children: [
-                                                const SizedBox(
-                                                  height: 10,
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsets
+                                        children: [
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets
+                                                .symmetric(
+                                                horizontal: 10,
+                                                vertical: 5),
+                                            child: Container(
+                                              decoration: const BoxDecoration(
+                                                  color: AppColors.gray,
+                                                  borderRadius:
+                                                  BorderRadius.all(
+                                                      Radius.circular(
+                                                          10))),
+                                              child: Padding(
+                                                  padding:
+                                                  const EdgeInsets
                                                       .symmetric(
                                                       horizontal: 10,
-                                                      vertical: 5),
-                                                  child: Container(
-                                                    decoration: const BoxDecoration(
-                                                        color: AppColors.gray,
-                                                        borderRadius:
-                                                            BorderRadius.all(
-                                                                Radius.circular(
-                                                                    10))),
-                                                    child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .symmetric(
-                                                                horizontal: 10,
-                                                                vertical: 10),
-                                                        child: Center(
-                                                          child: RichText(
-                                                            text: TextSpan(
-                                                                text:
-                                                                    'Recommended Price ${Constant.amountShow(amount: controller.amount.value)}. Approx time ${controller.duration}'
-                                                                        .tr,
-                                                                style: GoogleFonts
-                                                                    .poppins(
-                                                                        color: Colors
-                                                                            .black),
-                                                                children: [
-                                                                  TextSpan(
-                                                                      text: controller.selectedInterCityType.value.offerRate ==
-                                                                              true
-                                                                          ? '. Enter your rate'
-                                                                              .tr
-                                                                          : '',
-                                                                      style: GoogleFonts.poppins(
-                                                                          color:
-                                                                              Colors.black))
-                                                                ]),
-                                                          ),
-                                                        )),
-                                                  ),
-                                                ),
-                                                const SizedBox(
-                                                  height: 10,
-                                                ),
-                                              ],
-                                            )
+                                                      vertical: 10),
+                                                  child: Center(
+                                                    child: RichText(
+                                                      text: TextSpan(
+                                                          text:
+                                                          'Recommended Price ${Constant.amountShow(amount: controller.amount.value)}. Approx time ${controller.duration}'
+                                                              .tr,
+                                                          style: GoogleFonts
+                                                              .poppins(
+                                                              color: Colors
+                                                                  .black),
+                                                          children: [
+                                                            TextSpan(
+                                                                text: controller.selectedInterCityType.value.offerRate ==
+                                                                    true
+                                                                    ? '. Enter your rate'
+                                                                    .tr
+                                                                    : '',
+                                                                style: GoogleFonts.poppins(
+                                                                    color:
+                                                                    Colors.black))
+                                                          ]),
+                                                    ),
+                                                  )),
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                        ],
+                                      )
                                           : Container(),
                                     ),
                                     Visibility(
                                       visible: controller.selectedInterCityType
-                                              .value.offerRate ==
+                                          .value.offerRate ==
                                           true,
                                       child: Padding(
                                           padding:
-                                              const EdgeInsets.only(top: 10),
+                                          const EdgeInsets.only(top: 10),
                                           child: TextFieldThem
                                               .buildTextFiledWithPrefixIcon(
                                             context,
                                             hintText:
-                                                "Enter your offer rate".tr,
+                                            "Enter your offer rate".tr,
                                             controller: controller
                                                 .offerYourRateController.value,
                                             prefix: Padding(
@@ -628,79 +630,79 @@ class InterCityScreen extends StatelessWidget {
                                       context,
                                       hintText: 'Comments'.tr,
                                       controller:
-                                          controller.commentsController.value,
+                                      controller.commentsController.value,
                                       keyBoardType: TextInputType.text,
                                     ),
                                     const SizedBox(
                                       height: 10,
                                     ),
                                     controller.selectedInterCityType.value.id ==
-                                                "UmQ2bjWTnlwoKqdCIlTr" ||
-                                            controller.selectedInterCityType
-                                                    .value.id ==
-                                                "647f340e35553"
+                                        "UmQ2bjWTnlwoKqdCIlTr" ||
+                                        controller.selectedInterCityType
+                                            .value.id ==
+                                            "647f340e35553"
                                         ? Column(
-                                            children: [
-                                              InkWell(
-                                                onTap: () {
-                                                  someOneTakingDialog(
-                                                      context, controller);
-                                                },
-                                                child: Container(
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        const BorderRadius.all(
-                                                            Radius.circular(4)),
-                                                    border: Border.all(
-                                                        color: AppColors
-                                                            .textFieldBorder,
-                                                        width: 1),
+                                      children: [
+                                        InkWell(
+                                          onTap: () {
+                                            someOneTakingDialog(
+                                                context, controller);
+                                          },
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                              const BorderRadius.all(
+                                                  Radius.circular(4)),
+                                              border: Border.all(
+                                                  color: AppColors
+                                                      .textFieldBorder,
+                                                  width: 1),
+                                            ),
+                                            child: Padding(
+                                              padding: const EdgeInsets
+                                                  .symmetric(
+                                                  horizontal: 10,
+                                                  vertical: 12),
+                                              child: Row(
+                                                children: [
+                                                  const Icon(
+                                                      Icons.person),
+                                                  const SizedBox(
+                                                    width: 10,
                                                   ),
-                                                  child: Padding(
-                                                    padding: const EdgeInsets
-                                                        .symmetric(
-                                                        horizontal: 10,
-                                                        vertical: 12),
-                                                    child: Row(
-                                                      children: [
-                                                        const Icon(
-                                                            Icons.person),
-                                                        const SizedBox(
-                                                          width: 10,
+                                                  Expanded(
+                                                      child: Text(
+                                                        controller
+                                                            .selectedTakingRide
+                                                            .value
+                                                            .fullName ==
+                                                            "Myself"
+                                                            ? "Myself".tr
+                                                            : controller
+                                                            .selectedTakingRide
+                                                            .value
+                                                            .fullName
+                                                            .toString(),
+                                                        style: GoogleFonts
+                                                            .poppins(
+                                                          color: themeChange
+                                                              .getThem()
+                                                              ? Colors.black
+                                                              : Colors.black,
                                                         ),
-                                                        Expanded(
-                                                            child: Text(
-                                                          controller
-                                                                      .selectedTakingRide
-                                                                      .value
-                                                                      .fullName ==
-                                                                  "Myself"
-                                                              ? "Myself".tr
-                                                              : controller
-                                                                  .selectedTakingRide
-                                                                  .value
-                                                                  .fullName
-                                                                  .toString(),
-                                                          style: GoogleFonts
-                                                              .poppins(
-                                                            color: themeChange
-                                                                    .getThem()
-                                                                ? Colors.black
-                                                                : Colors.black,
-                                                          ),
-                                                        )),
-                                                        const Icon(Icons
-                                                            .arrow_drop_down_outlined)
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
+                                                      )),
+                                                  const Icon(Icons
+                                                      .arrow_drop_down_outlined)
+                                                ],
                                               ),
-                                              const SizedBox(
-                                                height: 10,
-                                              ),
-                                            ],
-                                          )
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                      ],
+                                    )
                                         : const SizedBox(),
                                     InkWell(
                                       onTap: () {
@@ -729,18 +731,18 @@ class InterCityScreen extends StatelessWidget {
                                               ),
                                               Expanded(
                                                   child: Text(
-                                                controller.selectedPaymentMethod
+                                                    controller.selectedPaymentMethod
                                                         .value.isNotEmpty
-                                                    ? controller
+                                                        ? controller
                                                         .selectedPaymentMethod
                                                         .value
-                                                    : "Select Payment type".tr,
-                                                style: GoogleFonts.poppins(
-                                                  color: themeChange.getThem()
-                                                      ? Colors.black
-                                                      : Colors.black,
-                                                ),
-                                              )),
+                                                        : "Select Payment type".tr,
+                                                    style: GoogleFonts.poppins(
+                                                      color: themeChange.getThem()
+                                                          ? Colors.black
+                                                          : Colors.black,
+                                                    ),
+                                                  )),
                                               const Icon(Icons
                                                   .arrow_drop_down_outlined)
                                             ],
@@ -754,27 +756,27 @@ class InterCityScreen extends StatelessWidget {
                                     ButtonThem.buildButton(
                                       context,
                                       title: controller.selectedInterCityType
-                                                  .value.id ==
-                                              "Kn2VEnPI3ikF58uK8YqY"
+                                          .value.id ==
+                                          "Kn2VEnPI3ikF58uK8YqY"
                                           ? "Order Freight"
                                           : controller.selectedInterCityType
-                                                      .value.id ==
-                                                  "647f350983ba2"
-                                              ? "Order Parcel"
-                                              : "Ride Placed".tr,
+                                          .value.id ==
+                                          "647f350983ba2"
+                                          ? "Order Parcel"
+                                          : "Ride Placed".tr,
                                       btnWidthRatio:
-                                          Responsive.width(100, context),
+                                      Responsive.width(100, context),
                                       onPress: () async {
                                         bool isPaymentNotCompleted =
-                                            await FireStoreUtils
-                                                .paymentStatusCheckIntercity();
+                                        await FireStoreUtils
+                                            .paymentStatusCheckIntercity();
 
                                         if (isPaymentNotCompleted) {
                                           showAlertDialog(context);
                                           // showDialog(context: context, builder: (BuildContext context) => warningDailog());
                                         } else {
                                           if (controller.selectedInterCityType
-                                                  .value.id ==
+                                              .value.id ==
                                               "647f350983ba2") {
                                             if (controller
                                                 .sourceLocationController
@@ -818,10 +820,10 @@ class InterCityScreen extends StatelessWidget {
                                                   "Please select date and time"
                                                       .tr);
                                             } else if (controller
-                                                        .selectedInterCityType
-                                                        .value
-                                                        .offerRate ==
-                                                    true &&
+                                                .selectedInterCityType
+                                                .value
+                                                .offerRate ==
+                                                true &&
                                                 controller
                                                     .offerYourRateController
                                                     .value
@@ -835,23 +837,23 @@ class InterCityScreen extends StatelessWidget {
 
                                               List<dynamic> parcelImages = [];
                                               for (var element
-                                                  in controller.images) {
+                                              in controller.images) {
                                                 Url url = await Constant()
                                                     .uploadChatImageToFireStorage(
-                                                        File(element.path));
+                                                    File(element.path));
                                                 parcelImages.add(url.url);
                                               }
 
                                               InterCityOrderModel
-                                                  intercityOrderModel =
-                                                  InterCityOrderModel();
+                                              intercityOrderModel =
+                                              InterCityOrderModel();
                                               intercityOrderModel.id =
                                                   Constant.getUuid();
                                               intercityOrderModel.userId =
                                                   FireStoreUtils
                                                       .getCurrentUid();
                                               intercityOrderModel
-                                                      .sourceLocationName =
+                                                  .sourceLocationName =
                                                   controller
                                                       .sourceLocationController
                                                       .value
@@ -862,7 +864,7 @@ class InterCityScreen extends StatelessWidget {
                                                       .value
                                                       .text;
                                               intercityOrderModel
-                                                      .sourceLocationLAtLng =
+                                                  .sourceLocationLAtLng =
                                                   controller
                                                       .sourceLocationLAtLng
                                                       .value;
@@ -873,64 +875,64 @@ class InterCityScreen extends StatelessWidget {
                                                   controller
                                                       .parcelWeight.value.text;
                                               intercityOrderModel
-                                                      .parcelDimension =
+                                                  .parcelDimension =
                                                   controller.parcelDimension
                                                       .value.text;
 
                                               intercityOrderModel
-                                                      .destinationLocationName =
+                                                  .destinationLocationName =
                                                   controller
                                                       .destinationLocationController
                                                       .value
                                                       .text;
                                               intercityOrderModel
-                                                      .destinationCity =
+                                                  .destinationCity =
                                                   controller
                                                       .destinationCityController
                                                       .value
                                                       .text;
                                               intercityOrderModel
-                                                      .destinationLocationLAtLng =
+                                                  .destinationLocationLAtLng =
                                                   controller
                                                       .destinationLocationLAtLng
                                                       .value;
                                               intercityOrderModel.distance =
                                                   controller.distance.value;
                                               intercityOrderModel.offerRate =
-                                                  controller.selectedInterCityType
-                                                              .value.offerRate ==
-                                                          true
-                                                      ? controller
-                                                          .offerYourRateController
-                                                          .value
-                                                          .text
-                                                      : controller.amount.value;
+                                              controller.selectedInterCityType
+                                                  .value.offerRate ==
+                                                  true
+                                                  ? controller
+                                                  .offerYourRateController
+                                                  .value
+                                                  .text
+                                                  : controller.amount.value;
                                               intercityOrderModel
-                                                      .intercityServiceId =
+                                                  .intercityServiceId =
                                                   controller
                                                       .selectedInterCityType
                                                       .value
                                                       .id;
                                               intercityOrderModel
-                                                      .intercityService =
+                                                  .intercityService =
                                                   controller
                                                       .selectedInterCityType
                                                       .value;
                                               GeoFirePoint position =
-                                                  GeoFlutterFire().point(
-                                                      latitude: controller
-                                                          .sourceLocationLAtLng
-                                                          .value
-                                                          .latitude!,
-                                                      longitude: controller
-                                                          .sourceLocationLAtLng
-                                                          .value
-                                                          .longitude!);
+                                              GeoFlutterFire().point(
+                                                  latitude: controller
+                                                      .sourceLocationLAtLng
+                                                      .value
+                                                      .latitude!,
+                                                  longitude: controller
+                                                      .sourceLocationLAtLng
+                                                      .value
+                                                      .longitude!);
 
                                               intercityOrderModel.position =
                                                   Positions(
                                                       geoPoint:
-                                                          position.geoPoint,
+                                                      position.geoPoint,
                                                       geohash: position.hash);
                                               intercityOrderModel.createdDate =
                                                   Timestamp.now();
@@ -948,7 +950,7 @@ class InterCityScreen extends StatelessWidget {
                                               intercityOrderModel.whenDates =
                                                   DateFormat("dd-MMM-yyyy")
                                                       .format(controller
-                                                          .dateAndTime!);
+                                                      .dateAndTime!);
                                               intercityOrderModel.comments =
                                                   controller.commentsController
                                                       .value.text;
@@ -958,20 +960,20 @@ class InterCityScreen extends StatelessWidget {
                                                   Constant.taxList;
                                               intercityOrderModel
                                                   .adminCommission = controller
-                                                          .selectedInterCityType
-                                                          .value
-                                                          .adminCommission!
-                                                          .isEnabled ==
-                                                      false
+                                                  .selectedInterCityType
+                                                  .value
+                                                  .adminCommission!
+                                                  .isEnabled ==
+                                                  false
                                                   ? controller
-                                                      .selectedInterCityType
-                                                      .value
-                                                      .adminCommission!
+                                                  .selectedInterCityType
+                                                  .value
+                                                  .adminCommission!
                                                   : Constant.adminCommission;
                                               intercityOrderModel.distanceType =
                                                   Constant.distanceType;
                                               FireStoreUtils.setInterCityOrder(
-                                                      intercityOrderModel)
+                                                  intercityOrderModel)
                                                   .then((value) {
                                                 ShowToastDialog.closeLoader();
                                                 if (value == true) {
@@ -984,9 +986,9 @@ class InterCityScreen extends StatelessWidget {
                                               });
                                             }
                                           } else if (controller
-                                                  .selectedInterCityType
-                                                  .value
-                                                  .id ==
+                                              .selectedInterCityType
+                                              .value
+                                              .id ==
                                               "Kn2VEnPI3ikF58uK8YqY") {
                                             if (controller
                                                 .sourceLocationController
@@ -1012,10 +1014,10 @@ class InterCityScreen extends StatelessWidget {
                                                   "Please select Payment Method"
                                                       .tr);
                                             } else if (controller
-                                                        .selectedInterCityType
-                                                        .value
-                                                        .offerRate ==
-                                                    true &&
+                                                .selectedInterCityType
+                                                .value
+                                                .offerRate ==
+                                                true &&
                                                 controller
                                                     .offerYourRateController
                                                     .value
@@ -1029,10 +1031,10 @@ class InterCityScreen extends StatelessWidget {
                                                   "Please select date and time"
                                                       .tr);
                                             } else if (controller
-                                                        .selectedFreightVehicle
-                                                        .value
-                                                        .id ==
-                                                    null ||
+                                                .selectedFreightVehicle
+                                                .value
+                                                .id ==
+                                                null ||
                                                 controller
                                                     .selectedFreightVehicle
                                                     .value
@@ -1047,23 +1049,23 @@ class InterCityScreen extends StatelessWidget {
 
                                               List<dynamic> parcelImages = [];
                                               for (var element
-                                                  in controller.images) {
+                                              in controller.images) {
                                                 Url url = await Constant()
                                                     .uploadChatImageToFireStorage(
-                                                        File(element.path));
+                                                    File(element.path));
                                                 parcelImages.add(url.url);
                                               }
 
                                               InterCityOrderModel
-                                                  intercityOrderModel =
-                                                  InterCityOrderModel();
+                                              intercityOrderModel =
+                                              InterCityOrderModel();
                                               intercityOrderModel.id =
                                                   Constant.getUuid();
                                               intercityOrderModel.userId =
                                                   FireStoreUtils
                                                       .getCurrentUid();
                                               intercityOrderModel
-                                                      .sourceLocationName =
+                                                  .sourceLocationName =
                                                   controller
                                                       .sourceLocationController
                                                       .value
@@ -1074,7 +1076,7 @@ class InterCityScreen extends StatelessWidget {
                                                       .value
                                                       .text;
                                               intercityOrderModel
-                                                      .sourceLocationLAtLng =
+                                                  .sourceLocationLAtLng =
                                                   controller
                                                       .sourceLocationLAtLng
                                                       .value;
@@ -1085,64 +1087,64 @@ class InterCityScreen extends StatelessWidget {
                                                   controller
                                                       .parcelWeight.value.text;
                                               intercityOrderModel
-                                                      .parcelDimension =
+                                                  .parcelDimension =
                                                   controller.parcelDimension
                                                       .value.text;
 
                                               intercityOrderModel
-                                                      .destinationLocationName =
+                                                  .destinationLocationName =
                                                   controller
                                                       .destinationLocationController
                                                       .value
                                                       .text;
                                               intercityOrderModel
-                                                      .destinationCity =
+                                                  .destinationCity =
                                                   controller
                                                       .destinationCityController
                                                       .value
                                                       .text;
                                               intercityOrderModel
-                                                      .destinationLocationLAtLng =
+                                                  .destinationLocationLAtLng =
                                                   controller
                                                       .destinationLocationLAtLng
                                                       .value;
                                               intercityOrderModel.distance =
                                                   controller.distance.value;
                                               intercityOrderModel.offerRate =
-                                                  controller.selectedInterCityType
-                                                              .value.offerRate ==
-                                                          true
-                                                      ? controller
-                                                          .offerYourRateController
-                                                          .value
-                                                          .text
-                                                      : controller.amount.value;
+                                              controller.selectedInterCityType
+                                                  .value.offerRate ==
+                                                  true
+                                                  ? controller
+                                                  .offerYourRateController
+                                                  .value
+                                                  .text
+                                                  : controller.amount.value;
                                               intercityOrderModel
-                                                      .intercityServiceId =
+                                                  .intercityServiceId =
                                                   controller
                                                       .selectedInterCityType
                                                       .value
                                                       .id;
                                               intercityOrderModel
-                                                      .intercityService =
+                                                  .intercityService =
                                                   controller
                                                       .selectedInterCityType
                                                       .value;
                                               GeoFirePoint position =
-                                                  GeoFlutterFire().point(
-                                                      latitude: controller
-                                                          .sourceLocationLAtLng
-                                                          .value
-                                                          .latitude!,
-                                                      longitude: controller
-                                                          .sourceLocationLAtLng
-                                                          .value
-                                                          .longitude!);
+                                              GeoFlutterFire().point(
+                                                  latitude: controller
+                                                      .sourceLocationLAtLng
+                                                      .value
+                                                      .latitude!,
+                                                  longitude: controller
+                                                      .sourceLocationLAtLng
+                                                      .value
+                                                      .longitude!);
 
                                               intercityOrderModel.position =
                                                   Positions(
                                                       geoPoint:
-                                                          position.geoPoint,
+                                                      position.geoPoint,
                                                       geohash: position.hash);
                                               intercityOrderModel.createdDate =
                                                   Timestamp.now();
@@ -1160,7 +1162,7 @@ class InterCityScreen extends StatelessWidget {
                                               intercityOrderModel.whenDates =
                                                   DateFormat("dd-MMM-yyyy")
                                                       .format(controller
-                                                          .dateAndTime!);
+                                                      .dateAndTime!);
                                               intercityOrderModel.comments =
                                                   controller.commentsController
                                                       .value.text;
@@ -1170,20 +1172,20 @@ class InterCityScreen extends StatelessWidget {
                                                   Constant.taxList;
                                               intercityOrderModel
                                                   .adminCommission = controller
-                                                          .selectedInterCityType
-                                                          .value
-                                                          .adminCommission!
-                                                          .isEnabled ==
-                                                      false
+                                                  .selectedInterCityType
+                                                  .value
+                                                  .adminCommission!
+                                                  .isEnabled ==
+                                                  false
                                                   ? controller
-                                                      .selectedInterCityType
-                                                      .value
-                                                      .adminCommission!
+                                                  .selectedInterCityType
+                                                  .value
+                                                  .adminCommission!
                                                   : Constant.adminCommission;
                                               intercityOrderModel.distanceType =
                                                   Constant.distanceType;
                                               intercityOrderModel
-                                                      .freightVehicle =
+                                                  .freightVehicle =
                                                   controller
                                                       .selectedFreightVehicle
                                                       .value;
@@ -1192,7 +1194,7 @@ class InterCityScreen extends StatelessWidget {
                                                   .selectedFreightVehicle
                                                   .value);
                                               FireStoreUtils.setInterCityOrder(
-                                                      intercityOrderModel)
+                                                  intercityOrderModel)
                                                   .then((value) {
                                                 ShowToastDialog.closeLoader();
                                                 if (value == true) {
@@ -1239,10 +1241,10 @@ class InterCityScreen extends StatelessWidget {
                                                   "Please select date and time"
                                                       .tr);
                                             } else if (controller
-                                                        .selectedInterCityType
-                                                        .value
-                                                        .offerRate ==
-                                                    true &&
+                                                .selectedInterCityType
+                                                .value
+                                                .offerRate ==
+                                                true &&
                                                 controller
                                                     .offerYourRateController
                                                     .value
@@ -1254,15 +1256,15 @@ class InterCityScreen extends StatelessWidget {
                                               ShowToastDialog.showLoader(
                                                   "Please wait".tr);
                                               InterCityOrderModel
-                                                  intercityOrderModel =
-                                                  InterCityOrderModel();
+                                              intercityOrderModel =
+                                              InterCityOrderModel();
                                               intercityOrderModel.id =
                                                   Constant.getUuid();
                                               intercityOrderModel.userId =
                                                   FireStoreUtils
                                                       .getCurrentUid();
                                               intercityOrderModel
-                                                      .sourceLocationName =
+                                                  .sourceLocationName =
                                                   controller
                                                       .sourceLocationController
                                                       .value
@@ -1273,65 +1275,65 @@ class InterCityScreen extends StatelessWidget {
                                                       .value
                                                       .text;
                                               intercityOrderModel
-                                                      .sourceLocationLAtLng =
+                                                  .sourceLocationLAtLng =
                                                   controller
                                                       .sourceLocationLAtLng
                                                       .value;
 
                                               intercityOrderModel
-                                                      .destinationLocationName =
+                                                  .destinationLocationName =
                                                   controller
                                                       .destinationLocationController
                                                       .value
                                                       .text;
                                               intercityOrderModel
-                                                      .destinationCity =
+                                                  .destinationCity =
                                                   controller
                                                       .destinationCityController
                                                       .value
                                                       .text;
                                               intercityOrderModel
-                                                      .destinationLocationLAtLng =
+                                                  .destinationLocationLAtLng =
                                                   controller
                                                       .destinationLocationLAtLng
                                                       .value;
                                               intercityOrderModel.distance =
                                                   controller.distance.value;
                                               intercityOrderModel.offerRate =
-                                                  controller.selectedInterCityType
-                                                              .value.offerRate ==
-                                                          true
-                                                      ? controller
-                                                          .offerYourRateController
-                                                          .value
-                                                          .text
-                                                      : controller.amount.value;
+                                              controller.selectedInterCityType
+                                                  .value.offerRate ==
+                                                  true
+                                                  ? controller
+                                                  .offerYourRateController
+                                                  .value
+                                                  .text
+                                                  : controller.amount.value;
                                               intercityOrderModel
-                                                      .intercityServiceId =
+                                                  .intercityServiceId =
                                                   controller
                                                       .selectedInterCityType
                                                       .value
                                                       .id;
                                               intercityOrderModel
-                                                      .intercityService =
+                                                  .intercityService =
                                                   controller
                                                       .selectedInterCityType
                                                       .value;
                                               GeoFirePoint position =
-                                                  GeoFlutterFire().point(
-                                                      latitude: controller
-                                                          .sourceLocationLAtLng
-                                                          .value
-                                                          .latitude!,
-                                                      longitude: controller
-                                                          .sourceLocationLAtLng
-                                                          .value
-                                                          .longitude!);
+                                              GeoFlutterFire().point(
+                                                  latitude: controller
+                                                      .sourceLocationLAtLng
+                                                      .value
+                                                      .latitude!,
+                                                  longitude: controller
+                                                      .sourceLocationLAtLng
+                                                      .value
+                                                      .longitude!);
 
                                               intercityOrderModel.position =
                                                   Positions(
                                                       geoPoint:
-                                                          position.geoPoint,
+                                                      position.geoPoint,
                                                       geohash: position.hash);
                                               intercityOrderModel.createdDate =
                                                   Timestamp.now();
@@ -1349,9 +1351,9 @@ class InterCityScreen extends StatelessWidget {
                                               intercityOrderModel.whenDates =
                                                   DateFormat("dd-MMM-yyyy")
                                                       .format(controller
-                                                          .dateAndTime!);
+                                                      .dateAndTime!);
                                               intercityOrderModel
-                                                      .numberOfPassenger =
+                                                  .numberOfPassenger =
                                                   controller.noOfPassengers
                                                       .value.text;
                                               intercityOrderModel.comments =
@@ -1363,29 +1365,29 @@ class InterCityScreen extends StatelessWidget {
                                                   Constant.taxList;
                                               intercityOrderModel
                                                   .adminCommission = controller
-                                                          .selectedInterCityType
-                                                          .value
-                                                          .adminCommission!
-                                                          .isEnabled ==
-                                                      false
+                                                  .selectedInterCityType
+                                                  .value
+                                                  .adminCommission!
+                                                  .isEnabled ==
+                                                  false
                                                   ? controller
-                                                      .selectedInterCityType
-                                                      .value
-                                                      .adminCommission!
+                                                  .selectedInterCityType
+                                                  .value
+                                                  .adminCommission!
                                                   : Constant.adminCommission;
                                               intercityOrderModel.distanceType =
                                                   Constant.distanceType;
                                               if (controller.selectedTakingRide
-                                                      .value.fullName !=
+                                                  .value.fullName !=
                                                   "Myself") {
                                                 intercityOrderModel
-                                                        .someOneElse =
+                                                    .someOneElse =
                                                     controller
                                                         .selectedTakingRide
                                                         .value;
                                               }
                                               FireStoreUtils.setInterCityOrder(
-                                                      intercityOrderModel)
+                                                  intercityOrderModel)
                                                   .then((value) {
                                                 ShowToastDialog.closeLoader();
                                                 if (value == true) {
@@ -1410,7 +1412,8 @@ class InterCityScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                ),
+                )],
+              ),
         );
       },
     );

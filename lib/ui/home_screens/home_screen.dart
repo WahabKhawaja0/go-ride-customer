@@ -21,6 +21,7 @@ import 'package:customer/ui/places_screen.dart';
 import 'package:customer/utils/DarkThemeProvider.dart';
 import 'package:customer/utils/fire_store_utils.dart';
 import 'package:customer/utils/utils.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dash/flutter_dash.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -53,51 +54,840 @@ class HomeScreen extends StatelessWidget {
             ),
             body: controller.isLoading.value
                 ? Constant.loader()
-                : Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Obx(
-                              () => ClipRRect( // Wrap with ClipRRect for border radius
-                            borderRadius: BorderRadius.circular(15),
-                            child: Container(
-                              height: 200,
-                              decoration: BoxDecoration(
-                                // color: Colors.red,
+                : Stack(
+                  children: [
+                    Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: Obx(
+                                () => ClipRRect( // Wrap with ClipRRect for border radius
+                              borderRadius: BorderRadius.circular(15),
+                              child: Container(
+                                height: 200,
+                                decoration: BoxDecoration(
+                                  // color: Colors.red,
 
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(.1),
-                                    blurRadius: 1,
-                                    spreadRadius: 1,
-                                    offset: Offset(1, 1),
-                                  ),
-                                ],
-                              ),
-                              child: GoogleMap(
-                                onMapCreated: (con) {
-                                  controller.mapController = con;
-                                  controller.animateToCurrentLocation();
-                                  // controller.getCurrentLocation();
-                                },
-                                initialCameraPosition: CameraPosition(
-                                  target: controller.currentPosition.value,
-                                  zoom: 14,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(.1),
+                                      blurRadius: 1,
+                                      spreadRadius: 1,
+                                      offset: Offset(1, 1),
+                                    ),
+                                  ],
                                 ),
-                                markers: {
-                                  Marker(
-                                    markerId: MarkerId('currentLocation'),
-                                    position: controller.currentPosition.value,
+                                child: GoogleMap(
+                                  onMapCreated: (con) {
+                                    controller.mapController = con;
+                                    controller.animateToCurrentLocation();
+                                    // controller.getCurrentLocation();
+                                  },
+                                  initialCameraPosition: CameraPosition(
+                                    target: controller.currentPosition.value,
+                                    zoom: 14,
                                   ),
-                                },
-                              ),
+                                  markers: {
+                                    Marker(
+                                      markerId: MarkerId('currentLocation'),
+                                      position: controller.currentPosition.value,
+                                    ),
+                                  },
+                                ),
 
+                              ),
                             ),
                           ),
                         ),
-                      ),
 
-                      SizedBox(
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(25),
+                                    topRight: Radius.circular(25))),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 10),
+                              child: SingleChildScrollView(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Visibility(
+                                        visible: controller.bannerList.isNotEmpty,
+                                        child: SizedBox(
+                                            height: MediaQuery.of(context)
+                                                .size
+                                                .height *
+                                                0.20,
+                                            child: PageView.builder(
+                                                padEnds: false,
+                                                itemCount:
+                                                controller.bannerList.length,
+                                                scrollDirection: Axis.horizontal,
+                                                controller:
+                                                controller.pageController,
+                                                itemBuilder: (context, index) {
+                                                  BannerModel bannerModel =
+                                                  controller
+                                                      .bannerList[index];
+                                                  return Padding(
+                                                    padding: const EdgeInsets
+                                                        .symmetric(
+                                                        horizontal: 10),
+                                                    child: CachedNetworkImage(
+                                                      imageUrl: bannerModel.image
+                                                          .toString(),
+                                                      imageBuilder: (context,
+                                                          imageProvider) =>
+                                                          Container(
+                                                            decoration: BoxDecoration(
+                                                              borderRadius:
+                                                              BorderRadius
+                                                                  .circular(20),
+                                                              image: DecorationImage(
+                                                                  image:
+                                                                  imageProvider,
+                                                                  fit: BoxFit.cover),
+                                                            ),
+                                                          ),
+                                                      color: Colors.black
+                                                          .withOpacity(0.5),
+                                                      placeholder: (context,
+                                                          url) =>
+                                                      const Center(
+                                                          child:
+                                                          CircularProgressIndicator()),
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  );
+                                                })),
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text("Where you want to go?".tr,
+                                          style: GoogleFonts.poppins(
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 18,
+                                            letterSpacing: 1,
+                                            color: Colors.black,
+                                          )),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      controller.sourceLocationLAtLng.value
+                                          .latitude ==
+                                          null
+                                          ? InkWell(
+                                          onTap: (){
+                                            largeBottomSheet(context,controller);
+                                          },
+                                          // onTap: () async {
+                                          //   LocationResult? result =
+                                          //       await Utils.showPlacePicker(
+                                          //           context);
+                                          //   if (result != null) {
+                                          //     controller
+                                          //             .sourceLocationController
+                                          //             .value
+                                          //             .text =
+                                          //         result.formattedAddress
+                                          //             .toString();
+                                          //     controller.sourceLocationLAtLng
+                                          //             .value =
+                                          //         LocationLatLng(
+                                          //             latitude: result
+                                          //                 .latLng!.latitude,
+                                          //             longitude: result
+                                          //                 .latLng!.longitude);
+                                          //     controller.calculateAmount();
+                                          //   }
+                                          // },
+                                          child: TextFieldThem.buildTextFiled(
+                                              context,
+                                              hintText: 'Enter Location'.tr,
+                                              controller: controller
+                                                  .sourceLocationController
+                                                  .value,
+                                              enable: false))
+                                          : Row(
+                                        children: [
+                                          Column(
+                                            children: [
+                                              SvgPicture.asset(
+                                                  themeChange.getThem()
+                                                      ? 'assets/icons/ic_source_dark.svg'
+                                                      :'assets/icons/ic_source_dark.svg',
+
+                                                  width: 18),
+                                              Dash(
+                                                  direction: Axis.vertical,
+                                                  length: Responsive.height(
+                                                      6, context),
+                                                  dashLength: 12,
+                                                  dashColor: AppColors
+                                                      .dottedDivider),
+                                              SvgPicture.asset(
+                                                  themeChange.getThem()
+                                                      ? 'assets/icons/ic_destination_dark.svg'
+                                                      : 'assets/icons/ic_destination_dark.svg',
+                                                  width: 20),
+                                            ],
+                                          ),
+                                          const SizedBox(
+                                            width: 18,
+                                          ),
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                              children: [
+                                                InkWell(
+
+                                                    onTap: () async {
+                                                      LocationResult?
+                                                      result =
+                                                      await Utils
+                                                          .showPlacePicker(
+                                                          context);
+                                                      if (result != null) {
+                                                        controller
+                                                            .sourceLocationController
+                                                            .value
+                                                            .text =
+                                                            result
+                                                                .formattedAddress
+                                                                .toString();
+                                                        controller.sourceLocationLAtLng
+                                                            .value =
+                                                            LocationLatLng(
+                                                                latitude: result
+                                                                    .latLng!
+                                                                    .latitude,
+                                                                longitude: result
+                                                                    .latLng!
+                                                                    .longitude);
+                                                        controller
+                                                            .calculateAmount();
+                                                      }
+                                                    },
+                                                    child: Row(
+                                                      children: [
+                                                        Expanded(
+                                                          child: TextFieldThem.buildTextFiled(
+                                                              context,
+                                                              hintText:
+                                                              'Enter Location'
+                                                                  .tr,
+                                                              controller:
+                                                              controller
+                                                                  .sourceLocationController
+                                                                  .value,
+                                                              enable:
+                                                              false),
+                                                        ),
+                                                        const SizedBox(
+                                                          width: 10,
+                                                        ),
+                                                        InkWell(
+                                                            onTap: () {
+                                                              ariPortDialog(
+                                                                  context,
+                                                                  controller,
+                                                                  true);
+                                                            },
+                                                            child: const Icon(
+
+                                                              Icons
+                                                                  .flight_takeoff,color: Colors.black,))
+                                                      ],
+                                                    )),
+                                                SizedBox(
+                                                    height:
+                                                    Responsive.height(
+                                                        1, context)),
+                                                InkWell(
+                                                    onTap: (){
+                                                      destinationBottomSheet(context,controller);
+                                                    },
+                                                    // onTap: () async {
+                                                    //   LocationResult?
+                                                    //       result =
+                                                    //       await Utils
+                                                    //           .showPlacePicker(
+                                                    //               context);
+                                                    //   if (result != null) {
+                                                    //     controller
+                                                    //             .destinationLocationController
+                                                    //             .value
+                                                    //             .text =
+                                                    //         result
+                                                    //             .formattedAddress
+                                                    //             .toString();
+                                                    //     controller.destinationLocationLAtLng
+                                                    //             .value =
+                                                    //         LocationLatLng(
+                                                    //             latitude: result
+                                                    //                 .latLng!
+                                                    //                 .latitude,
+                                                    //             longitude: result
+                                                    //                 .latLng!
+                                                    //                 .longitude);
+                                                    //     controller
+                                                    //         .calculateAmount();
+                                                    //   }
+                                                    // },
+                                                    child: Row(
+                                                      children: [
+                                                        Expanded(
+                                                          child: TextFieldThem.buildTextFiled(
+                                                              context,
+                                                              hintText:
+                                                              'Enter destination Location'
+                                                                  .tr,
+                                                              controller:
+                                                              controller
+                                                                  .destinationLocationController
+                                                                  .value,
+                                                              enable:
+                                                              false),
+                                                        ),
+                                                        const SizedBox(
+                                                          width: 10,
+                                                        ),
+                                                        InkWell(
+                                                            onTap: () {
+                                                              ariPortDialog(
+                                                                  context,
+                                                                  controller,
+                                                                  false);
+                                                            },
+                                                            child: const Icon(
+                                                              Icons
+                                                                  .flight_takeoff,color: Colors.black,))
+                                                      ],
+                                                    )),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      Text(
+                                        "Select Vehicle".tr,
+                                        style: GoogleFonts.poppins(
+                                          fontWeight: FontWeight.w500,
+                                          letterSpacing: 1,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 05,
+                                      ),
+                                      SizedBox(
+                                        height: Responsive.height(18, context),
+                                        child: ListView.builder(
+                                          itemCount:
+                                          controller.serviceList.length,
+                                          scrollDirection: Axis.horizontal,
+                                          shrinkWrap: true,
+                                          itemBuilder: (context, index) {
+                                            ServiceModel serviceModel =
+                                            controller.serviceList[index];
+                                            return Obx(
+                                                  () => InkWell(
+                                                onTap: () {
+                                                  controller.selectedType.value =
+                                                      serviceModel;
+                                                  controller.calculateAmount();
+                                                },
+                                                child: Padding(
+                                                  padding:
+                                                  const EdgeInsets.all(6.0),
+                                                  child: Container(
+                                                    width: Responsive.width(
+                                                        28, context),
+                                                    decoration: BoxDecoration(
+                                                        color: controller
+                                                            .selectedType
+                                                            .value ==
+                                                            serviceModel
+                                                            ? themeChange
+                                                            .getThem()
+                                                            ? AppColors
+                                                            .darkModePrimary
+                                                            : AppColors
+                                                            .darkModePrimary
+                                                            : themeChange
+                                                            .getThem()
+                                                            ? AppColors
+                                                            .darkService
+                                                            : AppColors.darkService,
+                                                        borderRadius:
+                                                        const BorderRadius
+                                                            .all(
+                                                          Radius.circular(20),
+                                                        )),
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                      CrossAxisAlignment
+                                                          .center,
+                                                      mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .center,
+                                                      children: [
+                                                        Container(
+                                                          decoration:
+                                                          BoxDecoration(
+                                                              color: Colors.white,
+                                                              borderRadius:
+                                                              const BorderRadius
+                                                                  .all(
+                                                                Radius
+                                                                    .circular(
+                                                                    20),
+                                                              )),
+                                                          child: Padding(
+                                                            padding:
+                                                            const EdgeInsets
+                                                                .all(8.0),
+                                                            child:
+                                                            CachedNetworkImage(
+                                                              imageUrl:
+                                                              serviceModel
+                                                                  .image
+                                                                  .toString(),
+                                                              fit: BoxFit.contain,
+                                                              height: Responsive
+                                                                  .height(
+                                                                  8, context),
+                                                              width: Responsive
+                                                                  .width(18,
+                                                                  context),
+                                                              placeholder: (context,
+                                                                  url) =>
+                                                                  Constant
+                                                                      .loader(),
+                                                              errorWidget: (context,
+                                                                  url,
+                                                                  error) =>
+                                                                  Image.network(
+                                                                      Constant
+                                                                          .userPlaceHolder),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        const SizedBox(
+                                                          height: 10,
+                                                        ),
+                                                        Text(
+                                                            serviceModel.title
+                                                                .toString(),
+                                                            style: GoogleFonts.poppins(
+                                                                color: controller.selectedType.value == serviceModel
+                                                                    ? themeChange.getThem()
+                                                                    ? Colors.white
+                                                                    : Colors.white
+                                                                    : themeChange.getThem()
+                                                                    ? Colors.white
+                                                                    : Colors.white)),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                      Obx(
+                                            () => controller.sourceLocationLAtLng
+                                            .value.latitude !=
+                                            null &&
+                                            controller
+                                                .destinationLocationLAtLng
+                                                .value
+                                                .latitude !=
+                                                null &&
+                                            controller.amount.value.isNotEmpty
+                                            ? Column(
+                                          children: [
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets
+                                                  .symmetric(
+                                                  horizontal: 10,
+                                                  vertical: 5),
+                                              child: Container(
+                                                width: Responsive.width(
+                                                    100, context),
+                                                decoration: const BoxDecoration(
+                                                    color: AppColors.gray,
+                                                    borderRadius:
+                                                    BorderRadius.all(
+                                                        Radius.circular(
+                                                            10))),
+                                                child: Padding(
+                                                    padding:
+                                                    const EdgeInsets
+                                                        .symmetric(
+                                                        horizontal: 10,
+                                                        vertical: 10),
+                                                    child: Center(
+                                                      child: controller
+                                                          .selectedType
+                                                          .value
+                                                          .offerRate ==
+                                                          true
+                                                          ? RichText(
+                                                        text:
+                                                        TextSpan(
+                                                          text:
+                                                          'Recommended Price is ${Constant.amountShow(amount: controller.amount.value)}. Approx time ${controller.duration}. Approx distance ${double.parse(controller.distance.value).toStringAsFixed(Constant.currencyModel!.decimalDigits!)} ${Constant.distanceType}'
+                                                              .tr,
+                                                          style: GoogleFonts
+                                                              .poppins(
+                                                              color:
+                                                              Colors.black),
+                                                        ),
+                                                      )
+                                                          : RichText(
+                                                        text: TextSpan(
+                                                            text: 'Your Price is ${Constant.amountShow(amount: controller.amount.value)}. Approx time ${controller.duration}. Approx distance ${double.parse(controller.distance.value).toStringAsFixed(Constant.currencyModel!.decimalDigits!)} ${Constant.distanceType}'
+                                                                .tr,
+                                                            style: GoogleFonts.poppins(
+                                                                color:
+                                                                Colors.black)),
+                                                      ),
+                                                    )),
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                            : Container(),
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Visibility(
+                                        visible: controller
+                                            .selectedType.value.offerRate ==
+                                            true,
+                                        child: TextFieldThem
+                                            .buildTextFiledWithPrefixIcon(
+                                          context,
+                                          hintText: "Enter your offer rate".tr,
+                                          controller: controller
+                                              .offerYourRateController.value,
+                                          prefix: Padding(
+                                            padding:
+                                            const EdgeInsets.only(right: 10),
+                                            child: Text(
+                                              Constant.currencyModel!.symbol
+                                                  .toString(),
+                                              style: GoogleFonts.poppins(
+                                                  color: themeChange.getThem() ? Colors.black : Colors.black),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          someOneTakingDialog(
+                                              context, controller);
+                                        },
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius: const BorderRadius.all(
+                                                Radius.circular(4)),
+                                            border: Border.all(
+                                                color: AppColors.textFieldBorder,
+                                                width: 1),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 10, vertical: 12),
+                                            child: Row(
+                                              children: [
+                                                const Icon(Icons.person),
+                                                const SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Expanded(
+                                                    child: Text(
+                                                      controller.selectedTakingRide
+                                                          .value.fullName ==
+                                                          "Myself"
+                                                          ? "Myself".tr
+                                                          : controller
+                                                          .selectedTakingRide
+                                                          .value
+                                                          .fullName
+                                                          .toString(),
+                                                      style: GoogleFonts.poppins(
+                                                          color: Colors.black
+                                                      ),
+                                                    )),
+                                                const Icon(Icons
+                                                    .arrow_drop_down_outlined,
+                                                  color: Colors.black,
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          paymentMethodDialog(
+                                              context, controller);
+                                        },
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius: const BorderRadius.all(
+                                                Radius.circular(4)),
+                                            border: Border.all(
+                                                color: AppColors.textFieldBorder,
+                                                width: 1),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 10, vertical: 12),
+                                            child: Row(
+                                              children: [
+                                                SvgPicture.asset(
+                                                  'assets/icons/ic_payment.svg',
+                                                  width: 26,
+                                                ),
+                                                const SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Expanded(
+                                                    child: Text(
+                                                      controller.selectedPaymentMethod
+                                                          .value.isNotEmpty
+                                                          ? controller
+                                                          .selectedPaymentMethod
+                                                          .value
+                                                          : "Select Payment type".tr,
+                                                      style: GoogleFonts.poppins(
+                                                          color: Colors.black
+                                                      ),
+                                                    )),
+                                                const Icon(Icons
+                                                    .arrow_drop_down_outlined,
+                                                    color: Colors.black
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      ButtonThem.buildButton(
+                                        context,
+                                        title: "Book Ride".tr,
+                                        btnWidthRatio:
+                                        Responsive.width(100, context),
+                                        onPress: () async {
+                                          bool isPaymentNotCompleted =
+                                          await FireStoreUtils
+                                              .paymentStatusCheck();
+                                          if (controller.selectedPaymentMethod
+                                              .value.isEmpty) {
+                                            ShowToastDialog.showToast(
+                                                "Please select Payment Method"
+                                                    .tr);
+                                          } else if (controller
+                                              .sourceLocationController
+                                              .value
+                                              .text
+                                              .isEmpty) {
+                                            ShowToastDialog.showToast(
+                                                "Please select source location"
+                                                    .tr);
+                                          } else if (controller
+                                              .destinationLocationController
+                                              .value
+                                              .text
+                                              .isEmpty) {
+                                            ShowToastDialog.showToast(
+                                                "Please select destination location"
+                                                    .tr);
+                                          }
+                                          // else if (double.parse(
+                                          //         controller.distance.value) <=
+                                          //     2) {
+                                          //   ShowToastDialog.showToast(
+                                          //       "Please select more than two ${Constant.distanceType} location"
+                                          //           .tr);
+                                          // }
+                                          else if (controller.selectedType.value
+                                              .offerRate ==
+                                              true &&
+                                              controller.offerYourRateController
+                                                  .value.text.isEmpty) {
+                                            ShowToastDialog.showToast(
+                                                "Please Enter offer rate".tr);
+                                          } else if (isPaymentNotCompleted) {
+                                            showAlertDialog(context);
+                                            // showDialog(context: context, builder: (BuildContext context) => warningDailog());
+                                          } else {
+                                            // ShowToastDialog.showLoader("Please wait");
+                                            OrderModel orderModel = OrderModel();
+                                            orderModel.id = Constant.getUuid();
+                                            orderModel.userId =
+                                                FireStoreUtils.getCurrentUid();
+                                            orderModel.sourceLocationName =
+                                                controller
+                                                    .sourceLocationController
+                                                    .value
+                                                    .text;
+                                            orderModel.destinationLocationName =
+                                                controller
+                                                    .destinationLocationController
+                                                    .value
+                                                    .text;
+                                            orderModel.sourceLocationLAtLng =
+                                                controller
+                                                    .sourceLocationLAtLng.value;
+                                            orderModel.destinationLocationLAtLng =
+                                                controller
+                                                    .destinationLocationLAtLng
+                                                    .value;
+                                            orderModel.distance =
+                                                controller.distance.value;
+                                            orderModel.distanceType =
+                                                Constant.distanceType;
+                                            orderModel.offerRate = controller
+                                                .selectedType
+                                                .value
+                                                .offerRate ==
+                                                true
+                                                ? controller
+                                                .offerYourRateController
+                                                .value
+                                                .text
+                                                : controller.amount.value;
+                                            orderModel.serviceId =
+                                                controller.selectedType.value.id;
+                                            GeoFirePoint position =
+                                            GeoFlutterFire().point(
+                                                latitude: controller
+                                                    .sourceLocationLAtLng
+                                                    .value
+                                                    .latitude!,
+                                                longitude: controller
+                                                    .sourceLocationLAtLng
+                                                    .value
+                                                    .longitude!);
+
+                                            orderModel.position = Positions(
+                                                geoPoint: position.geoPoint,
+                                                geohash: position.hash);
+                                            orderModel.createdDate =
+                                                Timestamp.now();
+                                            orderModel.status =
+                                                Constant.ridePlaced;
+                                            orderModel.paymentType = controller
+                                                .selectedPaymentMethod.value;
+                                            orderModel.paymentStatus = false;
+                                            orderModel.service =
+                                                controller.selectedType.value;
+                                            orderModel.adminCommission =
+                                            controller
+                                                .selectedType
+                                                .value
+                                                .adminCommission!
+                                                .isEnabled ==
+                                                false
+                                                ? controller.selectedType
+                                                .value.adminCommission!
+                                                : Constant.adminCommission;
+                                            orderModel.otp =
+                                                Constant.getReferralCode();
+                                            orderModel.taxList = Constant.taxList;
+                                            if (controller.selectedTakingRide
+                                                .value.fullName !=
+                                                "Myself") {
+                                              orderModel.someOneElse = controller
+                                                  .selectedTakingRide.value;
+                                            }
+
+
+
+
+                                            // FireStoreUtils().startStream();
+                                            FireStoreUtils()
+                                                .sendOrderData(orderModel)
+                                                .listen((event) {
+                                              event.forEach((element) async {
+                                                if (element.fcmToken != null) {
+                                                  Map<String, dynamic> playLoad =
+                                                  <String, dynamic>{
+                                                    "type": "city_order",
+                                                    "orderId": orderModel.id
+                                                  };
+                                                  await SendNotification
+                                                      .sendOneNotification(
+                                                      token: element
+                                                          .fcmToken
+                                                          .toString(),
+                                                      title:
+                                                      'New Ride Available'
+                                                          .tr,
+                                                      body:
+                                                      'A customer has placed an ride near your location.'
+                                                          .tr,
+                                                      payload: playLoad);
+                                                }
+                                              });
+                                              FireStoreUtils().closeStream();
+                                            });
+                                            await FireStoreUtils.setOrder(
+                                                orderModel)
+                                                .then((value) {
+                                              ShowToastDialog.showToast(
+                                                  "Ride Placed successfully".tr);
+                                              controller.dashboardController
+                                                  .selectedDrawerIndex(3);
+                                              ShowToastDialog.closeLoader();
+                                              Navigator.pop(context);
+                                            },
+                                            );
+
+                                          }
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Positioned(
+                      top: 100,
+                      left: 7,
+                      right: 5,
+                      child: SizedBox(
                         height: Responsive.width(22, context),
                         width: Responsive.width(100, context),
                         child: Padding(
@@ -120,7 +910,7 @@ class HomeScreen extends StatelessWidget {
                                       UserModel userModel = snapshot.data!;
                                       return Column(
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                         children: [
                                           Text(userModel.fullName.toString(),
                                               style: GoogleFonts.poppins(
@@ -134,9 +924,9 @@ class HomeScreen extends StatelessWidget {
                                           Row(
                                             children: [
                                               SvgPicture.asset(
-                                                  'assets/icons/ic_location.svg',
-                                                  width: 16,
-                                              color: Colors.black,
+                                                'assets/icons/ic_location.svg',
+                                                width: 16,
+                                                color: Colors.black,
                                               ),
                                               const SizedBox(
                                                 width: 10,
@@ -145,12 +935,12 @@ class HomeScreen extends StatelessWidget {
                                                   child: Text(
                                                       controller.currentLocation.value.toString(),
                                                       style:
-                                                          GoogleFonts.poppins(
-                                                              color:
-                                                                  themeChange.getThem() ? Colors.black: Colors.black,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400))),
+                                                      GoogleFonts.poppins(
+                                                          color:
+                                                          themeChange.getThem() ? Colors.black: Colors.black,
+                                                          fontWeight:
+                                                          FontWeight
+                                                              .w400))),
                                             ],
                                           ),
                                         ],
@@ -165,789 +955,10 @@ class HomeScreen extends StatelessWidget {
                               }),
                         ),
                       ),
-                      Expanded(
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(25),
-                                  topRight: Radius.circular(25))),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            child: SingleChildScrollView(
-                              child: Padding(
-                                padding: const EdgeInsets.only(top: 10),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Visibility(
-                                      visible: controller.bannerList.isNotEmpty,
-                                      child: SizedBox(
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              0.20,
-                                          child: PageView.builder(
-                                              padEnds: false,
-                                              itemCount:
-                                                  controller.bannerList.length,
-                                              scrollDirection: Axis.horizontal,
-                                              controller:
-                                                  controller.pageController,
-                                              itemBuilder: (context, index) {
-                                                BannerModel bannerModel =
-                                                    controller
-                                                        .bannerList[index];
-                                                return Padding(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(
-                                                      horizontal: 10),
-                                                  child: CachedNetworkImage(
-                                                    imageUrl: bannerModel.image
-                                                        .toString(),
-                                                    imageBuilder: (context,
-                                                            imageProvider) =>
-                                                        Container(
-                                                      decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(20),
-                                                        image: DecorationImage(
-                                                            image:
-                                                                imageProvider,
-                                                            fit: BoxFit.cover),
-                                                      ),
-                                                    ),
-                                                    color: Colors.black
-                                                        .withOpacity(0.5),
-                                                    placeholder: (context,
-                                                            url) =>
-                                                        const Center(
-                                                            child:
-                                                                CircularProgressIndicator()),
-                                                    fit: BoxFit.cover,
-                                                  ),
-                                                );
-                                              })),
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text("Where you want to go?".tr,
-                                        style: GoogleFonts.poppins(
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 18,
-                                          letterSpacing: 1,
-                                          color: Colors.black,
-                                        )),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    controller.sourceLocationLAtLng.value
-                                                .latitude ==
-                                            null
-                                        ? InkWell(
-                                        onTap: (){
-                                          largeBottomSheet(context,controller);
-                                        },
-                                            // onTap: () async {
-                                            //   LocationResult? result =
-                                            //       await Utils.showPlacePicker(
-                                            //           context);
-                                            //   if (result != null) {
-                                            //     controller
-                                            //             .sourceLocationController
-                                            //             .value
-                                            //             .text =
-                                            //         result.formattedAddress
-                                            //             .toString();
-                                            //     controller.sourceLocationLAtLng
-                                            //             .value =
-                                            //         LocationLatLng(
-                                            //             latitude: result
-                                            //                 .latLng!.latitude,
-                                            //             longitude: result
-                                            //                 .latLng!.longitude);
-                                            //     controller.calculateAmount();
-                                            //   }
-                                            // },
-                                            child: TextFieldThem.buildTextFiled(
-                                                context,
-                                                hintText: 'Enter Location'.tr,
-                                                controller: controller
-                                                    .sourceLocationController
-                                                    .value,
-                                                enable: false))
-                                        : Row(
-                                            children: [
-                                              Column(
-                                                children: [
-                                                  SvgPicture.asset(
-                                                      themeChange.getThem()
-                                                          ? 'assets/icons/ic_source_dark.svg'
-                                                          :'assets/icons/ic_source_dark.svg',
+                    ),
 
-                                                      width: 18),
-                                                  Dash(
-                                                      direction: Axis.vertical,
-                                                      length: Responsive.height(
-                                                          6, context),
-                                                      dashLength: 12,
-                                                      dashColor: AppColors
-                                                          .dottedDivider),
-                                                  SvgPicture.asset(
-                                                      themeChange.getThem()
-                                                          ? 'assets/icons/ic_destination_dark.svg'
-                                                          : 'assets/icons/ic_destination_dark.svg',
-                                                      width: 20),
-                                                ],
-                                              ),
-                                              const SizedBox(
-                                                width: 18,
-                                              ),
-                                              Expanded(
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    InkWell(
-
-                                                        onTap: () async {
-                                                          LocationResult?
-                                                              result =
-                                                              await Utils
-                                                                  .showPlacePicker(
-                                                                      context);
-                                                          if (result != null) {
-                                                            controller
-                                                                    .sourceLocationController
-                                                                    .value
-                                                                    .text =
-                                                                result
-                                                                    .formattedAddress
-                                                                    .toString();
-                                                            controller.sourceLocationLAtLng
-                                                                    .value =
-                                                                LocationLatLng(
-                                                                    latitude: result
-                                                                        .latLng!
-                                                                        .latitude,
-                                                                    longitude: result
-                                                                        .latLng!
-                                                                        .longitude);
-                                                            controller
-                                                                .calculateAmount();
-                                                          }
-                                                        },
-                                                        child: Row(
-                                                          children: [
-                                                            Expanded(
-                                                              child: TextFieldThem.buildTextFiled(
-                                                                  context,
-                                                                  hintText:
-                                                                      'Enter Location'
-                                                                          .tr,
-                                                                  controller:
-                                                                      controller
-                                                                          .sourceLocationController
-                                                                          .value,
-                                                                  enable:
-                                                                      false),
-                                                            ),
-                                                            const SizedBox(
-                                                              width: 10,
-                                                            ),
-                                                            InkWell(
-                                                                onTap: () {
-                                                                  ariPortDialog(
-                                                                      context,
-                                                                      controller,
-                                                                      true);
-                                                                },
-                                                                child: const Icon(
-
-                                                                    Icons
-                                                                        .flight_takeoff,color: Colors.black,))
-                                                          ],
-                                                        )),
-                                                    SizedBox(
-                                                        height:
-                                                            Responsive.height(
-                                                                1, context)),
-                                                    InkWell(
-                                                      onTap: (){
-                                                        destinationBottomSheet(context,controller);
-                                                      },
-                                                        // onTap: () async {
-                                                        //   LocationResult?
-                                                        //       result =
-                                                        //       await Utils
-                                                        //           .showPlacePicker(
-                                                        //               context);
-                                                        //   if (result != null) {
-                                                        //     controller
-                                                        //             .destinationLocationController
-                                                        //             .value
-                                                        //             .text =
-                                                        //         result
-                                                        //             .formattedAddress
-                                                        //             .toString();
-                                                        //     controller.destinationLocationLAtLng
-                                                        //             .value =
-                                                        //         LocationLatLng(
-                                                        //             latitude: result
-                                                        //                 .latLng!
-                                                        //                 .latitude,
-                                                        //             longitude: result
-                                                        //                 .latLng!
-                                                        //                 .longitude);
-                                                        //     controller
-                                                        //         .calculateAmount();
-                                                        //   }
-                                                        // },
-                                                        child: Row(
-                                                          children: [
-                                                            Expanded(
-                                                              child: TextFieldThem.buildTextFiled(
-                                                                  context,
-                                                                  hintText:
-                                                                      'Enter destination Location'
-                                                                          .tr,
-                                                                  controller:
-                                                                      controller
-                                                                          .destinationLocationController
-                                                                          .value,
-                                                                  enable:
-                                                                      false),
-                                                            ),
-                                                            const SizedBox(
-                                                              width: 10,
-                                                            ),
-                                                            InkWell(
-                                                                onTap: () {
-                                                                  ariPortDialog(
-                                                                      context,
-                                                                      controller,
-                                                                      false);
-                                                                },
-                                                                child: const Icon(
-                                                                    Icons
-                                                                        .flight_takeoff,color: Colors.black,))
-                                                          ],
-                                                        )),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                    const SizedBox(
-                                      height: 20,
-                                    ),
-                                    Text(
-                                      "Select Vehicle".tr,
-                                      style: GoogleFonts.poppins(
-                                        fontWeight: FontWeight.w500,
-                                        letterSpacing: 1,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 05,
-                                    ),
-                                    SizedBox(
-                                      height: Responsive.height(18, context),
-                                      child: ListView.builder(
-                                        itemCount:
-                                            controller.serviceList.length,
-                                        scrollDirection: Axis.horizontal,
-                                        shrinkWrap: true,
-                                        itemBuilder: (context, index) {
-                                          ServiceModel serviceModel =
-                                              controller.serviceList[index];
-                                          return Obx(
-                                            () => InkWell(
-                                              onTap: () {
-                                                controller.selectedType.value =
-                                                    serviceModel;
-                                                controller.calculateAmount();
-                                              },
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(6.0),
-                                                child: Container(
-                                                  width: Responsive.width(
-                                                      28, context),
-                                                  decoration: BoxDecoration(
-                                                      color: controller
-                                                                  .selectedType
-                                                                  .value ==
-                                                              serviceModel
-                                                          ? themeChange
-                                                                  .getThem()
-                                                              ? AppColors
-                                                                  .darkModePrimary
-                                                              : AppColors
-                                                                  .darkModePrimary
-                                                          : themeChange
-                                                                  .getThem()
-                                                              ? AppColors
-                                                                  .darkService
-                                                              : AppColors.darkService,
-                                                      borderRadius:
-                                                          const BorderRadius
-                                                              .all(
-                                                        Radius.circular(20),
-                                                      )),
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Container(
-                                                        decoration:
-                                                            BoxDecoration(
-                                                                color: Colors.white,
-                                                                borderRadius:
-                                                                    const BorderRadius
-                                                                        .all(
-                                                                  Radius
-                                                                      .circular(
-                                                                          20),
-                                                                )),
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(8.0),
-                                                          child:
-                                                              CachedNetworkImage(
-                                                            imageUrl:
-                                                                serviceModel
-                                                                    .image
-                                                                    .toString(),
-                                                            fit: BoxFit.contain,
-                                                            height: Responsive
-                                                                .height(
-                                                                    8, context),
-                                                            width: Responsive
-                                                                .width(18,
-                                                                    context),
-                                                            placeholder: (context,
-                                                                    url) =>
-                                                                Constant
-                                                                    .loader(),
-                                                            errorWidget: (context,
-                                                                    url,
-                                                                    error) =>
-                                                                Image.network(
-                                                                    Constant
-                                                                        .userPlaceHolder),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      const SizedBox(
-                                                        height: 10,
-                                                      ),
-                                                      Text(
-                                                          serviceModel.title
-                                                              .toString(),
-                                                          style: GoogleFonts.poppins(
-                                                              color: controller.selectedType.value == serviceModel
-                                                                  ? themeChange.getThem()
-                                                                      ? Colors.white
-                                                                      : Colors.white
-                                                                  : themeChange.getThem()
-                                                                      ? Colors.white
-                                                                      : Colors.white)),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                    Obx(
-                                      () => controller.sourceLocationLAtLng
-                                                      .value.latitude !=
-                                                  null &&
-                                              controller
-                                                      .destinationLocationLAtLng
-                                                      .value
-                                                      .latitude !=
-                                                  null &&
-                                              controller.amount.value.isNotEmpty
-                                          ? Column(
-                                              children: [
-                                                const SizedBox(
-                                                  height: 10,
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(
-                                                      horizontal: 10,
-                                                      vertical: 5),
-                                                  child: Container(
-                                                    width: Responsive.width(
-                                                        100, context),
-                                                    decoration: const BoxDecoration(
-                                                        color: AppColors.gray,
-                                                        borderRadius:
-                                                            BorderRadius.all(
-                                                                Radius.circular(
-                                                                    10))),
-                                                    child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .symmetric(
-                                                                horizontal: 10,
-                                                                vertical: 10),
-                                                        child: Center(
-                                                          child: controller
-                                                                      .selectedType
-                                                                      .value
-                                                                      .offerRate ==
-                                                                  true
-                                                              ? RichText(
-                                                                  text:
-                                                                      TextSpan(
-                                                                    text:
-                                                                        'Recommended Price is ${Constant.amountShow(amount: controller.amount.value)}. Approx time ${controller.duration}. Approx distance ${double.parse(controller.distance.value).toStringAsFixed(Constant.currencyModel!.decimalDigits!)} ${Constant.distanceType}'
-                                                                            .tr,
-                                                                    style: GoogleFonts
-                                                                        .poppins(
-                                                                            color:
-                                                                                Colors.black),
-                                                                  ),
-                                                                )
-                                                              : RichText(
-                                                                  text: TextSpan(
-                                                                      text: 'Your Price is ${Constant.amountShow(amount: controller.amount.value)}. Approx time ${controller.duration}. Approx distance ${double.parse(controller.distance.value).toStringAsFixed(Constant.currencyModel!.decimalDigits!)} ${Constant.distanceType}'
-                                                                          .tr,
-                                                                      style: GoogleFonts.poppins(
-                                                                          color:
-                                                                              Colors.black)),
-                                                                ),
-                                                        )),
-                                                  ),
-                                                ),
-                                              ],
-                                            )
-                                          : Container(),
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Visibility(
-                                      visible: controller
-                                              .selectedType.value.offerRate ==
-                                          true,
-                                      child: TextFieldThem
-                                          .buildTextFiledWithPrefixIcon(
-                                        context,
-                                        hintText: "Enter your offer rate".tr,
-                                        controller: controller
-                                            .offerYourRateController.value,
-                                        prefix: Padding(
-                                          padding:
-                                              const EdgeInsets.only(right: 10),
-                                          child: Text(
-                                            Constant.currencyModel!.symbol
-                                                .toString(),
-                                            style: GoogleFonts.poppins(
-                                              color: themeChange.getThem() ? Colors.black : Colors.black),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    InkWell(
-                                      onTap: () {
-                                        someOneTakingDialog(
-                                            context, controller);
-                                      },
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius: const BorderRadius.all(
-                                              Radius.circular(4)),
-                                          border: Border.all(
-                                              color: AppColors.textFieldBorder,
-                                              width: 1),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 10, vertical: 12),
-                                          child: Row(
-                                            children: [
-                                              const Icon(Icons.person),
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              Expanded(
-                                                  child: Text(
-                                                controller.selectedTakingRide
-                                                            .value.fullName ==
-                                                        "Myself"
-                                                    ? "Myself".tr
-                                                    : controller
-                                                        .selectedTakingRide
-                                                        .value
-                                                        .fullName
-                                                        .toString(),
-                                                style: GoogleFonts.poppins(
-                                                  color: Colors.black
-                                                ),
-                                              )),
-                                              const Icon(Icons
-                                                  .arrow_drop_down_outlined,
-                                              color: Colors.black,
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    InkWell(
-                                      onTap: () {
-                                        paymentMethodDialog(
-                                            context, controller);
-                                      },
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius: const BorderRadius.all(
-                                              Radius.circular(4)),
-                                          border: Border.all(
-                                              color: AppColors.textFieldBorder,
-                                              width: 1),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 10, vertical: 12),
-                                          child: Row(
-                                            children: [
-                                              SvgPicture.asset(
-                                                'assets/icons/ic_payment.svg',
-                                                width: 26,
-                                              ),
-                                              const SizedBox(
-                                                width: 10,
-                                              ),
-                                              Expanded(
-                                                  child: Text(
-                                                controller.selectedPaymentMethod
-                                                        .value.isNotEmpty
-                                                    ? controller
-                                                        .selectedPaymentMethod
-                                                        .value
-                                                    : "Select Payment type".tr,
-                                                style: GoogleFonts.poppins(
-                                                  color: Colors.black
-                                                ),
-                                              )),
-                                              const Icon(Icons
-                                                  .arrow_drop_down_outlined,
-                                                  color: Colors.black
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    ButtonThem.buildButton(
-                                      context,
-                                      title: "Book Ride".tr,
-                                      btnWidthRatio:
-                                          Responsive.width(100, context),
-                                      onPress: () async {
-                                        bool isPaymentNotCompleted =
-                                            await FireStoreUtils
-                                                .paymentStatusCheck();
-                                        if (controller.selectedPaymentMethod
-                                            .value.isEmpty) {
-                                          ShowToastDialog.showToast(
-                                              "Please select Payment Method"
-                                                  .tr);
-                                        } else if (controller
-                                            .sourceLocationController
-                                            .value
-                                            .text
-                                            .isEmpty) {
-                                          ShowToastDialog.showToast(
-                                              "Please select source location"
-                                                  .tr);
-                                        } else if (controller
-                                            .destinationLocationController
-                                            .value
-                                            .text
-                                            .isEmpty) {
-                                          ShowToastDialog.showToast(
-                                              "Please select destination location"
-                                                  .tr);
-                                        }
-                                        // else if (double.parse(
-                                        //         controller.distance.value) <=
-                                        //     2) {
-                                        //   ShowToastDialog.showToast(
-                                        //       "Please select more than two ${Constant.distanceType} location"
-                                        //           .tr);
-                                        // }
-                                        else if (controller.selectedType.value
-                                                    .offerRate ==
-                                                true &&
-                                            controller.offerYourRateController
-                                                .value.text.isEmpty) {
-                                          ShowToastDialog.showToast(
-                                              "Please Enter offer rate".tr);
-                                        } else if (isPaymentNotCompleted) {
-                                          showAlertDialog(context);
-                                          // showDialog(context: context, builder: (BuildContext context) => warningDailog());
-                                        } else {
-                                          // ShowToastDialog.showLoader("Please wait");
-                                          OrderModel orderModel = OrderModel();
-                                          orderModel.id = Constant.getUuid();
-                                          orderModel.userId =
-                                              FireStoreUtils.getCurrentUid();
-                                          orderModel.sourceLocationName =
-                                              controller
-                                                  .sourceLocationController
-                                                  .value
-                                                  .text;
-                                          orderModel.destinationLocationName =
-                                              controller
-                                                  .destinationLocationController
-                                                  .value
-                                                  .text;
-                                          orderModel.sourceLocationLAtLng =
-                                              controller
-                                                  .sourceLocationLAtLng.value;
-                                          orderModel.destinationLocationLAtLng =
-                                              controller
-                                                  .destinationLocationLAtLng
-                                                  .value;
-                                          orderModel.distance =
-                                              controller.distance.value;
-                                          orderModel.distanceType =
-                                              Constant.distanceType;
-                                          orderModel.offerRate = controller
-                                                      .selectedType
-                                                      .value
-                                                      .offerRate ==
-                                                  true
-                                              ? controller
-                                                  .offerYourRateController
-                                                  .value
-                                                  .text
-                                              : controller.amount.value;
-                                          orderModel.serviceId =
-                                              controller.selectedType.value.id;
-                                          GeoFirePoint position =
-                                              GeoFlutterFire().point(
-                                                  latitude: controller
-                                                      .sourceLocationLAtLng
-                                                      .value
-                                                      .latitude!,
-                                                  longitude: controller
-                                                      .sourceLocationLAtLng
-                                                      .value
-                                                      .longitude!);
-
-                                          orderModel.position = Positions(
-                                              geoPoint: position.geoPoint,
-                                              geohash: position.hash);
-                                          orderModel.createdDate =
-                                              Timestamp.now();
-                                          orderModel.status =
-                                              Constant.ridePlaced;
-                                          orderModel.paymentType = controller
-                                              .selectedPaymentMethod.value;
-                                          orderModel.paymentStatus = false;
-                                          orderModel.service =
-                                              controller.selectedType.value;
-                                          orderModel.adminCommission =
-                                              controller
-                                                          .selectedType
-                                                          .value
-                                                          .adminCommission!
-                                                          .isEnabled ==
-                                                      false
-                                                  ? controller.selectedType
-                                                      .value.adminCommission!
-                                                  : Constant.adminCommission;
-                                          orderModel.otp =
-                                              Constant.getReferralCode();
-                                          orderModel.taxList = Constant.taxList;
-                                          if (controller.selectedTakingRide
-                                                  .value.fullName !=
-                                              "Myself") {
-                                            orderModel.someOneElse = controller
-                                                .selectedTakingRide.value;
-                                          }
-
-
-
-
-                                          // FireStoreUtils().startStream();
-                                          FireStoreUtils()
-                                              .sendOrderData(orderModel)
-                                              .listen((event) {
-                                            event.forEach((element) async {
-                                              if (element.fcmToken != null) {
-                                                Map<String, dynamic> playLoad =
-                                                    <String, dynamic>{
-                                                  "type": "city_order",
-                                                  "orderId": orderModel.id
-                                                };
-                                                await SendNotification
-                                                    .sendOneNotification(
-                                                        token: element
-                                                            .fcmToken
-                                                            .toString(),
-                                                        title:
-                                                            'New Ride Available'
-                                                                .tr,
-                                                        body:
-                                                            'A customer has placed an ride near your location.'
-                                                                .tr,
-                                                        payload: playLoad);
-                                              }
-                                            });
-                                            FireStoreUtils().closeStream();
-                                          });
-                                          await FireStoreUtils.setOrder(
-                                                  orderModel)
-                                              .then((value) {
-                                            ShowToastDialog.showToast(
-                                                "Ride Placed successfully".tr);
-                                            controller.dashboardController
-                                                .selectedDrawerIndex(3);
-                                            ShowToastDialog.closeLoader();
-                                            Navigator.pop(context);
-                                          },
-                                          );
-
-                                        }
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                  ],
+                ),
           );
         });
   }
